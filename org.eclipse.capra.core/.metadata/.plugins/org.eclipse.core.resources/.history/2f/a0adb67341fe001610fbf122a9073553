@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_24AZcPjFEeaEoYSmdDAPVA" name="RootElement">
+  <packagedElement xmi:type="uml:StateMachine" xmi:id="_24FR8PjFEeaEoYSmdDAPVA" name="StateMachine1">
+    <region xmi:type="uml:Region" xmi:id="_25MFMPjFEeaEoYSmdDAPVA" name="Region1">
+      <transition xmi:type="uml:Transition" xmi:id="_6Sm4EPjFEeaEoYSmdDAPVA" source="_4SL4cPjFEeaEoYSmdDAPVA" target="_32qaEPjFEeaEoYSmdDAPVA"/>
+      <transition xmi:type="uml:Transition" xmi:id="_JvuGUPjGEeaEoYSmdDAPVA" source="_32qaEPjFEeaEoYSmdDAPVA" target="_C4BOsPjGEeaEoYSmdDAPVA"/>
+      <transition xmi:type="uml:Transition" xmi:id="_KbSL0PjGEeaEoYSmdDAPVA" source="_C4BOsPjGEeaEoYSmdDAPVA" target="__EDN0PjFEeaEoYSmdDAPVA"/>
+      <transition xmi:type="uml:Transition" xmi:id="_LAZrEPjGEeaEoYSmdDAPVA" source="_C4BOsPjGEeaEoYSmdDAPVA" target="__d6fUPjFEeaEoYSmdDAPVA"/>
+      <transition xmi:type="uml:Transition" xmi:id="_L_P48PjGEeaEoYSmdDAPVA" source="__EDN0PjFEeaEoYSmdDAPVA" target="_Lc5Z0PjGEeaEoYSmdDAPVA"/>
+      <transition xmi:type="uml:Transition" xmi:id="_MgwqkPjGEeaEoYSmdDAPVA" source="__d6fUPjFEeaEoYSmdDAPVA" target="_Lc5Z0PjGEeaEoYSmdDAPVA"/>
+      <transition xmi:type="uml:Transition" xmi:id="_NRLa4PjGEeaEoYSmdDAPVA" source="_Lc5Z0PjGEeaEoYSmdDAPVA" target="_7g0XoPjFEeaEoYSmdDAPVA"/>
+      <subvertex xmi:type="uml:State" xmi:id="_32qaEPjFEeaEoYSmdDAPVA" name="State1"/>
+      <subvertex xmi:type="uml:Pseudostate" xmi:id="_4SL4cPjFEeaEoYSmdDAPVA" name="Initial1"/>
+      <subvertex xmi:type="uml:FinalState" xmi:id="_7g0XoPjFEeaEoYSmdDAPVA" name="FinalState1"/>
+      <subvertex xmi:type="uml:State" xmi:id="__EDN0PjFEeaEoYSmdDAPVA" name="State2"/>
+      <subvertex xmi:type="uml:State" xmi:id="__d6fUPjFEeaEoYSmdDAPVA" name="State3"/>
+      <subvertex xmi:type="uml:Pseudostate" xmi:id="_C4BOsPjGEeaEoYSmdDAPVA" name="Choice1" kind="choice"/>
+      <subvertex xmi:type="uml:Pseudostate" xmi:id="_Lc5Z0PjGEeaEoYSmdDAPVA" name="Join1" kind="join"/>
+    </region>
+  </packagedElement>
+</uml:Model>

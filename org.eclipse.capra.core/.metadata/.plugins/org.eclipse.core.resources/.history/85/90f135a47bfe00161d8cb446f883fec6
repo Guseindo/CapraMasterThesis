@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ASCII"?>
+<GenericTraceMetaModel:GenericTraceModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:GenericTraceMetaModel="org.eclipse.capra.GenericTraceMetaModel">
+  <traces>
+    <item href="../org.itea2.amalthea.example.hvac/01_Requirements/HVAC_Requirements.reqif#_BRG4Z6g0EeOsnrBaB07QiA"/>
+    <item href="../org.itea2.amalthea.example.hvac/model.uml#_R1CF4PcsEea3FqLSFwaXsA"/>
+  </traces>
+  <traces>
+    <item href="../org.itea2.amalthea.example.hvac/model.uml#_SgSCUPcsEea3FqLSFwaXsA"/>
+    <item href="../org.itea2.amalthea.example.hvac/01_Requirements/HVAC_Requirements.reqif#_4dppQKg0EeOsnrBaB07QiA"/>
+  </traces>
+  <traces>
+    <item href="../org.itea2.amalthea.example.hvac/01_Requirements/HVAC_Requirements.reqif#_4dppQKg0EeOsnrBaB07QiA"/>
+    <item href="../org.itea2.amalthea.example.hvac/model.uml#_UoyeUPfZEeauWe7uNK_rBQ"/>
+  </traces>
+  <traces>
+    <item href="../org.itea2.amalthea.example.hvac/usecase.uml#_g_As4PjFEeaEoYSmdDAPVA"/>
+    <item href="../org.itea2.amalthea.example.hvac/model.uml#_R1CF4PcsEea3FqLSFwaXsA"/>
+  </traces>
+  <traces>
+    <item href="../org.itea2.amalthea.example.hvac/model.uml#_W2UOcPcsEea3FqLSFwaXsA"/>
+    <item href="../org.itea2.amalthea.example.hvac/01_Requirements/HVAC_Requirements.reqif#_5IpuEKg0EeOsnrBaB07QiA"/>
+  </traces>
+</GenericTraceMetaModel:GenericTraceModel>

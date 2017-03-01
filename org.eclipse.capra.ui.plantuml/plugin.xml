@@ -44,6 +44,14 @@
          </command>
          
       </menuContribution>
+      <menuContribution
+            locationURI="menu:net.sourceforge.plantuml.eclipse.views.PlantUmlView?after=additions">
+         <command
+               commandId="org.eclipse.capra.ui.plantuml.toggleInternalLinks"
+               label="Toggle Internal links"
+               style="push">
+         </command>
+      </menuContribution>
    </extension>
    
    <extension

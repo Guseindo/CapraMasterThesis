@@ -109,4 +109,17 @@ public interface TraceMetaModelAdapter {
 	 */
 	List<Connection> getTransitivelyConnectedElements(EObject element, EObject traceModel);
 
+	/**
+	 * Determine a list of all objects internally connected (e.g. in a UML diagram) elements
+	 * 
+	 * @param element
+	 *            The element used to determine the list of connected objects.
+	 *            Note that this element could be a trace in the trace model
+	 * @param traceModel
+	 *            Trace model to base calculation on
+	 * @return A Map with the following structure: [Trace object t -> {list of
+	 *         all objects connected to element via t}]
+	 */
+	List<Connection> getInternalElements(EObject element, EObject traceModel);
+
 }

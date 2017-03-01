@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_fuWWQPjFEeaEoYSmdDAPVA" name="RootElement">
+  <packagedElement xmi:type="uml:Actor" xmi:id="_g_As4PjFEeaEoYSmdDAPVA" name="Actor1"/>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_hj47kPjFEeaEoYSmdDAPVA" name="UseCase1">
+    <include xmi:type="uml:Include" xmi:id="_lg0EIPjFEeaEoYSmdDAPVA" addition="_kICTUPjFEeaEoYSmdDAPVA"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Usage" xmi:id="_jHgDYPjFEeaEoYSmdDAPVA" client="_g_As4PjFEeaEoYSmdDAPVA" supplier="_hj47kPjFEeaEoYSmdDAPVA"/>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_kICTUPjFEeaEoYSmdDAPVA" name="UseCase2"/>
+</uml:Model>
