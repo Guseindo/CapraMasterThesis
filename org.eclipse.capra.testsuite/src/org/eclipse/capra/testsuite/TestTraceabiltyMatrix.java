@@ -23,6 +23,7 @@ import org.eclipse.capra.GenericTraceMetaModel.GenericTraceMetaModelPackage;
 import org.eclipse.capra.core.adapters.TracePersistenceAdapter;
 import org.eclipse.capra.core.helpers.ExtensionPointHelper;
 import org.eclipse.capra.ui.plantuml.DiagramTextProviderHandler;
+import org.eclipse.capra.ui.plantuml.DisplayTracesHandler;
 import org.eclipse.capra.ui.views.SelectionView;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
@@ -36,9 +37,12 @@ import org.junit.Test;
 
 public class TestTraceabiltyMatrix {
 
-	private final static String EXPECTED_TEXT_FOR_SELECTED_PACKAGES = "@startuml\n" + "salt\n" + "{#\n"
+	private final static String EXPECTED_TEXT_FOR_SELECTED_PACKAGES_DIRECT = "@startuml\n" + "salt\n" + "{#\n"
+			+ ".|modelB : EPackage\n" + "modelA : EPackage |X\n" + "}\n" + "\n" + "@enduml\n";
+
+	private final static String EXPECTED_TEXT_FOR_SELECTED_PACKAGES_TRANSITIVE = "@startuml\n" + "salt\n" + "{#\n"
 			+ ".|B : EClass|BB : EClass|modelB : EPackage\n" + "A : EClass |X|.|.\n" + "AA : EClass |.|X|.\n"
-			+ "modelA : EPackage |.|.|.\n" + "}\n" + "\n" + "@enduml\n";
+			+ "modelA : EPackage |.|.|X\n" + "}\n" + "\n" + "@enduml\n";
 
 	private final static String EXPECTED_TEXT_FOR_SELECTED_CLASSES = "@startuml\n" + "salt\n" + "{#\n"
 			+ ".|A : EClass|B : EClass|AA : EClass|BB : EClass\n" + "A : EClass |.|X|.|.\n" + "B : EClass |X|.|.|.\n"
@@ -111,16 +115,42 @@ public class TestTraceabiltyMatrix {
 		removeTraceModel(rs);
 		assertTrue(thereIsATraceBetween(_AA, _BB));
 
+		// create trace link between package A and B
+		// clear selection
+		SelectionView.getOpenedView().clearSelection();
+		assertTrue(SelectionView.getOpenedView().getSelection().isEmpty());
+
+		// Add Package A and B to selection view
+		SelectionView.getOpenedView().dropToSelection(_a);
+		SelectionView.getOpenedView().dropToSelection(_b);
+		assertFalse(SelectionView.getOpenedView().getSelection().isEmpty());
+
+		// Create a trace between Package A and B
+		assertFalse(thereIsATraceBetween(_a, _b));
+		createTraceForCurrentSelectionOfType(GenericTraceMetaModelPackage.eINSTANCE.getRelatedTo());
+
+		// Remove trace model from resource set to make sure the trace model is
+		// re-loaded to capture the third trace link
+		removeTraceModel(rs);
+		assertTrue(thereIsATraceBetween(_a, _b));
+
 		// create a selection with Package A and B
 		List<Object> selectedPackages = new ArrayList<>();
 		selectedPackages.add(_a);
 		selectedPackages.add(_b);
 
+		// Test directly connected Elements
+		DisplayTracesHandler.setTraceViewTransitive(false);
 		DiagramTextProviderHandler provider = new DiagramTextProviderHandler();
-		String plantUMLTextForSelectedPackages = provider.getDiagramText(selectedPackages);
+		String plantUMLTextForSelectedPackages_Direct = provider.getDiagramText(selectedPackages);
+		assertTrue(plantUMLTextForSelectedPackages_Direct.equals(EXPECTED_TEXT_FOR_SELECTED_PACKAGES_DIRECT));
 
-		assertTrue(plantUMLTextForSelectedPackages.equals(EXPECTED_TEXT_FOR_SELECTED_PACKAGES));
+		// Test transitively connected Elements
+		DisplayTracesHandler.setTraceViewTransitive(true);
+		String plantUMLTextForSelectedPackages_Transitive = provider.getDiagramText(selectedPackages);
+		assertTrue(plantUMLTextForSelectedPackages_Transitive.equals(EXPECTED_TEXT_FOR_SELECTED_PACKAGES_TRANSITIVE));
 
+		// test multiple classes selected
 		List<Object> selectedClasses = new ArrayList<>();
 		selectedClasses.add(_A);
 		selectedClasses.add(_B);
@@ -136,5 +166,4 @@ public class TestTraceabiltyMatrix {
 		EObject tm = persistenceAdapter.getTraceModel(rs);
 		rs.getResources().remove(tm.eResource());
 	}
-
 }

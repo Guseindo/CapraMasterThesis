@@ -11,22 +11,17 @@
 package org.eclipse.capra.ui.handlers;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
-import org.eclipse.capra.core.adapters.ArtifactMetaModelAdapter;
-import org.eclipse.capra.core.adapters.Connection;
 import org.eclipse.capra.core.adapters.TraceMetaModelAdapter;
 import org.eclipse.capra.core.adapters.TracePersistenceAdapter;
-import org.eclipse.capra.core.handlers.ArtifactHandler;
-import org.eclipse.capra.core.handlers.IAnnotateArtifact;
-import org.eclipse.capra.core.handlers.PriorityHandler;
+import org.eclipse.capra.core.helpers.ArtifactHelper;
 import org.eclipse.capra.core.helpers.EMFHelper;
 import org.eclipse.capra.core.helpers.ExtensionPointHelper;
+import org.eclipse.capra.core.helpers.TraceHelper;
 import org.eclipse.capra.ui.views.SelectionView;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -35,7 +30,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.window.Window;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -53,7 +47,7 @@ public class TraceCreationHandler extends AbstractHandler {
 
 	public void createTrace(IWorkbenchWindow window,
 			BiFunction<Collection<EClass>, List<EObject>, Optional<EClass>> chooseTraceType) {
-		List<Object> selection = SelectionView.getOpenedView().getSelection();
+		List<Object> artifacts = SelectionView.getOpenedView().getSelection();
 
 		TraceMetaModelAdapter traceAdapter = ExtensionPointHelper.getTraceMetamodelAdapter().get();
 		TracePersistenceAdapter persistenceAdapter = ExtensionPointHelper.getTracePersistenceAdapter().get();
@@ -64,87 +58,26 @@ public class TraceCreationHandler extends AbstractHandler {
 		// add artifact model to resource set
 		EObject artifactModel = persistenceAdapter.getArtifactWrappers(resourceSet);
 
-		Collection<ArtifactHandler> artifactHandlers = ExtensionPointHelper.getArtifactHandlers();
+		ArtifactHelper artifactHelper = new ArtifactHelper(artifactModel);
+		TraceHelper traceHelper = new TraceHelper(traceModel);
 
-		List<EObject> selectionAsEObjects = mapSelectionToEObjects(window, artifactModel, artifactHandlers, selection);
+		// Create the artifact wrappers
+		List<EObject> wrappers = artifactHelper.createWrappers(artifacts);
 
-		Collection<EClass> traceTypes = traceAdapter.getAvailableTraceTypes(selectionAsEObjects);
-		Optional<EClass> chosenType = chooseTraceType.apply(traceTypes, selectionAsEObjects);
+		// Get the type of trace to be created
+		Collection<EClass> traceTypes = traceAdapter.getAvailableTraceTypes(wrappers);
+		Optional<EClass> chosenType = chooseTraceType.apply(traceTypes, wrappers);
 
+		// Create trace
 		if (chosenType.isPresent()) {
-			EObject root = traceAdapter.createTrace(chosenType.get(), traceModel, selectionAsEObjects);
-			persistenceAdapter.saveTracesAndArtifacts(root, artifactModel);
-			annotateTrace(traceAdapter, traceModel, selectionAsEObjects);
+			traceHelper.createTrace(wrappers, chosenType.get());
+			persistenceAdapter.saveTracesAndArtifacts(traceModel, artifactModel);
+			traceHelper.annotateTrace(wrappers);
 		}
-	}
-
-	private void annotateTrace(TraceMetaModelAdapter traceAdapter, EObject traceModel,
-			List<EObject> artifacts) {
-		ArtifactMetaModelAdapter adapter = ExtensionPointHelper.getArtifactWrapperMetaModelAdapter().get();
-
-		// Annotate if possible
-		for (EObject artifact : artifacts) {
-			ArtifactHandler handler = adapter.getArtifactHandlerInstance(artifact);
-			if (handler instanceof IAnnotateArtifact) {
-				IAnnotateArtifact h = (IAnnotateArtifact) handler;
-				try {
-					// Get unique connected artifacts, not including this element
-					// TODO: maybe add an adapter method for this?
-					Set<EObject> connectedElements = new HashSet<EObject>();
-					final StringBuilder annotation = new StringBuilder();
-					List<Connection> connections = traceAdapter.getConnectedElements(artifact, traceModel);
-					connections.forEach(c -> {
-						c.getTargets().forEach(t -> {
-							if (t != artifact) {
-								connectedElements.add(t);
-							}
-						});
-					});
-
-					// Build annotation string
-					connectedElements.forEach(e -> {
-						if (annotation.length() > 0) {
-							annotation.append(", ");
-						}
-						String name = adapter.getArtifactName(e);
-						annotation.append(name);
-					});
-
-					h.annotateArtifact(artifact, annotation.toString());
-				} catch (Exception e) {
-					// Ignore
-				}
-			}
-		}
-	}
-
-	private List<EObject> mapSelectionToEObjects(IWorkbenchWindow window, EObject artifactModel,
-			Collection<ArtifactHandler> artifactHandlers, List<Object> selection) {
-		return selection.stream().map(sel -> convertToEObject(window, sel, artifactHandlers, artifactModel))
-				.filter(Optional::isPresent).map(Optional::get).collect(Collectors.toList());
-	}
-
-	private Optional<EObject> convertToEObject(IWorkbenchWindow window, Object sel,
-			Collection<ArtifactHandler> artifactHandlers, EObject artifactModel) {
-		List<ArtifactHandler> availableHandlers = artifactHandlers.stream()
-				.filter(handler -> handler.canHandleSelection(sel)).collect(Collectors.toList());
-		Optional<PriorityHandler> priorityHandler = ExtensionPointHelper.getPriorityHandler();
-
-		if (availableHandlers.size() == 1) {
-			return Optional.of(availableHandlers.get(0).getEObjectForSelection(sel, artifactModel));
-		} else if (availableHandlers.size() > 1 && priorityHandler.isPresent()) {
-			ArtifactHandler selectedHandler = priorityHandler.get().getSelectedHandler(availableHandlers, sel);
-			return Optional.of(selectedHandler.getEObjectForSelection(sel, artifactModel));
-		} else {
-			MessageDialog.openWarning(window.getShell(), "No handler for selected item",
-					"There is no handler for " + sel + " so it will be ignored.");
-			return Optional.empty();
-		}
-
 	}
 
 	private Optional<EClass> getTraceTypeToCreate(IWorkbenchWindow window, Collection<EClass> traceTypes,
-			List<EObject> selectionAsEObjects) {
+			List<EObject> wrappers) {
 		ElementListSelectionDialog dialog = new ElementListSelectionDialog(window.getShell(), new LabelProvider() {
 			@Override
 			public String getText(Object element) {
@@ -154,8 +87,7 @@ public class TraceCreationHandler extends AbstractHandler {
 		});
 		dialog.setTitle("Select the trace type you want to create");
 		dialog.setElements(traceTypes.toArray());
-		dialog.setMessage("Selection: "
-				+ selectionAsEObjects.stream().map(EMFHelper::getIdentifier).collect(Collectors.toList()));
+		dialog.setMessage("Selection: " + wrappers.stream().map(EMFHelper::getIdentifier).collect(Collectors.toList()));
 
 		if (dialog.open() == Window.OK) {
 			return Optional.of((EClass) dialog.getFirstResult());

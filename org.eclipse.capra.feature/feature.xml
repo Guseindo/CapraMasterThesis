@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.capra.feature"
-      label="Capra"
+      label="Capra Core Functionality"
       version="0.7.0.qualifier"
+      provider-name="Capra Development Team"
       license-feature="org.eclipse.license"
       license-feature-version="0.0.0">
 
@@ -43,13 +44,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.capra.handler.cdt"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.capra.handler.emf"
          download-size="0"
          install-size="0"
@@ -78,13 +72,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.capra.handler.jdt"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.capra.handler.mylyn"
          download-size="0"
          install-size="0"
@@ -106,13 +93,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.capra.ui.plantuml"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.capra.documentation"
          download-size="0"
          install-size="0"
@@ -127,41 +107,6 @@
 
    <plugin
          id="org.eclipse.capra.handler.reqIf"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.capra.ui.cdt"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.capra.ui.jdt"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.capra.ui.zest"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.capra.ui.cdt"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.capra.ui.jdt"
          download-size="0"
          install-size="0"
          version="0.0.0"
