@@ -74,13 +74,12 @@ public class DiagramTextProviderHandler implements DiagramTextProvider {
 
 					if (selectedModels.size() == 1) {
 						if (DisplayTracesHandler.isTraceViewTransitive()) {
-							traces = metamodelAdapter.getInternalElements(selectedObject, traceModel);
-						} else if (DisplayInternalLinksHandler.areInternalLinksShown()){
 							traces = metamodelAdapter.getTransitivelyConnectedElements(selectedObject, traceModel);
+						} else if (DisplayInternalLinksHandler.areInternalLinksShown()){
+							traces = metamodelAdapter.getInternalElements(selectedObject, traceModel);
 						} else {
 							traces = metamodelAdapter.getConnectedElements(selectedObject, traceModel);
 						}
-
 						return VisualizationHelper.createNeighboursView(traces, selectedObject);
 					} else if (selectedModels.size() == 2) {
 						if (DisplayTracesHandler.isTraceViewTransitive()) {
