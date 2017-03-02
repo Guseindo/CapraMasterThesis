@@ -74,8 +74,9 @@ public class DiagramTextProviderHandler implements DiagramTextProvider {
 
 					if (selectedModels.size() == 1) {
 						if (DisplayTracesHandler.isTraceViewTransitive()) {
-							//traces = metamodelAdapter.getTransitivelyConnectedElements(selectedObject, traceModel);
 							traces = metamodelAdapter.getInternalElements(selectedObject, traceModel);
+						} else if (DisplayInternalLinksHandler.areInternalLinksShown()){
+							traces = metamodelAdapter.getTransitivelyConnectedElements(selectedObject, traceModel);
 						} else {
 							traces = metamodelAdapter.getConnectedElements(selectedObject, traceModel);
 						}

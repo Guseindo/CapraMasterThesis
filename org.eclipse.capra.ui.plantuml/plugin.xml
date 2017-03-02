@@ -25,12 +25,20 @@
             id="org.eclipse.capra.ui.plantuml.toggleTransitivity"
             name="Toggle Transitivity">
       </command>
+      <command
+            id="org.eclipse.capra.ui.plantuml.toggleInternalLinks"
+            name="Toggle Internal links">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
       <handler
             class="org.eclipse.capra.ui.plantuml.DisplayTracesHandler"
             commandId="org.eclipse.capra.ui.plantuml.toggleTransitivity">
+      </handler>
+      <handler
+            class="org.eclipse.capra.ui.plantuml.DisplayInternalLinksHandler"
+            commandId="org.eclipse.capra.ui.plantuml.toggleInternalLinks">
       </handler>
    </extension>
 	<extension
