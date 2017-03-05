@@ -173,6 +173,13 @@ public class GenericMetaModelAdapter implements TraceMetaModelAdapter {
 				rel.getRelatedElements().forEach(element -> relatedElements.add(element));
 				Connection conn = new Connection(o, relatedElements, rel);
 				allElements.add(conn);
+			} else if(Transition.class.isAssignableFrom(o.getClass())){
+				Transition transition = Transition.class.cast(o);
+				List<EObject> relatedElements = new ArrayList<>();
+				relatedElements.add(transition.getSource());
+				relatedElements.add(transition.getTarget());
+				Connection conn = new Connection(o, relatedElements, transition);
+				allElements.add(conn);
 			} else {
 				EObject root = EcoreUtil.getRootContainer(o);
 				TreeIterator<EObject> modelContents = root.eAllContents();				
