@@ -146,7 +146,7 @@ public class GenericMetaModelAdapter implements TraceMetaModelAdapter {
 	public List<Connection> getInternalElements(EObject element, EObject traceModel) {
 		List<Connection> directElements = getConnectedElements(element, traceModel);
 		List<Connection> allElements = new ArrayList<>();
-		HashMap<String, Connection> duplicationCheck = new HashMap<>();
+		ArrayList<String> duplicationCheck = new ArrayList<>();
 		allElements.addAll(directElements);
 		
 		for(Connection conn : directElements){
@@ -165,7 +165,7 @@ public class GenericMetaModelAdapter implements TraceMetaModelAdapter {
 	
 	
 	
-	private static void addConnectionsForRelations(EObject o, List<Connection>allElements, HashMap<String, Connection> duplicationCheck){
+	private static void addConnectionsForRelations(EObject o, List<Connection>allElements, ArrayList<String> duplicationCheck){
 		if(objectIsOfUML2Package(o)){
 			if(Relationship.class.isAssignableFrom(o.getClass())){
 				Relationship rel = Relationship.class.cast(o);
@@ -202,11 +202,10 @@ public class GenericMetaModelAdapter implements TraceMetaModelAdapter {
 							}
 						}
 						if(isRelatedToElement){
-							String hash = getHashForConnection(o, relatedElements, relation);
-							if(!duplicationCheck.containsKey(hash)){
+							if(!isDuplicatedEntry(o, relatedElements, relation, duplicationCheck)){
 								Connection conn = new Connection(o, relatedElements, relation);
 								allElements.add(conn);
-								duplicationCheck.put(hash, conn);
+								addPotentialStringsForConnection(o, relatedElements, relation, duplicationCheck);
 							}
 						}
 					}
@@ -217,19 +216,17 @@ public class GenericMetaModelAdapter implements TraceMetaModelAdapter {
 						if(EMFHelper.getNameAttribute(transition.getSource()).equals(EMFHelper.getNameAttribute(o))
 						){
 							relatedElements.add(transition.getTarget());
-							String hash = getHashForConnection(o, relatedElements, transition);
-							if(!duplicationCheck.containsKey(hash)){
+							if(!isDuplicatedEntry(o, relatedElements, transition, duplicationCheck)){
 								Connection conn = new Connection(o, relatedElements, transition);
 								allElements.add(conn);
-								duplicationCheck.put(hash, conn);
+								addPotentialStringsForConnection(o, relatedElements, transition, duplicationCheck);
 							}
 						} else if (EMFHelper.getNameAttribute(transition.getTarget()).equals(EMFHelper.getNameAttribute(o))){
 							relatedElements.add(transition.getSource());
-							String hash = getHashForConnection(o, relatedElements, transition);
-							if(!duplicationCheck.containsKey(hash)){
+							if(!isDuplicatedEntry(o, relatedElements, transition, duplicationCheck)){
 								Connection conn = new Connection(o, relatedElements, transition);
 								allElements.add(conn);
-								duplicationCheck.put(hash, conn);
+								addPotentialStringsForConnection(o, relatedElements, transition, duplicationCheck);
 							}
 						}
 					}
@@ -238,22 +235,31 @@ public class GenericMetaModelAdapter implements TraceMetaModelAdapter {
 		}
 	}
 	
-	private static String getHashForConnection(EObject source, List<EObject> targets, EObject relation){
-	   String md5 = EMFHelper.getNameAttribute(source);
-	   for(EObject target : targets){
-		   md5 += EMFHelper.getNameAttribute(target);
-	   }
-	   md5 += EMFHelper.getNameAttribute(relation);
-	   try {
-	        java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
-	        byte[] array = md.digest(md5.getBytes());
-	        StringBuffer sb = new StringBuffer();
-	        for (int i = 0; i < array.length; ++i) {
-	          sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1,3));
-	       }
-	        return sb.toString();
-	    } catch (java.security.NoSuchAlgorithmException e) {
-	    }
-	    return null;
+	private static void addPotentialStringsForConnection(EObject source, List<EObject> targets, EObject relation, List<String> duplicationCheck){
+		String potentialString = EMFHelper.getNameAttribute(source);
+		for(EObject target : targets){
+			potentialString += EMFHelper.getNameAttribute(target);
+		}
+		potentialString += EMFHelper.getNameAttribute(relation);
+		
+		duplicationCheck.add(potentialString);
+		
+		potentialString = "";
+		for(EObject target : targets){
+			potentialString += EMFHelper.getNameAttribute(target);
+		}
+		potentialString += EMFHelper.getNameAttribute(source);
+		potentialString += EMFHelper.getNameAttribute(relation);
+		
+		duplicationCheck.add(potentialString);
+	}
+	
+	private static boolean isDuplicatedEntry(EObject source, List<EObject> targets, EObject relation, List<String> duplicationCheck){
+		String connectionString = EMFHelper.getNameAttribute(source);
+		for(EObject target : targets){
+			connectionString += EMFHelper.getNameAttribute(target);
+		}
+		connectionString += EMFHelper.getNameAttribute(relation);
+		return duplicationCheck.contains(connectionString);
 	}
 }
