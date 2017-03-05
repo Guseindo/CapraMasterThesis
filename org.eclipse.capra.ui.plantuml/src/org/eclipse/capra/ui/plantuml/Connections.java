@@ -24,6 +24,7 @@ import org.eclipse.capra.core.handlers.IArtifactHandler;
 import org.eclipse.capra.core.helpers.EMFHelper;
 import org.eclipse.capra.core.helpers.ExtensionPointHelper;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.uml2.uml.Generalization;
 
 /**
  * Helper class for generating PlantUML diagrams from a collection of
@@ -87,8 +88,20 @@ public class Connections {
 		connections.forEach(c -> {
 			c.getTargets().forEach(trg -> {
 				if (!trg.equals(c.getOrigin())) {
-					arrows.add(object2Id.get(c.getOrigin()) + "--" + object2Id.get(trg) + ":"
-							+ EMFHelper.getIdentifier(c.getTlink()));
+					if(Generalization.class.isAssignableFrom(c.getTlink().getClass())){
+						Generalization generalization = Generalization.class.cast(c.getTlink());
+						if(EMFHelper.getNameAttribute(c.getOrigin()).equals(EMFHelper.getNameAttribute(generalization.getGeneral()))){
+							arrows.add(object2Id.get(c.getOrigin()) + "--" + object2Id.get(trg) + ":"
+									+ EMFHelper.getDirectedRelationIdentifier(c.getOrigin(), c.getTlink(), true));
+						} else {
+
+							arrows.add(object2Id.get(c.getOrigin()) + "--" + object2Id.get(trg) + ":"
+									+ EMFHelper.getDirectedRelationIdentifier(c.getOrigin(), c.getTlink(), false));
+						}
+					} else {
+						arrows.add(object2Id.get(c.getOrigin()) + "--" + object2Id.get(trg) + ":"
+								+ EMFHelper.getIdentifier(c.getTlink()));
+					}
 				}
 			});
 		});

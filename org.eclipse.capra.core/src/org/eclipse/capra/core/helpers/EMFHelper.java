@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.uml2.uml.Generalization;
 
 /**
  * Contains methods to work with {@link EObject} instances encountered when
@@ -61,6 +62,26 @@ public class EMFHelper {
 			identifier.append(" : ");
 
 		identifier.append(eObject.eClass().getName());
+
+		return identifier.toString();
+	}
+
+	/**
+	 * Builds an identifier String for the given EObject for a directed Relationship (e.g. Generalization). 
+	 * Builds the same String as @see {@link EMFHelper.getIdentifier} but adds whether the origin is the target
+	 * or the source of the relationship
+	 */
+	public static String getDirectedRelationIdentifier(final EObject eObject, EObject relation, boolean isSource) {
+		if (eObject == null)
+			return "<null>";
+		if (eObject.eClass() == null)
+			return eObject.toString();
+
+		StringBuilder identifier = new StringBuilder();
+
+		identifier.append(relation.eClass().getName());
+		identifier.append(" : ");
+		identifier.append(getNameAttribute(eObject)+" "+getCorrectWording(relation, isSource));
 
 		return identifier.toString();
 	}
@@ -165,4 +186,37 @@ public class EMFHelper {
 		return elementList;
 	}
 
+	/**
+	 * Public API access for other classes to get the name attribute of an EObject
+	 * @param eObject
+	 * @return String
+	 */
+	public static String getNameAttribute(final EObject eObject) {
+		String name = "";
+		for (EAttribute feature : eObject.eClass().getEAllAttributes()) {
+			if (feature.getName().equals("name")) {
+				Object obj = eObject.eGet(feature);
+				if (obj != null) {
+					name = obj.toString();
+				}
+			}
+		}
+		return name;
+	}
+	
+	private static String getCorrectWording(EObject relation, boolean isSource){
+		if(Generalization.class.isAssignableFrom(relation.getClass())){
+			if(isSource){
+				return "is Superclass";
+			} else {
+				return "is Childclass";
+			}
+		} else {
+			if(isSource){
+				return "is Source";
+			} else {
+				return "is Target";
+			}
+		}
+	}
 }

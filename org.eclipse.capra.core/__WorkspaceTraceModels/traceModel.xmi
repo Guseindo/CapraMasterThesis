@@ -32,4 +32,8 @@
     <item href="../org.itea2.amalthea.example.hvac/sysml.uml#_4JNvUP57EearFLGxP0Y2qg"/>
     <item href="../org.itea2.amalthea.example.hvac/01_Requirements/HVAC_Requirements.reqif#_2oHrAKg0EeOsnrBaB07QiA"/>
   </traces>
+  <traces>
+    <item href="../org.itea2.amalthea.example.hvac/model.uml#_R1CF4PcsEea3FqLSFwaXsA"/>
+    <item href="../org.itea2.amalthea.example.hvac/model.uml#_W2UOcPcsEea3FqLSFwaXsA"/>
+  </traces>
 </GenericTraceMetaModel:GenericTraceModel>
