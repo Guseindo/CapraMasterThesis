@@ -33,6 +33,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Generalization;
+import org.eclipse.uml2.uml.Message;
+import org.eclipse.uml2.uml.MessageEnd;
+import org.eclipse.uml2.uml.MessageOccurrenceSpecification;
+import org.eclipse.uml2.uml.MessageSort;
 import org.eclipse.uml2.uml.Relationship;
 import org.eclipse.uml2.uml.Transition;
 
@@ -159,14 +163,8 @@ public class GenericMetaModelAdapter implements TraceMetaModelAdapter {
 		return allElements;
 	}
 	
-	private static boolean objectIsOfUML2Package(EObject obj){
-		return obj.getClass().getPackage().getName().equals("org.eclipse.uml2.uml.internal.impl");
-	}
-	
-	
-	
 	private static void addConnectionsForRelations(EObject o, List<Connection>allElements, ArrayList<String> duplicationCheck){
-		if(objectIsOfUML2Package(o)){
+		if(EMFHelper.objectIsOfUML2Package(o)){
 			if(Relationship.class.isAssignableFrom(o.getClass())){
 				Relationship rel = Relationship.class.cast(o);
 				List<EObject> relatedElements = new ArrayList<>();
@@ -180,16 +178,27 @@ public class GenericMetaModelAdapter implements TraceMetaModelAdapter {
 				relatedElements.add(transition.getTarget());
 				Connection conn = new Connection(o, relatedElements, transition);
 				allElements.add(conn);
+			} else if(Message.class.isAssignableFrom(o.getClass())){
+				Message msg = Message.class.cast(o);
+				MessageOccurrenceSpecification receiver = (MessageOccurrenceSpecification) msg.getReceiveEvent();
+				MessageOccurrenceSpecification sender = (MessageOccurrenceSpecification) msg.getSendEvent();
+				if(receiver != null){
+					List<EObject> relatedElements = new ArrayList<>();
+					relatedElements.add(sender.getCovered());
+					relatedElements.add(receiver.getCovered());
+					Connection conn = new Connection(o, relatedElements, msg);
+					allElements.add(conn);
+				}
 			} else {
 				EObject root = EcoreUtil.getRootContainer(o);
 				TreeIterator<EObject> modelContents = root.eAllContents();				
 				while(modelContents.hasNext()){
 					EObject content = modelContents.next();
-					/*System.out.println("Name: "+getNameAttribute(content));
+					/*System.out.println("Name: "+EMFHelper.getNameAttribute(content));
 					System.out.println("EClass: "+content.eClass().getName());
 					System.out.println("EClass: "+content.getClass().toString());
-					System.out.println("IsRelationship: "+Relationship.class.isAssignableFrom(content.getClass()));*/
-					
+					System.out.println("IsRelationship: "+Relationship.class.isAssignableFrom(content.getClass()));
+					*/
 					if(Relationship.class.isAssignableFrom(content.getClass())){
 						Relationship relation = Relationship.class.cast(content);
 						boolean isRelatedToElement = false;
@@ -208,9 +217,7 @@ public class GenericMetaModelAdapter implements TraceMetaModelAdapter {
 								addPotentialStringsForConnection(o, relatedElements, relation, duplicationCheck);
 							}
 						}
-					}
-					
-					if(Transition.class.isAssignableFrom(content.getClass())){
+					}else if(Transition.class.isAssignableFrom(content.getClass())){
 						Transition transition = Transition.class.cast(content);
 						List<EObject> relatedElements = new ArrayList<>();
 						if(EMFHelper.getNameAttribute(transition.getSource()).equals(EMFHelper.getNameAttribute(o))
@@ -227,6 +234,28 @@ public class GenericMetaModelAdapter implements TraceMetaModelAdapter {
 								Connection conn = new Connection(o, relatedElements, transition);
 								allElements.add(conn);
 								addPotentialStringsForConnection(o, relatedElements, transition, duplicationCheck);
+							}
+						}
+					} else if(Message.class.isAssignableFrom(content.getClass())){
+						Message msg = Message.class.cast(content);
+						MessageOccurrenceSpecification receiver = (MessageOccurrenceSpecification) msg.getReceiveEvent();
+						MessageOccurrenceSpecification sender = (MessageOccurrenceSpecification) msg.getSendEvent();
+						List<EObject> relatedElements = new ArrayList<>();
+						if(receiver != null){
+							if(EMFHelper.getNameAttribute(receiver.getCovered()).equals(EMFHelper.getNameAttribute(o))){
+								relatedElements.add(sender.getCovered());
+								if(!isDuplicatedEntry(o, relatedElements, msg, msg.getMessageSort(), duplicationCheck)){
+									Connection conn = new Connection(o, relatedElements, msg);
+									allElements.add(conn);
+									addPotentialStringsForConnection(o, relatedElements, msg, msg.getMessageSort(), duplicationCheck);
+								}
+							} else if(EMFHelper.getNameAttribute(sender.getCovered()).equals(EMFHelper.getNameAttribute(o))){
+								relatedElements.add(receiver.getCovered());
+								if(!isDuplicatedEntry(o, relatedElements, msg, msg.getMessageSort(), duplicationCheck)){
+									Connection conn = new Connection(o, relatedElements, msg);
+									allElements.add(conn);
+									addPotentialStringsForConnection(o, relatedElements, msg, msg.getMessageSort(), duplicationCheck);
+								}
 							}
 						}
 					}
@@ -262,4 +291,36 @@ public class GenericMetaModelAdapter implements TraceMetaModelAdapter {
 		connectionString += EMFHelper.getNameAttribute(relation);
 		return duplicationCheck.contains(connectionString);
 	}
+	
+	private static void addPotentialStringsForConnection(EObject source, List<EObject> targets, EObject relation, MessageSort msgSort, List<String> duplicationCheck){
+		String potentialString = EMFHelper.getNameAttribute(source);
+		for(EObject target : targets){
+			potentialString += EMFHelper.getNameAttribute(target);
+		}
+		potentialString += EMFHelper.getNameAttribute(relation);
+		potentialString += msgSort.getName();
+		
+		duplicationCheck.add(potentialString);
+		
+		potentialString = "";
+		for(EObject target : targets){
+			potentialString += EMFHelper.getNameAttribute(target);
+		}
+		potentialString += EMFHelper.getNameAttribute(source);
+		potentialString += EMFHelper.getNameAttribute(relation);
+		potentialString += msgSort.getName();
+		
+		duplicationCheck.add(potentialString);
+	}
+	
+	private static boolean isDuplicatedEntry(EObject source, List<EObject> targets, EObject relation, MessageSort msgSort, List<String> duplicationCheck){
+		String connectionString = EMFHelper.getNameAttribute(source);
+		for(EObject target : targets){
+			connectionString += EMFHelper.getNameAttribute(target);
+		}
+		connectionString += EMFHelper.getNameAttribute(relation);
+		connectionString += msgSort.getName();
+		return duplicationCheck.contains(connectionString);
+	}
+	
 }

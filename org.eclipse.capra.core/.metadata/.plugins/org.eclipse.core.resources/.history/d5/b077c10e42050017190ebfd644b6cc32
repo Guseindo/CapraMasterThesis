@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_DTzCkAU5EeeiQPokJavkDw" name="RootElement">
+  <packagedElement xmi:type="uml:Interaction" xmi:id="_DT8MgAU5EeeiQPokJavkDw" name="Interaction1">
+    <lifeline xmi:type="uml:Lifeline" xmi:id="_IHCIEAU5EeeiQPokJavkDw" name="Lifeline" coveredBy="_NFN5UAU5EeeiQPokJavkDw _RlkfEAU5EeeiQPokJavkDw"/>
+    <lifeline xmi:type="uml:Lifeline" xmi:id="_Iobk8AU5EeeiQPokJavkDw" name="Lifeline0" coveredBy="_NFOgYAU5EeeiQPokJavkDw _OHpmsAU5EeeiQPokJavkDw _Q98eYAU5EeeiQPokJavkDw _RliC0AU5EeeiQPokJavkDw"/>
+    <lifeline xmi:type="uml:Lifeline" xmi:id="_LcLe8AU5EeeiQPokJavkDw" name="Lifeline1" coveredBy="_OHrb4AU5EeeiQPokJavkDw _Q973UAU5EeeiQPokJavkDw"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_NFN5UAU5EeeiQPokJavkDw" name="MessageSend" covered="_IHCIEAU5EeeiQPokJavkDw" message="_NFDhQAU5EeeiQPokJavkDw"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_NFOgYAU5EeeiQPokJavkDw" name="MessageRecv" covered="_Iobk8AU5EeeiQPokJavkDw" message="_NFDhQAU5EeeiQPokJavkDw"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_OHpmsAU5EeeiQPokJavkDw" name="Message0Send" covered="_Iobk8AU5EeeiQPokJavkDw" message="_OHnKcAU5EeeiQPokJavkDw"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_OHrb4AU5EeeiQPokJavkDw" name="Message0Recv" covered="_LcLe8AU5EeeiQPokJavkDw" message="_OHnKcAU5EeeiQPokJavkDw"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_Q973UAU5EeeiQPokJavkDw" name="Message1Send" covered="_LcLe8AU5EeeiQPokJavkDw" message="_Q95bEAU5EeeiQPokJavkDw"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_Q98eYAU5EeeiQPokJavkDw" name="Message1Recv" covered="_Iobk8AU5EeeiQPokJavkDw" message="_Q95bEAU5EeeiQPokJavkDw"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_RliC0AU5EeeiQPokJavkDw" name="Message2Send" covered="_Iobk8AU5EeeiQPokJavkDw" message="_RlgNoAU5EeeiQPokJavkDw"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_RlkfEAU5EeeiQPokJavkDw" name="Message2Recv" covered="_IHCIEAU5EeeiQPokJavkDw" message="_RlgNoAU5EeeiQPokJavkDw"/>
+    <message xmi:type="uml:Message" xmi:id="_NFDhQAU5EeeiQPokJavkDw" name="Message" receiveEvent="_NFOgYAU5EeeiQPokJavkDw" sendEvent="_NFN5UAU5EeeiQPokJavkDw"/>
+    <message xmi:type="uml:Message" xmi:id="_OHnKcAU5EeeiQPokJavkDw" name="Message0" messageSort="asynchCall" receiveEvent="_OHrb4AU5EeeiQPokJavkDw" sendEvent="_OHpmsAU5EeeiQPokJavkDw"/>
+    <message xmi:type="uml:Message" xmi:id="_Q95bEAU5EeeiQPokJavkDw" name="Message1" receiveEvent="_Q98eYAU5EeeiQPokJavkDw" sendEvent="_Q973UAU5EeeiQPokJavkDw"/>
+    <message xmi:type="uml:Message" xmi:id="_RlgNoAU5EeeiQPokJavkDw" name="Message2" messageSort="asynchCall" receiveEvent="_RlkfEAU5EeeiQPokJavkDw" sendEvent="_RliC0AU5EeeiQPokJavkDw"/>
+  </packagedElement>
+</uml:Model>

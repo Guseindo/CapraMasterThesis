@@ -29,6 +29,10 @@
             id="org.eclipse.capra.ui.plantuml.toggleInternalLinks"
             name="Toggle Internal links">
       </command>
+      <command
+            id="org.eclipse.capra.ui.plantuml.selectRelationships"
+            name="Select Relationship types">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -39,6 +43,10 @@
       <handler
             class="org.eclipse.capra.ui.plantuml.DisplayInternalLinksHandler"
             commandId="org.eclipse.capra.ui.plantuml.toggleInternalLinks">
+      </handler>
+      <handler
+            class="org.eclipse.capra.ui.plantuml.SelectRelationshipsHandler"
+            commandId="org.eclipse.capra.ui.plantuml.selectRelationships">
       </handler>
    </extension>
 	<extension
@@ -57,6 +65,14 @@
          <command
                commandId="org.eclipse.capra.ui.plantuml.toggleInternalLinks"
                label="Toggle Internal links"
+               style="push">
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="menu:net.sourceforge.plantuml.eclipse.views.PlantUmlView?after=additions">
+         <command
+               commandId="org.eclipse.capra.ui.plantuml.selectRelationships"
+               label="Select Relationship types"
                style="push">
          </command>
       </menuContribution>

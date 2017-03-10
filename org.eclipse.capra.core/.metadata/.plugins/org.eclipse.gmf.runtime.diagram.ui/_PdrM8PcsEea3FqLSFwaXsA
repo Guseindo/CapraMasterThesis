@@ -1,12 +1,12 @@
-#Sun Mar 05 12:42:05 JST 2017
+#Fri Mar 10 16:58:49 JST 2017
 rulergrid.gridlinestyle=6
 print.margin.bottom=0.5
 print.margin.top=0.5
 print.page.height=11.6929134
 print.usePortrait=true
-viewport.y=16
-rulergrid.gridlinecolor=3289650
+viewport.y=56
 print.margin.left=0.5
+rulergrid.gridlinecolor=3289650
 rulergrid.gridspacing=20.0
 rulergrid.rulerunit=2
 print.margin.right=0.5

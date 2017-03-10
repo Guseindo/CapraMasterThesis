@@ -16,6 +16,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Generalization;
+import org.eclipse.uml2.uml.Message;
 
 /**
  * Contains methods to work with {@link EObject} instances encountered when
@@ -71,17 +72,15 @@ public class EMFHelper {
 	 * Builds the same String as @see {@link EMFHelper.getIdentifier} but adds whether the origin is the target
 	 * or the source of the relationship
 	 */
-	public static String getDirectedRelationIdentifier(final EObject eObject, EObject relation, boolean isSource) {
-		if (eObject == null)
-			return "<null>";
-		if (eObject.eClass() == null)
-			return eObject.toString();
-
+	public static String getRelationIdentifier(EObject relation) {
 		StringBuilder identifier = new StringBuilder();
 
 		identifier.append(relation.eClass().getName());
-		identifier.append(" : ");
-		identifier.append(getNameAttribute(eObject)+" "+getCorrectWording(relation, isSource));
+		if(Message.class.isAssignableFrom(relation.getClass())){
+			Message msg = Message.class.cast(relation);
+			identifier.append(" : ");
+			identifier.append(msg.getMessageSort().getName());
+		}
 
 		return identifier.toString();
 	}
@@ -204,19 +203,7 @@ public class EMFHelper {
 		return name;
 	}
 	
-	private static String getCorrectWording(EObject relation, boolean isSource){
-		if(Generalization.class.isAssignableFrom(relation.getClass())){
-			if(isSource){
-				return "is Superclass";
-			} else {
-				return "is Childclass";
-			}
-		} else {
-			if(isSource){
-				return "is Source";
-			} else {
-				return "is Target";
-			}
-		}
+	public static boolean objectIsOfUML2Package(EObject obj){
+		return obj.getClass().getPackage().getName().equals("org.eclipse.uml2.uml.internal.impl");
 	}
 }

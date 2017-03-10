@@ -24,7 +24,11 @@ import org.eclipse.capra.core.handlers.IArtifactHandler;
 import org.eclipse.capra.core.helpers.EMFHelper;
 import org.eclipse.capra.core.helpers.ExtensionPointHelper;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.uml2.uml.Dependency;
+import org.eclipse.uml2.uml.DirectedRelationship;
+import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Generalization;
+import org.eclipse.uml2.uml.Realization;
 
 /**
  * Helper class for generating PlantUML diagrams from a collection of
@@ -84,23 +88,36 @@ public class Connections {
 
 	public List<String> arrows() {
 		List<String> arrows = new ArrayList<>();
-
 		connections.forEach(c -> {
 			c.getTargets().forEach(trg -> {
 				if (!trg.equals(c.getOrigin())) {
-					if(Generalization.class.isAssignableFrom(c.getTlink().getClass())){
-						Generalization generalization = Generalization.class.cast(c.getTlink());
-						if(EMFHelper.getNameAttribute(c.getOrigin()).equals(EMFHelper.getNameAttribute(generalization.getGeneral()))){
-							arrows.add(object2Id.get(c.getOrigin()) + "--" + object2Id.get(trg) + ":"
-									+ EMFHelper.getDirectedRelationIdentifier(c.getOrigin(), c.getTlink(), true));
+					if(DirectedRelationship.class.isAssignableFrom(c.getTlink().getClass())){
+						DirectedRelationship dirRel = DirectedRelationship.class.cast(c.getTlink());
+						List<String> sourceNames = new ArrayList<>();
+						String arrowLeft = "<--";
+						String arrowRight = "-->";
+						for(Element elem : dirRel.getSources()){
+							sourceNames.add(EMFHelper.getNameAttribute(elem));
+						}
+						if(Dependency.class.isAssignableFrom(c.getTlink().getClass())){
+							arrowLeft = "<|..";
+							arrowRight = "..|>";
+						}
+						if(sourceNames.contains(EMFHelper.getNameAttribute(c.getOrigin()))){
+							arrows.add(object2Id.get(c.getOrigin()) + arrowRight + object2Id.get(trg) + ":"
+									+ EMFHelper.getRelationIdentifier(c.getTlink()));
 						} else {
-
-							arrows.add(object2Id.get(c.getOrigin()) + "--" + object2Id.get(trg) + ":"
-									+ EMFHelper.getDirectedRelationIdentifier(c.getOrigin(), c.getTlink(), false));
+							arrows.add(object2Id.get(c.getOrigin()) + arrowLeft + object2Id.get(trg) + ":"
+									+ EMFHelper.getRelationIdentifier(c.getTlink()));
 						}
 					} else {
-						arrows.add(object2Id.get(c.getOrigin()) + "--" + object2Id.get(trg) + ":"
-								+ EMFHelper.getIdentifier(c.getTlink()));
+						if(EMFHelper.objectIsOfUML2Package(c.getTlink())){
+							arrows.add(object2Id.get(c.getOrigin()) + "--" + object2Id.get(trg) + ":"
+									+ EMFHelper.getRelationIdentifier(c.getTlink()));
+						} else {
+							arrows.add(object2Id.get(c.getOrigin()) + "--" + object2Id.get(trg) + ":"
+									+ EMFHelper.getIdentifier(c.getTlink()));
+						}
 					}
 				}
 			});

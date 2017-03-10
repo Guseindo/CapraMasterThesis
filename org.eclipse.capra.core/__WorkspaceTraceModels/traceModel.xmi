@@ -36,4 +36,8 @@
     <item href="../org.itea2.amalthea.example.hvac/model.uml#_R1CF4PcsEea3FqLSFwaXsA"/>
     <item href="../org.itea2.amalthea.example.hvac/model.uml#_W2UOcPcsEea3FqLSFwaXsA"/>
   </traces>
+  <traces>
+    <item href="artifactWrappers.xmi#//@artifacts.0"/>
+    <item href="artifactWrappers.xmi#//@artifacts.2"/>
+  </traces>
 </GenericTraceMetaModel:GenericTraceModel>

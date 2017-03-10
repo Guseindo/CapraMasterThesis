@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="ASCII"?>
+<GenericArtifactMetaModel:ArtifactWrapperContainer xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:GenericArtifactMetaModel="org.eclipse.capra.GenericArtifactMetaModel">
+  <artifacts uri="/org.itea2.amalthea.example.hvac/interfaces/Fout.ts" name="Fout.ts" ArtifactHandler="org.eclipse.capra.handler.file.IFileHandler"/>
+  <artifacts uri="/org.itea2.amalthea.example.hvac/interfaces/Yahoo.ts" name="Yahoo.ts" ArtifactHandler="org.eclipse.capra.handler.file.IFileHandler"/>
+</GenericArtifactMetaModel:ArtifactWrapperContainer>
