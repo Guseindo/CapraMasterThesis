@@ -11,7 +11,7 @@
                 <version>0.7.0-SNAPSHOT</version>
         </parent>
 
-        <artifactId>org.eclipse.capra.handler.feature</artifactId>
+        <artifactId>org.eclipse.capra.handler.php.feature</artifactId>
         <packaging>eclipse-feature</packaging>
 
 </project>
