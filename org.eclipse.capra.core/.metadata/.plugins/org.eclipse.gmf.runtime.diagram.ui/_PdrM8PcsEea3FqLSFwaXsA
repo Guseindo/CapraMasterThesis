@@ -1,18 +1,18 @@
-#Fri Mar 10 16:58:49 JST 2017
+#Sat Mar 11 15:18:17 JST 2017
 rulergrid.gridlinestyle=6
 print.margin.bottom=0.5
 print.margin.top=0.5
 print.page.height=11.6929134
 print.usePortrait=true
-viewport.y=56
+viewport.y=0
 print.margin.left=0.5
 rulergrid.gridlinecolor=3289650
 rulergrid.gridspacing=20.0
-rulergrid.rulerunit=2
 print.margin.right=0.5
+rulergrid.rulerunit=2
 rulergrid.snaptogrid=false
-rulergrid.gridlevel=false
 print.page.size=A4
+rulergrid.gridlevel=false
 print.useMillim=true
-print.page.width=8.26771654
 zoom=1.0
+print.page.width=8.26771654

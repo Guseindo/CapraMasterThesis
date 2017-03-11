@@ -12,12 +12,7 @@ package org.eclipse.capra.generic.tracemodels;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-
-import javax.management.relation.Relation;
 
 import org.eclipse.capra.GenericTraceMetaModel.GenericTraceMetaModelFactory;
 import org.eclipse.capra.GenericTraceMetaModel.GenericTraceMetaModelPackage;
@@ -27,20 +22,15 @@ import org.eclipse.capra.core.adapters.Connection;
 import org.eclipse.capra.core.adapters.TraceMetaModelAdapter;
 import org.eclipse.capra.core.helpers.EMFHelper;
 import org.eclipse.emf.common.util.TreeIterator;
-import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.uml2.uml.Element;
-import org.eclipse.uml2.uml.Generalization;
 import org.eclipse.uml2.uml.Message;
-import org.eclipse.uml2.uml.MessageEnd;
 import org.eclipse.uml2.uml.MessageOccurrenceSpecification;
 import org.eclipse.uml2.uml.MessageSort;
 import org.eclipse.uml2.uml.Relationship;
 import org.eclipse.uml2.uml.Transition;
-
-import com.google.common.base.Predicate;
 
 /**
  * Provides generic functionality to deal with traceability meta models.

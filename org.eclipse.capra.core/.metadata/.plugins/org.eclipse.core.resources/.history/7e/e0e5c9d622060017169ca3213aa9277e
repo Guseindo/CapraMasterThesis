@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<GenericTraceMetaModel:GenericTraceModel
-    xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI"
-    xmlns:GenericTraceMetaModel="org.eclipse.capra.GenericTraceMetaModel">
+<GenericTraceMetaModel:GenericTraceModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:GenericTraceMetaModel="org.eclipse.capra.GenericTraceMetaModel">
   <traces>
     <item href="../org.itea2.amalthea.example.hvac/01_Requirements/HVAC_Requirements.reqif#_BRG4Z6g0EeOsnrBaB07QiA"/>
     <item href="../org.itea2.amalthea.example.hvac/model.uml#_R1CF4PcsEea3FqLSFwaXsA"/>
@@ -38,5 +35,9 @@
   <traces>
     <item href="../org.itea2.amalthea.example.hvac/model.uml#_R1CF4PcsEea3FqLSFwaXsA"/>
     <item href="../org.itea2.amalthea.example.hvac/model.uml#_W2UOcPcsEea3FqLSFwaXsA"/>
+  </traces>
+  <traces>
+    <item href="artifactWrappers.xmi#//@artifacts.0"/>
+    <item href="artifactWrappers.xmi#//@artifacts.2"/>
   </traces>
 </GenericTraceMetaModel:GenericTraceModel>
