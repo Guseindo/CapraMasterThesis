@@ -36,6 +36,9 @@ import org.eclipse.uml2.uml.Transition;
  * Provides generic functionality to deal with traceability meta models.
  */
 public class GenericMetaModelAdapter implements TraceMetaModelAdapter {
+	
+	private static List<Connection> tracesForPlantUml = new ArrayList<>();
+	private static List<String> selectedRelationshipTypes = new ArrayList<>();
 
 	public GenericMetaModelAdapter() {
 		// TODO Auto-generated constructor stub
@@ -50,7 +53,6 @@ public class GenericMetaModelAdapter implements TraceMetaModelAdapter {
 	public Collection<EClass> getAvailableTraceTypes(List<EObject> selection) {
 		Collection<EClass> traceTypes = new ArrayList<>();
 		if (selection.size() > 1) {
-
 			traceTypes.add(GenericTraceMetaModelPackage.eINSTANCE.getRelatedTo());
 		}
 		return traceTypes;
@@ -141,7 +143,6 @@ public class GenericMetaModelAdapter implements TraceMetaModelAdapter {
 		List<Connection> directElements = getConnectedElements(element, traceModel);
 		List<Connection> allElements = new ArrayList<>();
 		ArrayList<String> duplicationCheck = new ArrayList<>();
-		allElements.addAll(directElements);
 		
 		for(Connection conn : directElements){
 			for(EObject o : conn.getTargets()){
@@ -156,28 +157,34 @@ public class GenericMetaModelAdapter implements TraceMetaModelAdapter {
 	private static void addConnectionsForRelations(EObject o, List<Connection>allElements, ArrayList<String> duplicationCheck){
 		if(EMFHelper.objectIsOfUML2Package(o)){
 			if(Relationship.class.isAssignableFrom(o.getClass())){
-				Relationship rel = Relationship.class.cast(o);
-				List<EObject> relatedElements = new ArrayList<>();
-				rel.getRelatedElements().forEach(element -> relatedElements.add(element));
-				Connection conn = new Connection(o, relatedElements, rel);
-				allElements.add(conn);
-			} else if(Transition.class.isAssignableFrom(o.getClass())){
-				Transition transition = Transition.class.cast(o);
-				List<EObject> relatedElements = new ArrayList<>();
-				relatedElements.add(transition.getSource());
-				relatedElements.add(transition.getTarget());
-				Connection conn = new Connection(o, relatedElements, transition);
-				allElements.add(conn);
-			} else if(Message.class.isAssignableFrom(o.getClass())){
-				Message msg = Message.class.cast(o);
-				MessageOccurrenceSpecification receiver = (MessageOccurrenceSpecification) msg.getReceiveEvent();
-				MessageOccurrenceSpecification sender = (MessageOccurrenceSpecification) msg.getSendEvent();
-				if(receiver != null){
+				if(selectedRelationshipTypes.size() == 0 || selectedRelationshipTypes.contains(o.eClass().getName())){
+					Relationship rel = Relationship.class.cast(o);
 					List<EObject> relatedElements = new ArrayList<>();
-					relatedElements.add(sender.getCovered());
-					relatedElements.add(receiver.getCovered());
-					Connection conn = new Connection(o, relatedElements, msg);
+					rel.getRelatedElements().forEach(element -> relatedElements.add(element));
+					Connection conn = new Connection(o, relatedElements, rel);
 					allElements.add(conn);
+				}
+			} else if(Transition.class.isAssignableFrom(o.getClass())){
+				if(selectedRelationshipTypes.size() == 0 || selectedRelationshipTypes.contains(o.eClass().getName())){
+					Transition transition = Transition.class.cast(o);
+					List<EObject> relatedElements = new ArrayList<>();
+					relatedElements.add(transition.getSource());
+					relatedElements.add(transition.getTarget());
+					Connection conn = new Connection(o, relatedElements, transition);
+					allElements.add(conn);
+				}
+			} else if(Message.class.isAssignableFrom(o.getClass())){
+				if(selectedRelationshipTypes.size() == 0 || selectedRelationshipTypes.contains(o.eClass().getName())){
+					Message msg = Message.class.cast(o);
+					MessageOccurrenceSpecification receiver = (MessageOccurrenceSpecification) msg.getReceiveEvent();
+					MessageOccurrenceSpecification sender = (MessageOccurrenceSpecification) msg.getSendEvent();
+					if(receiver != null){
+						List<EObject> relatedElements = new ArrayList<>();
+						relatedElements.add(sender.getCovered());
+						relatedElements.add(receiver.getCovered());
+						Connection conn = new Connection(o, relatedElements, msg);
+						allElements.add(conn);
+					}
 				}
 			} else {
 				EObject root = EcoreUtil.getRootContainer(o);
@@ -189,62 +196,64 @@ public class GenericMetaModelAdapter implements TraceMetaModelAdapter {
 					System.out.println("EClass: "+content.getClass().toString());
 					System.out.println("IsRelationship: "+Relationship.class.isAssignableFrom(content.getClass()));
 					*/
-					if(Relationship.class.isAssignableFrom(content.getClass())){
-						Relationship relation = Relationship.class.cast(content);
-						boolean isRelatedToElement = false;
-						List<EObject> relatedElements = new ArrayList<>();
-						for(Element relatedElement : relation.getRelatedElements()){
-							if(EMFHelper.getNameAttribute(relatedElement).equals(EMFHelper.getNameAttribute(o))){
-								isRelatedToElement = true;
-							} else {
-								relatedElements.add(relatedElement);
-							}
-						}
-						if(isRelatedToElement){
-							if(!isDuplicatedEntry(o, relatedElements, relation, duplicationCheck)){
-								Connection conn = new Connection(o, relatedElements, relation);
-								allElements.add(conn);
-								addPotentialStringsForConnection(o, relatedElements, relation, duplicationCheck);
-							}
-						}
-					}else if(Transition.class.isAssignableFrom(content.getClass())){
-						Transition transition = Transition.class.cast(content);
-						List<EObject> relatedElements = new ArrayList<>();
-						if(EMFHelper.getNameAttribute(transition.getSource()).equals(EMFHelper.getNameAttribute(o))
-						){
-							relatedElements.add(transition.getTarget());
-							if(!isDuplicatedEntry(o, relatedElements, transition, duplicationCheck)){
-								Connection conn = new Connection(o, relatedElements, transition);
-								allElements.add(conn);
-								addPotentialStringsForConnection(o, relatedElements, transition, duplicationCheck);
-							}
-						} else if (EMFHelper.getNameAttribute(transition.getTarget()).equals(EMFHelper.getNameAttribute(o))){
-							relatedElements.add(transition.getSource());
-							if(!isDuplicatedEntry(o, relatedElements, transition, duplicationCheck)){
-								Connection conn = new Connection(o, relatedElements, transition);
-								allElements.add(conn);
-								addPotentialStringsForConnection(o, relatedElements, transition, duplicationCheck);
-							}
-						}
-					} else if(Message.class.isAssignableFrom(content.getClass())){
-						Message msg = Message.class.cast(content);
-						MessageOccurrenceSpecification receiver = (MessageOccurrenceSpecification) msg.getReceiveEvent();
-						MessageOccurrenceSpecification sender = (MessageOccurrenceSpecification) msg.getSendEvent();
-						List<EObject> relatedElements = new ArrayList<>();
-						if(receiver != null){
-							if(EMFHelper.getNameAttribute(receiver.getCovered()).equals(EMFHelper.getNameAttribute(o))){
-								relatedElements.add(sender.getCovered());
-								if(!isDuplicatedEntry(o, relatedElements, msg, msg.getMessageSort(), duplicationCheck)){
-									Connection conn = new Connection(o, relatedElements, msg);
-									allElements.add(conn);
-									addPotentialStringsForConnection(o, relatedElements, msg, msg.getMessageSort(), duplicationCheck);
+					if(selectedRelationshipTypes.size() == 0 || selectedRelationshipTypes.contains(content.eClass().getName())){
+						if(Relationship.class.isAssignableFrom(content.getClass())){
+							Relationship relation = Relationship.class.cast(content);
+							boolean isRelatedToElement = false;
+							List<EObject> relatedElements = new ArrayList<>();
+							for(Element relatedElement : relation.getRelatedElements()){
+								if(EMFHelper.getNameAttribute(relatedElement).equals(EMFHelper.getNameAttribute(o))){
+									isRelatedToElement = true;
+								} else {
+									relatedElements.add(relatedElement);
 								}
-							} else if(EMFHelper.getNameAttribute(sender.getCovered()).equals(EMFHelper.getNameAttribute(o))){
-								relatedElements.add(receiver.getCovered());
-								if(!isDuplicatedEntry(o, relatedElements, msg, msg.getMessageSort(), duplicationCheck)){
-									Connection conn = new Connection(o, relatedElements, msg);
+							}
+							if(isRelatedToElement){
+								if(!isDuplicatedEntry(o, relatedElements, relation, duplicationCheck)){
+									Connection conn = new Connection(o, relatedElements, relation);
 									allElements.add(conn);
-									addPotentialStringsForConnection(o, relatedElements, msg, msg.getMessageSort(), duplicationCheck);
+									addPotentialStringsForConnection(o, relatedElements, relation, duplicationCheck);
+								}
+							}
+						}else if(Transition.class.isAssignableFrom(content.getClass())){
+							Transition transition = Transition.class.cast(content);
+							List<EObject> relatedElements = new ArrayList<>();
+							if(EMFHelper.getNameAttribute(transition.getSource()).equals(EMFHelper.getNameAttribute(o))
+							){
+								relatedElements.add(transition.getTarget());
+								if(!isDuplicatedEntry(o, relatedElements, transition, duplicationCheck)){
+									Connection conn = new Connection(o, relatedElements, transition);
+									allElements.add(conn);
+									addPotentialStringsForConnection(o, relatedElements, transition, duplicationCheck);
+								}
+							} else if (EMFHelper.getNameAttribute(transition.getTarget()).equals(EMFHelper.getNameAttribute(o))){
+								relatedElements.add(transition.getSource());
+								if(!isDuplicatedEntry(o, relatedElements, transition, duplicationCheck)){
+									Connection conn = new Connection(o, relatedElements, transition);
+									allElements.add(conn);
+									addPotentialStringsForConnection(o, relatedElements, transition, duplicationCheck);
+								}
+							}
+						} else if(Message.class.isAssignableFrom(content.getClass())){
+							Message msg = Message.class.cast(content);
+							MessageOccurrenceSpecification receiver = (MessageOccurrenceSpecification) msg.getReceiveEvent();
+							MessageOccurrenceSpecification sender = (MessageOccurrenceSpecification) msg.getSendEvent();
+							List<EObject> relatedElements = new ArrayList<>();
+							if(receiver != null){
+								if(EMFHelper.getNameAttribute(receiver.getCovered()).equals(EMFHelper.getNameAttribute(o))){
+									relatedElements.add(sender.getCovered());
+									if(!isDuplicatedEntry(o, relatedElements, msg, msg.getMessageSort(), duplicationCheck)){
+										Connection conn = new Connection(o, relatedElements, msg);
+										allElements.add(conn);
+										addPotentialStringsForConnection(o, relatedElements, msg, msg.getMessageSort(), duplicationCheck);
+									}
+								} else if(EMFHelper.getNameAttribute(sender.getCovered()).equals(EMFHelper.getNameAttribute(o))){
+									relatedElements.add(receiver.getCovered());
+									if(!isDuplicatedEntry(o, relatedElements, msg, msg.getMessageSort(), duplicationCheck)){
+										Connection conn = new Connection(o, relatedElements, msg);
+										allElements.add(conn);
+										addPotentialStringsForConnection(o, relatedElements, msg, msg.getMessageSort(), duplicationCheck);
+									}
 								}
 							}
 						}
@@ -313,4 +322,26 @@ public class GenericMetaModelAdapter implements TraceMetaModelAdapter {
 		return duplicationCheck.contains(connectionString);
 	}
 	
+	public void setPlantUmlTraces(List<Connection> traces){
+		tracesForPlantUml.addAll(traces);
+	}
+	
+	public List<String> getPossibleRelationsForSelection(){
+		List<String> possibleRelations = new ArrayList<>();
+		for(Connection conn : tracesForPlantUml){
+			EObject relation = conn.getTlink();
+			if(!possibleRelations.contains(relation.eClass().getName())){
+				possibleRelations.add(relation.eClass().getName());
+			}
+		}
+		return possibleRelations;
+	}
+	
+	public void setSelectedRelationshipTypes(List<String> relationships){
+		selectedRelationshipTypes.addAll(relationships);
+	}
+	
+	public List<String> getSelectedRelationshipTypes(){
+		return selectedRelationshipTypes;
+	}
 }

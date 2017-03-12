@@ -122,4 +122,11 @@ public interface TraceMetaModelAdapter {
 	 */
 	List<Connection> getInternalElements(EObject element, EObject traceModel);
 
+	void setPlantUmlTraces(List<Connection> traces);
+	
+	List<String> getPossibleRelationsForSelection();
+
+	void setSelectedRelationshipTypes(List<String> relationships);
+
+	List<String> getSelectedRelationshipTypes();
 }

@@ -10,25 +10,33 @@
  *******************************************************************************/
 package org.eclipse.capra.ui.plantuml;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.Collection;
+import java.util.List;
 
-import org.eclipse.capra.core.helpers.EMFHelper;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.window.Window;
 import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 import org.eclipse.ui.dialogs.ListSelectionDialog;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
+import org.eclipse.capra.core.adapters.Connection;
+import org.eclipse.capra.core.adapters.TraceMetaModelAdapter;
+import org.eclipse.capra.core.adapters.TracePersistenceAdapter;
+import org.eclipse.capra.core.helpers.ArtifactHelper;
+import org.eclipse.capra.core.helpers.ExtensionPointHelper;
+import org.eclipse.capra.core.helpers.TraceHelper;
 
 /**
  * Toggles between showing (DSL) internal links or not
@@ -40,10 +48,11 @@ public class SelectRelationshipsHandler extends AbstractHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
-		String[] elements = new String[2];
-		elements[0] = "Test 1";
-		elements[1] = "Test 2";
-		ListSelectionDialog dialog = new ListSelectionDialog(window.getShell(), Arrays.asList(elements) , new ArrayContentProvider(), new LabelProvider() {
+		
+		TraceMetaModelAdapter traceAdapter = ExtensionPointHelper.getTraceMetamodelAdapter().get();
+		
+		List<String> elements = traceAdapter.getPossibleRelationsForSelection();
+		ListSelectionDialog dialog = new ListSelectionDialog(window.getShell(), elements , new ArrayContentProvider(), new LabelProvider() {
 			@Override
 			public String getText(Object element) {
 				return (String) element;
@@ -52,45 +61,14 @@ public class SelectRelationshipsHandler extends AbstractHandler {
 		dialog.setTitle("Select Relationships you want to include");
 
 		if (dialog.open() == Window.OK) {
+			Object[] results = dialog.getResult();
+			List<String> selectedRelations = new ArrayList<>();
+			for(Object res : results){
+				selectedRelations.add((String) res);
+			}
+			traceAdapter.setSelectedRelationshipTypes(selectedRelations);
 		}
 
 		return null;
-	}
-
-	/**
-	 * Checks whether the trace view is set to show transitive traces.
-	 * 
-	 * @return {@code true} if transitive traces are enabled, {@code false}
-	 *         otherwise
-	 */
-	public static boolean areInternalLinksShown() {
-		Preferences internalLinks = getPreference();
-
-		return internalLinks.get("option", "turnedOff").equals("shown");
-	}
-
-	private static Preferences getPreference() {
-		Preferences preferences = InstanceScope.INSTANCE.getNode("org.eclipse.capra.ui.plantuml.relationshipTypes");
-		Preferences transitivity = preferences.node("relationshipTypes");
-		return transitivity;
-	}
-
-	/**
-	 * Sets whether the trace view is set to show transitive traces.
-	 * 
-	 * @param value
-	 *            indicates whether transitive traces should be shown
-	 */
-	public static void showInternalLinks(boolean value) {
-		Preferences internalLinks = getPreference();
-
-		internalLinks.put("option", value ? "shown" : "turnedOff");
-
-		try {
-			// forces the application to save the preferences
-			internalLinks.flush();
-		} catch (BackingStoreException e) {
-			e.printStackTrace();
-		}
 	}
 }

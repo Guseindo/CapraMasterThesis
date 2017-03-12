@@ -81,6 +81,7 @@ public class DiagramTextProviderHandler implements DiagramTextProvider {
 						if (DisplayInternalLinksHandler.areInternalLinksShown()){
 							traces.addAll(metamodelAdapter.getInternalElements(selectedObject, traceModel));
 						}
+						metamodelAdapter.setPlantUmlTraces(traces);
 						return VisualizationHelper.createNeighboursView(traces, selectedObject);
 					} else if (selectedModels.size() == 2) {
 						if (DisplayTracesHandler.isTraceViewTransitive()) {

@@ -51,7 +51,7 @@ public class TraceCreationHandler extends AbstractHandler {
 
 		TraceMetaModelAdapter traceAdapter = ExtensionPointHelper.getTraceMetamodelAdapter().get();
 		TracePersistenceAdapter persistenceAdapter = ExtensionPointHelper.getTracePersistenceAdapter().get();
-
+		
 		ResourceSet resourceSet = new ResourceSetImpl();
 		// add trace model to resource set
 		EObject traceModel = persistenceAdapter.getTraceModel(resourceSet);

@@ -27,8 +27,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Dependency;
 import org.eclipse.uml2.uml.DirectedRelationship;
 import org.eclipse.uml2.uml.Element;
-import org.eclipse.uml2.uml.Generalization;
-import org.eclipse.uml2.uml.Realization;
 
 /**
  * Helper class for generating PlantUML diagrams from a collection of
