@@ -125,8 +125,12 @@ public interface TraceMetaModelAdapter {
 	void setPlantUmlTraces(List<Connection> traces);
 	
 	List<String> getPossibleRelationsForSelection();
+	
+	void emptyPlantUmlTraces();
 
 	void setSelectedRelationshipTypes(List<String> relationships);
 
 	List<String> getSelectedRelationshipTypes();
+	
+	void emptySelectedRelationshipTypes();
 }

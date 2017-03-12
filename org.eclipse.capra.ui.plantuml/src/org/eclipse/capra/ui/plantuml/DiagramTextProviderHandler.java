@@ -71,7 +71,8 @@ public class DiagramTextProviderHandler implements DiagramTextProvider {
 				if (selectedObject != null) {
 					resourceSet = selectedObject.eResource().getResourceSet();
 					traceModel = persistenceAdapter.getTraceModel(resourceSet);
-
+					metamodelAdapter.emptyPlantUmlTraces();
+					metamodelAdapter.emptySelectedRelationshipTypes();
 					if (selectedModels.size() == 1) {
 						if (DisplayTracesHandler.isTraceViewTransitive()) {
 							traces = metamodelAdapter.getTransitivelyConnectedElements(selectedObject, traceModel);

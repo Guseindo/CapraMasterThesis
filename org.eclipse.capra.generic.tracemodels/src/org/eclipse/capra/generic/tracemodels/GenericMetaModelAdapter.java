@@ -344,4 +344,12 @@ public class GenericMetaModelAdapter implements TraceMetaModelAdapter {
 	public List<String> getSelectedRelationshipTypes(){
 		return selectedRelationshipTypes;
 	}
+	
+	public void emptyPlantUmlTraces(){
+		tracesForPlantUml.clear();
+	}
+	
+	public void emptySelectedRelationshipTypes(){
+		selectedRelationshipTypes.clear();
+	}
 }
