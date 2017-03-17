@@ -10,6 +10,10 @@
  *******************************************************************************/
 package org.eclipse.capra.handler.reqif;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.capra.core.adapters.Connection;
 import org.eclipse.capra.core.handlers.AbstractArtifactHandler;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.rmf.reqif10.SpecHierarchy;
@@ -33,6 +37,11 @@ public class ReqIfHandler extends AbstractArtifactHandler<SpecHierarchy> {
 	public String getDisplayName(SpecHierarchy spec) {
 		SpecObject specObject = spec.getObject();
 		return specObject.getIdentifier();
+	}
+
+	@Override
+	public List<Connection> getInternalElements(EObject element, EObject traceModel) {
+		return new ArrayList<Connection>();
 	}
 
 }

@@ -10,15 +10,19 @@
  *******************************************************************************/
 package org.eclipse.capra.handler.hudson;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.capra.core.adapters.ArtifactMetaModelAdapter;
+import org.eclipse.capra.core.adapters.Connection;
 import org.eclipse.capra.core.handlers.AbstractArtifactHandler;
 import org.eclipse.capra.core.helpers.ExtensionPointHelper;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.mylyn.builds.internal.core.BuildElement;
 
 /**
- * A handler to allow tracing to and from build elements handled by the continuous
- * integration server Hudson via the integrated Mylyn facilities.
+ * A handler to allow tracing to and from build elements handled by the
+ * continuous integration server Hudson via the integrated Mylyn facilities.
  */
 public class BuildElementHandler extends AbstractArtifactHandler<BuildElement> {
 
@@ -39,6 +43,11 @@ public class BuildElementHandler extends AbstractArtifactHandler<BuildElement> {
 	@Override
 	public String getDisplayName(BuildElement build) {
 		return build.getName();
+	}
+
+	@Override
+	public List<Connection> getInternalElements(EObject element, EObject traceModel) {
+		return new ArrayList<Connection>();
 	}
 
 }

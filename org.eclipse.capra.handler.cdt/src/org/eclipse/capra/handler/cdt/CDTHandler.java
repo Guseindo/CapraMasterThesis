@@ -10,7 +10,11 @@
  *******************************************************************************/
 package org.eclipse.capra.handler.cdt;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.capra.core.adapters.ArtifactMetaModelAdapter;
+import org.eclipse.capra.core.adapters.Connection;
 import org.eclipse.capra.core.handlers.AbstractArtifactHandler;
 import org.eclipse.capra.core.handlers.AnnotationException;
 import org.eclipse.capra.core.handlers.IAnnotateArtifact;
@@ -54,6 +58,11 @@ public class CDTHandler extends AbstractArtifactHandler<ICElement> implements IA
 			ICElement handle = resolveWrapper(wrapper);
 			CDTAnnotate.annotateArtifact(handle, annotation);
 		}
+	}
+
+	@Override
+	public List<Connection> getInternalElements(EObject element, EObject traceModel) {
+		return new ArrayList<Connection>();
 	}
 
 }

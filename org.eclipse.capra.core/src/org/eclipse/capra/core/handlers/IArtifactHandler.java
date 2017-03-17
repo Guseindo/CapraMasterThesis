@@ -10,12 +10,15 @@
  *******************************************************************************/
 package org.eclipse.capra.core.handlers;
 
+import java.util.List;
+
+import org.eclipse.capra.core.adapters.Connection;
 import org.eclipse.emf.ecore.EObject;
 
 /**
  * This interface defines functionality required to map chosen Objects in the
- * Eclipse workspace to wrappers which can then be traced and
- * persisted in EMF models.
+ * Eclipse workspace to wrappers which can then be traced and persisted in EMF
+ * models.
  */
 public interface IArtifactHandler<T> {
 
@@ -40,9 +43,9 @@ public interface IArtifactHandler<T> {
 	EObject createWrapper(T artifact, EObject artifactModel);
 
 	/**
-	 * Resolve the wrapper to the originally selected Object from the
-	 * Eclipse workspace. This is essentially the inverse of the
-	 * createWrapper operation.
+	 * Resolve the wrapper to the originally selected Object from the Eclipse
+	 * workspace. This is essentially the inverse of the createWrapper
+	 * operation.
 	 *
 	 * @param wrapper
 	 *            The wrapped object
@@ -52,7 +55,22 @@ public interface IArtifactHandler<T> {
 
 	/**
 	 * Provide a name for the artifact to be used for display purposes.
+	 * 
 	 * @param artifact
 	 */
 	String getDisplayName(T artifact);
+
+	/**
+	 * Determine a list of all objects internally connected (e.g. in a UML
+	 * diagram) elements
+	 * 
+	 * @param element
+	 *            The element used to determine the list of connected objects.
+	 *            Note that this element could be a trace in the trace model
+	 * @param traceModel
+	 *            Trace model to base calculation on
+	 * @return A Map with the following structure: [Trace object t -> {list of
+	 *         all objects connected to element via t}]
+	 */
+	List<Connection> getInternalElements(EObject element, EObject traceModel);
 }

@@ -10,15 +10,19 @@
  *******************************************************************************/
 package org.eclipse.capra.handler.hudson;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.capra.core.adapters.ArtifactMetaModelAdapter;
+import org.eclipse.capra.core.adapters.Connection;
 import org.eclipse.capra.core.handlers.AbstractArtifactHandler;
 import org.eclipse.capra.core.helpers.ExtensionPointHelper;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.mylyn.builds.internal.core.TestElement;
 
 /**
- * A handler to allow tracing to and from test elements handled by the continuous
- * integration server Hudson via the integrated Mylyn facilities.
+ * A handler to allow tracing to and from test elements handled by the
+ * continuous integration server Hudson via the integrated Mylyn facilities.
  */
 public class TestElementHandler extends AbstractArtifactHandler<TestElement> {
 
@@ -40,6 +44,11 @@ public class TestElementHandler extends AbstractArtifactHandler<TestElement> {
 	@Override
 	public String getDisplayName(TestElement test) {
 		return test.getLabel();
+	}
+
+	@Override
+	public List<Connection> getInternalElements(EObject element, EObject traceModel) {
+		return new ArrayList<Connection>();
 	}
 
 }

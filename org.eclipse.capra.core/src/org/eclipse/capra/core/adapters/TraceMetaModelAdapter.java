@@ -110,7 +110,8 @@ public interface TraceMetaModelAdapter {
 	List<Connection> getTransitivelyConnectedElements(EObject element, EObject traceModel);
 
 	/**
-	 * Determine a list of all objects internally connected (e.g. in a UML diagram) elements
+	 * Determine a list of all objects internally connected (e.g. in a UML
+	 * diagram) elements
 	 * 
 	 * @param element
 	 *            The element used to determine the list of connected objects.
@@ -122,15 +123,50 @@ public interface TraceMetaModelAdapter {
 	 */
 	List<Connection> getInternalElements(EObject element, EObject traceModel);
 
-	void setPlantUmlTraces(List<Connection> traces);
-	
+	/**
+	 * Gets a list of possible relations for the current elements in the
+	 * plant-uml view
+	 * 
+	 * @param relationships
+	 */
 	List<String> getPossibleRelationsForSelection();
-	
-	void emptyPlantUmlTraces();
 
+	/**
+	 * Empties the list of possible relations for the current elements in the
+	 * plant-uml view
+	 * 
+	 * @param relationships
+	 */
+	void clearPossibleRelationsForSelection();
+
+	/**
+	 * Sets the relationships that have been selected in the plant-uml checkbox
+	 * selection
+	 * 
+	 * @param relationships
+	 */
 	void setSelectedRelationshipTypes(List<String> relationships);
 
+	/**
+	 * Gets the relationships that have been selected in the plant-uml checkbox
+	 * selection
+	 * 
+	 * @param relationships
+	 */
 	List<String> getSelectedRelationshipTypes();
-	
+
+	/**
+	 * Empties the selected relationship-types
+	 * 
+	 * @param relationships
+	 */
 	void emptySelectedRelationshipTypes();
+
+	/**
+	 * Gets the previously selected element for plant-uml. This is used to check
+	 * whether the possible relationships have to be refreshed or not
+	 * 
+	 * @return
+	 */
+	EObject getPreviousElement();
 }

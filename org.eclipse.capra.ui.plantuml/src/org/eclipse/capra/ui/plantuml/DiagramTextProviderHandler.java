@@ -18,8 +18,8 @@ import java.util.stream.Collectors;
 import org.eclipse.capra.core.adapters.Connection;
 import org.eclipse.capra.core.adapters.TraceMetaModelAdapter;
 import org.eclipse.capra.core.adapters.TracePersistenceAdapter;
-import org.eclipse.capra.core.helpers.ArtifactHelper;
 import org.eclipse.capra.core.handlers.IArtifactHandler;
+import org.eclipse.capra.core.helpers.ArtifactHelper;
 import org.eclipse.capra.core.helpers.EMFHelper;
 import org.eclipse.capra.core.helpers.ExtensionPointHelper;
 import org.eclipse.capra.ui.helpers.TraceCreationHelper;
@@ -71,18 +71,25 @@ public class DiagramTextProviderHandler implements DiagramTextProvider {
 				if (selectedObject != null) {
 					resourceSet = selectedObject.eResource().getResourceSet();
 					traceModel = persistenceAdapter.getTraceModel(resourceSet);
-					metamodelAdapter.emptyPlantUmlTraces();
-					metamodelAdapter.emptySelectedRelationshipTypes();
+
 					if (selectedModels.size() == 1) {
 						if (DisplayTracesHandler.isTraceViewTransitive()) {
 							traces = metamodelAdapter.getTransitivelyConnectedElements(selectedObject, traceModel);
 						} else {
 							traces = metamodelAdapter.getConnectedElements(selectedObject, traceModel);
 						}
-						if (DisplayInternalLinksHandler.areInternalLinksShown()){
+						if (DisplayInternalLinksHandler.areInternalLinksShown()) {
+							EObject previousElement = metamodelAdapter.getPreviousElement();
+							if (previousElement != null) {
+								String previousElementName = EMFHelper.getNameAttribute(previousElement);
+								String currentElementName = EMFHelper.getNameAttribute(selectedObject);
+								if (!previousElementName.equals(currentElementName)) {
+									metamodelAdapter.clearPossibleRelationsForSelection();
+									metamodelAdapter.emptySelectedRelationshipTypes();
+								}
+							}
 							traces.addAll(metamodelAdapter.getInternalElements(selectedObject, traceModel));
 						}
-						metamodelAdapter.setPlantUmlTraces(traces);
 						return VisualizationHelper.createNeighboursView(traces, selectedObject);
 					} else if (selectedModels.size() == 2) {
 						if (DisplayTracesHandler.isTraceViewTransitive()) {

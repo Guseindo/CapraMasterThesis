@@ -15,7 +15,6 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.uml2.uml.Generalization;
 import org.eclipse.uml2.uml.Message;
 
 /**
@@ -68,15 +67,14 @@ public class EMFHelper {
 	}
 
 	/**
-	 * Builds an identifier String for the given EObject for a directed Relationship (e.g. Generalization). 
-	 * Builds the same String as @see {@link EMFHelper.getIdentifier} but adds whether the origin is the target
-	 * or the source of the relationship
+	 * Builds an identifier String for the given EObject for a directed
+	 * Relationship (e.g. Generalization).
 	 */
 	public static String getRelationIdentifier(EObject relation) {
 		StringBuilder identifier = new StringBuilder();
 
 		identifier.append(relation.eClass().getName());
-		if(Message.class.isAssignableFrom(relation.getClass())){
+		if (Message.class.isAssignableFrom(relation.getClass())) {
 			Message msg = Message.class.cast(relation);
 			identifier.append(" : ");
 			identifier.append(msg.getMessageSort().getName());
@@ -186,7 +184,9 @@ public class EMFHelper {
 	}
 
 	/**
-	 * Public API access for other classes to get the name attribute of an EObject
+	 * Public API access for other classes to get the name attribute of an
+	 * EObject
+	 * 
 	 * @param eObject
 	 * @return String
 	 */
@@ -202,8 +202,8 @@ public class EMFHelper {
 		}
 		return name;
 	}
-	
-	public static boolean objectIsOfUML2Package(EObject obj){
+
+	public static boolean objectIsOfUML2Package(EObject obj) {
 		return obj.getClass().getPackage().getName().equals("org.eclipse.uml2.uml.internal.impl");
 	}
 }

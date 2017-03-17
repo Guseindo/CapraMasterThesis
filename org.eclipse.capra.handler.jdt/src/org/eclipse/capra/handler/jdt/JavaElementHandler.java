@@ -10,7 +10,11 @@
  *******************************************************************************/
 package org.eclipse.capra.handler.jdt;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.capra.core.adapters.ArtifactMetaModelAdapter;
+import org.eclipse.capra.core.adapters.Connection;
 import org.eclipse.capra.core.handlers.AbstractArtifactHandler;
 import org.eclipse.capra.core.handlers.AnnotationException;
 import org.eclipse.capra.core.handlers.IAnnotateArtifact;
@@ -30,8 +34,8 @@ public class JavaElementHandler extends AbstractArtifactHandler<IJavaElement> im
 	@Override
 	public EObject createWrapper(IJavaElement element, EObject artifactModel) {
 		ArtifactMetaModelAdapter adapter = ExtensionPointHelper.getArtifactWrapperMetaModelAdapter().get();
-		EObject wrapper = adapter.createArtifact(artifactModel, this.getClass().getName(), element.getHandleIdentifier(),
-				element.getElementName());
+		EObject wrapper = adapter.createArtifact(artifactModel, this.getClass().getName(),
+				element.getHandleIdentifier(), element.getElementName());
 		return wrapper;
 	}
 
@@ -54,6 +58,11 @@ public class JavaElementHandler extends AbstractArtifactHandler<IJavaElement> im
 			IJavaElement handle = resolveWrapper(wrapper);
 			JDTAnnotate.annotateArtifact(handle, annotation);
 		}
+	}
+
+	@Override
+	public List<Connection> getInternalElements(EObject element, EObject traceModel) {
+		return new ArrayList<Connection>();
 	}
 
 }

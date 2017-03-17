@@ -10,6 +10,10 @@
  *******************************************************************************/
 package org.eclipse.capra.handler.emf;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.capra.core.adapters.Connection;
 import org.eclipse.capra.core.handlers.AbstractArtifactHandler;
 import org.eclipse.capra.core.helpers.EMFHelper;
 import org.eclipse.emf.ecore.EObject;
@@ -32,5 +36,10 @@ public class EMFHandler extends AbstractArtifactHandler<EObject> {
 	@Override
 	public String getDisplayName(EObject artifact) {
 		return EMFHelper.getIdentifier(artifact);
+	}
+
+	@Override
+	public List<Connection> getInternalElements(EObject element, EObject traceModel) {
+		return new ArrayList<Connection>();
 	}
 }

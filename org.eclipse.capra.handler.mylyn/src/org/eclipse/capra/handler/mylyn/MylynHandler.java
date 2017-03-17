@@ -10,7 +10,11 @@
  *******************************************************************************/
 package org.eclipse.capra.handler.mylyn;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.capra.core.adapters.ArtifactMetaModelAdapter;
+import org.eclipse.capra.core.adapters.Connection;
 import org.eclipse.capra.core.handlers.AbstractArtifactHandler;
 import org.eclipse.capra.core.helpers.ExtensionPointHelper;
 import org.eclipse.emf.ecore.EObject;
@@ -40,4 +44,8 @@ public class MylynHandler extends AbstractArtifactHandler<ITask> {
 		return task.getTaskId() + " : " + task.getSummary();
 	}
 
+	@Override
+	public List<Connection> getInternalElements(EObject element, EObject traceModel) {
+		return new ArrayList<Connection>();
+	}
 }

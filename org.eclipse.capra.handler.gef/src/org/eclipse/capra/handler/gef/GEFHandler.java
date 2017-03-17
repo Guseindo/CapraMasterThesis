@@ -10,6 +10,10 @@
  *******************************************************************************/
 package org.eclipse.capra.handler.gef;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.capra.core.adapters.Connection;
 import org.eclipse.capra.core.handlers.AbstractArtifactHandler;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
@@ -35,6 +39,11 @@ public class GEFHandler extends AbstractArtifactHandler<EditPart> {
 	@Override
 	public String getDisplayName(EditPart artifact) {
 		return org.eclipse.capra.core.helpers.EMFHelper.getIdentifier((EObject) artifact);
+	}
+
+	@Override
+	public List<Connection> getInternalElements(EObject element, EObject traceModel) {
+		return new ArrayList<Connection>();
 	}
 
 }
