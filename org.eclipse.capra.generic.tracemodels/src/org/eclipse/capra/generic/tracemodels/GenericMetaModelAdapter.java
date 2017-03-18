@@ -136,8 +136,9 @@ public class GenericMetaModelAdapter implements TraceMetaModelAdapter {
 		return getTransitivelyConnectedElements(element, traceModel, accumulator);
 	}
 
-	public List<Connection> getInternalElementsTransitive(EObject element, List<Object> accumulator) {
-		List<Connection> directElements = getInternalElements(element);
+	public List<Connection> getInternalElementsTransitive(EObject element, EObject traceModel,
+			List<Object> accumulator) {
+		List<Connection> directElements = getInternalElements(element, traceModel);
 		List<Connection> allElements = new ArrayList<>();
 
 		directElements.forEach(connection -> {
@@ -145,7 +146,7 @@ public class GenericMetaModelAdapter implements TraceMetaModelAdapter {
 				allElements.add(connection);
 				accumulator.add(connection.getTlink());
 				connection.getTargets().forEach(e -> {
-					allElements.addAll(getInternalElementsTransitive(e, accumulator));
+					allElements.addAll(getInternalElementsTransitive(e, traceModel, accumulator));
 				});
 			}
 		});
@@ -154,15 +155,21 @@ public class GenericMetaModelAdapter implements TraceMetaModelAdapter {
 	}
 
 	@Override
-	public List<Connection> getInternalElementsTransitive(EObject element) {
+	public List<Connection> getInternalElementsTransitive(EObject element, EObject traceModel) {
 		List<Object> accumulator = new ArrayList<>();
-		return getInternalElementsTransitive(element, accumulator);
+		return getInternalElementsTransitive(element, traceModel, accumulator);
 	}
 
 	@Override
-	public List<Connection> getInternalElements(EObject element) {
+	public List<Connection> getInternalElements(EObject element, EObject traceModel) {
+		List<Connection> directElements = getConnectedElements(element, traceModel);
 		List<Connection> allElements = new ArrayList<>();
 		ArrayList<String> duplicationCheck = new ArrayList<>();
+		for (Connection conn : directElements) {
+			for (EObject o : conn.getTargets()) {
+				addConnectionsForRelations(o, allElements, duplicationCheck);
+			}
+		}
 		addConnectionsForRelations(element, allElements, duplicationCheck);
 		return allElements;
 	}

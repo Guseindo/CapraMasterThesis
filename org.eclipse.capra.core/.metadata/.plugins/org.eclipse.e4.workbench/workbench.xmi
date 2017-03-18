@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
 <application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_QOlEkAuoEeerFLNjd_A4cQ" elementId="org.eclipse.e4.legacy.ide.application" contributorURI="platform:/plugin/org.eclipse.platform" selectedElement="_QOlEkQuoEeerFLNjd_A4cQ" bindingContexts="_QOm7cQuoEeerFLNjd_A4cQ">
-  <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;workbench>&#xD;&#xA;&lt;mruList>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.emf.ecore.presentation.ReflectiveEditorID&quot; name=&quot;traceModel.xmi&quot; tooltip=&quot;__WorkspaceTraceModels/traceModel.xmi&quot;>&#xD;&#xA;&lt;persistable path=&quot;/__WorkspaceTraceModels/traceModel.xmi&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.emf.ecore.presentation.ReflectiveEditorID&quot; name=&quot;HVAC_Requirements.reqif&quot; tooltip=&quot;org.itea2.amalthea.example.hvac/01_Requirements/HVAC_Requirements.reqif&quot;>&#xD;&#xA;&lt;persistable path=&quot;/org.itea2.amalthea.example.hvac/01_Requirements/HVAC_Requirements.reqif&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.uml2.uml.editor.presentation.UMLEditorID&quot; name=&quot;model.uml&quot; tooltip=&quot;org.itea2.amalthea.example.hvac/model.uml&quot;>&#xD;&#xA;&lt;persistable path=&quot;/org.itea2.amalthea.example.hvac/model.uml&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.papyrus.infra.core.papyrusEditor&quot; name=&quot;usecase.di&quot; tooltip=&quot;org.itea2.amalthea.example.hvac/usecase.di&quot;>&#xD;&#xA;&lt;persistable path=&quot;/org.itea2.amalthea.example.hvac/usecase.di&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.uml2.uml.editor.presentation.UMLEditorID&quot; name=&quot;sequence.uml&quot; tooltip=&quot;org.itea2.amalthea.example.hvac/sequence.uml&quot;>&#xD;&#xA;&lt;persistable path=&quot;/org.itea2.amalthea.example.hvac/sequence.uml&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.papyrus.infra.core.papyrusEditor&quot; name=&quot;sequence.di&quot; tooltip=&quot;org.itea2.amalthea.example.hvac/sequence.di&quot;>&#xD;&#xA;&lt;persistable path=&quot;/org.itea2.amalthea.example.hvac/sequence.di&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.papyrus.infra.core.papyrusEditor&quot; name=&quot;sysml.di&quot; tooltip=&quot;org.itea2.amalthea.example.hvac/sysml.di&quot;>&#xD;&#xA;&lt;persistable path=&quot;/org.itea2.amalthea.example.hvac/sysml.di&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.papyrus.infra.core.papyrusEditor&quot; name=&quot;model.di&quot; tooltip=&quot;org.itea2.amalthea.example.hvac/model.di&quot;>&#xD;&#xA;&lt;persistable path=&quot;/org.itea2.amalthea.example.hvac/model.di&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.ui.DefaultTextEditor&quot; name=&quot;Fout.ts&quot; tooltip=&quot;org.itea2.amalthea.example.hvac/interfaces/Fout.ts&quot;>&#xD;&#xA;&lt;persistable path=&quot;/org.itea2.amalthea.example.hvac/interfaces/Fout.ts&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.ui.DefaultTextEditor&quot; name=&quot;Classdiagram (1).xmi&quot; tooltip=&quot;org.itea2.amalthea.example.hvac/Classdiagram (1).xmi&quot;>&#xD;&#xA;&lt;persistable path=&quot;/org.itea2.amalthea.example.hvac/Classdiagram (1).xmi&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.papyrus.infra.core.papyrusEditor&quot; name=&quot;statemachine.di&quot; tooltip=&quot;org.itea2.amalthea.example.hvac/statemachine.di&quot;>&#xD;&#xA;&lt;persistable path=&quot;/org.itea2.amalthea.example.hvac/statemachine.di&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.uml2.uml.editor.presentation.UMLEditorID&quot; name=&quot;statemachine.uml&quot; tooltip=&quot;org.itea2.amalthea.example.hvac/statemachine.uml&quot;>&#xD;&#xA;&lt;persistable path=&quot;/org.itea2.amalthea.example.hvac/statemachine.uml&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.uml2.uml.editor.presentation.UMLEditorID&quot; name=&quot;sysml.uml&quot; tooltip=&quot;org.itea2.amalthea.example.hvac/sysml.uml&quot;>&#xD;&#xA;&lt;persistable path=&quot;/org.itea2.amalthea.example.hvac/sysml.uml&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.uml2.uml.editor.presentation.UMLEditorID&quot; name=&quot;usecase.uml&quot; tooltip=&quot;org.itea2.amalthea.example.hvac/usecase.uml&quot;>&#xD;&#xA;&lt;persistable path=&quot;/org.itea2.amalthea.example.hvac/usecase.uml&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;/mruList>&#xD;&#xA;&lt;/workbench>"/>
+  <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;workbench>&#xD;&#xA;&lt;mruList>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.ide.FileStoreEditorInputFactory&quot; id=&quot;org.eclipse.ui.DefaultTextEditor&quot; name=&quot;.lock&quot; tooltip=&quot;C:\Users\domin\git\org.eclipse.capra\org.eclipse.capra.core\.metadata\.lock&quot;>&#xD;&#xA;&lt;persistable uri=&quot;file:/C:/Users/domin/git/org.eclipse.capra/org.eclipse.capra.core/.metadata/.lock&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.ide.FileStoreEditorInputFactory&quot; id=&quot;org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPart&quot; name=&quot;.project&quot; tooltip=&quot;C:\Users\domin\git\org.eclipse.capra\org.eclipse.capra.core\.project&quot;>&#xD;&#xA;&lt;persistable uri=&quot;file:/C:/Users/domin/git/org.eclipse.capra/org.eclipse.capra.core/.project&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.emf.ecore.presentation.ReflectiveEditorID&quot; name=&quot;traceModel.xmi&quot; tooltip=&quot;__WorkspaceTraceModels/traceModel.xmi&quot;>&#xD;&#xA;&lt;persistable path=&quot;/__WorkspaceTraceModels/traceModel.xmi&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.emf.ecore.presentation.ReflectiveEditorID&quot; name=&quot;HVAC_Requirements.reqif&quot; tooltip=&quot;org.itea2.amalthea.example.hvac/01_Requirements/HVAC_Requirements.reqif&quot;>&#xD;&#xA;&lt;persistable path=&quot;/org.itea2.amalthea.example.hvac/01_Requirements/HVAC_Requirements.reqif&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.uml2.uml.editor.presentation.UMLEditorID&quot; name=&quot;model.uml&quot; tooltip=&quot;org.itea2.amalthea.example.hvac/model.uml&quot;>&#xD;&#xA;&lt;persistable path=&quot;/org.itea2.amalthea.example.hvac/model.uml&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.papyrus.infra.core.papyrusEditor&quot; name=&quot;usecase.di&quot; tooltip=&quot;org.itea2.amalthea.example.hvac/usecase.di&quot;>&#xD;&#xA;&lt;persistable path=&quot;/org.itea2.amalthea.example.hvac/usecase.di&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.uml2.uml.editor.presentation.UMLEditorID&quot; name=&quot;sequence.uml&quot; tooltip=&quot;org.itea2.amalthea.example.hvac/sequence.uml&quot;>&#xD;&#xA;&lt;persistable path=&quot;/org.itea2.amalthea.example.hvac/sequence.uml&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.papyrus.infra.core.papyrusEditor&quot; name=&quot;sequence.di&quot; tooltip=&quot;org.itea2.amalthea.example.hvac/sequence.di&quot;>&#xD;&#xA;&lt;persistable path=&quot;/org.itea2.amalthea.example.hvac/sequence.di&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.papyrus.infra.core.papyrusEditor&quot; name=&quot;sysml.di&quot; tooltip=&quot;org.itea2.amalthea.example.hvac/sysml.di&quot;>&#xD;&#xA;&lt;persistable path=&quot;/org.itea2.amalthea.example.hvac/sysml.di&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.papyrus.infra.core.papyrusEditor&quot; name=&quot;model.di&quot; tooltip=&quot;org.itea2.amalthea.example.hvac/model.di&quot;>&#xD;&#xA;&lt;persistable path=&quot;/org.itea2.amalthea.example.hvac/model.di&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.ui.DefaultTextEditor&quot; name=&quot;Fout.ts&quot; tooltip=&quot;org.itea2.amalthea.example.hvac/interfaces/Fout.ts&quot;>&#xD;&#xA;&lt;persistable path=&quot;/org.itea2.amalthea.example.hvac/interfaces/Fout.ts&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.ui.DefaultTextEditor&quot; name=&quot;Classdiagram (1).xmi&quot; tooltip=&quot;org.itea2.amalthea.example.hvac/Classdiagram (1).xmi&quot;>&#xD;&#xA;&lt;persistable path=&quot;/org.itea2.amalthea.example.hvac/Classdiagram (1).xmi&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.papyrus.infra.core.papyrusEditor&quot; name=&quot;statemachine.di&quot; tooltip=&quot;org.itea2.amalthea.example.hvac/statemachine.di&quot;>&#xD;&#xA;&lt;persistable path=&quot;/org.itea2.amalthea.example.hvac/statemachine.di&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.uml2.uml.editor.presentation.UMLEditorID&quot; name=&quot;statemachine.uml&quot; tooltip=&quot;org.itea2.amalthea.example.hvac/statemachine.uml&quot;>&#xD;&#xA;&lt;persistable path=&quot;/org.itea2.amalthea.example.hvac/statemachine.uml&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.uml2.uml.editor.presentation.UMLEditorID&quot; name=&quot;sysml.uml&quot; tooltip=&quot;org.itea2.amalthea.example.hvac/sysml.uml&quot;>&#xD;&#xA;&lt;persistable path=&quot;/org.itea2.amalthea.example.hvac/sysml.uml&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;/mruList>&#xD;&#xA;&lt;/workbench>"/>
   <tags>activeSchemeId:org.eclipse.ui.defaultAcceleratorConfiguration</tags>
   <tags>ModelMigrationProcessor.001</tags>
   <children xsi:type="basic:TrimmedWindow" xmi:id="_QOlEkQuoEeerFLNjd_A4cQ" elementId="IDEWindow" contributorURI="platform:/plugin/org.eclipse.platform" selectedElement="_QOlEkguoEeerFLNjd_A4cQ" label="%trimmedwindow.label.eclipseSDK" x="449" y="-9" width="1024" height="768">
@@ -136,9 +136,10 @@
           <tags>persp.actionSet:org.eclipse.ui.actionSet.openFiles</tags>
           <tags>persp.newWizSC:org.eclipse.rmf.reqif10.presentation.Reqif10ModelWizardID</tags>
           <tags>persp.actionSet:org.eclipse.wst.jsdt.chromium.debug.ui.actionSets</tags>
-          <children xsi:type="basic:PartSashContainer" xmi:id="_QOlEsguoEeerFLNjd_A4cQ" selectedElement="_QOlEuguoEeerFLNjd_A4cQ">
-            <children xsi:type="basic:PartSashContainer" xmi:id="_QOlEswuoEeerFLNjd_A4cQ" containerData="5859" selectedElement="_QOlEtguoEeerFLNjd_A4cQ" horizontal="true">
+          <children xsi:type="basic:PartSashContainer" xmi:id="_QOlEsguoEeerFLNjd_A4cQ" selectedElement="_QOlEswuoEeerFLNjd_A4cQ">
+            <children xsi:type="basic:PartSashContainer" xmi:id="_QOlEswuoEeerFLNjd_A4cQ" containerData="5859" selectedElement="_QOlEtAuoEeerFLNjd_A4cQ" horizontal="true">
               <children xsi:type="basic:PartStack" xmi:id="_QOlEtAuoEeerFLNjd_A4cQ" elementId="topLeft" containerData="2500" selectedElement="_QOlEtQuoEeerFLNjd_A4cQ">
+                <tags>active</tags>
                 <children xsi:type="advanced:Placeholder" xmi:id="_QOlEtQuoEeerFLNjd_A4cQ" elementId="org.eclipse.ui.navigator.ProjectExplorer" ref="_QOls1AuoEeerFLNjd_A4cQ"/>
               </children>
               <children xsi:type="basic:PartSashContainer" xmi:id="_QOlEtguoEeerFLNjd_A4cQ" containerData="7500" selectedElement="_QOlEtwuoEeerFLNjd_A4cQ" horizontal="true">
@@ -148,14 +149,13 @@
                 </children>
               </children>
             </children>
-            <children xsi:type="basic:PartSashContainer" xmi:id="_QOlEuguoEeerFLNjd_A4cQ" containerData="4141" selectedElement="_QOlEvQuoEeerFLNjd_A4cQ" horizontal="true">
+            <children xsi:type="basic:PartSashContainer" xmi:id="_QOlEuguoEeerFLNjd_A4cQ" containerData="4141" selectedElement="_QOlEuwuoEeerFLNjd_A4cQ" horizontal="true">
               <children xsi:type="basic:PartStack" xmi:id="_QOlEuwuoEeerFLNjd_A4cQ" elementId="bottomRight" containerData="2539" selectedElement="_QOlEvAuoEeerFLNjd_A4cQ">
                 <children xsi:type="advanced:Placeholder" xmi:id="_QOlEvAuoEeerFLNjd_A4cQ" elementId="org.eclipse.capra.generic.views.SelectionView" ref="_QOltJQuoEeerFLNjd_A4cQ"/>
               </children>
-              <children xsi:type="basic:PartStack" xmi:id="_QOlEvQuoEeerFLNjd_A4cQ" elementId="net.sourceforge.plantuml.eclipse.views.PlantUmlViewMStack" containerData="7461" selectedElement="_QOlEvguoEeerFLNjd_A4cQ">
+              <children xsi:type="basic:PartStack" xmi:id="_QOlEvQuoEeerFLNjd_A4cQ" elementId="net.sourceforge.plantuml.eclipse.views.PlantUmlViewMStack" containerData="7461" selectedElement="_QOlEvwuoEeerFLNjd_A4cQ">
                 <tags>General</tags>
                 <tags>Papyrus</tags>
-                <tags>active</tags>
                 <children xsi:type="advanced:Placeholder" xmi:id="_QOlEvguoEeerFLNjd_A4cQ" elementId="net.sourceforge.plantuml.eclipse.views.PlantUmlView" ref="_QOltTQuoEeerFLNjd_A4cQ"/>
                 <children xsi:type="advanced:Placeholder" xmi:id="_QOlEvwuoEeerFLNjd_A4cQ" elementId="org.eclipse.ui.views.PropertySheet" ref="_QOmStQuoEeerFLNjd_A4cQ"/>
                 <children xsi:type="advanced:Placeholder" xmi:id="_QOlEwAuoEeerFLNjd_A4cQ" elementId="org.eclipse.papyrus.views.modelexplorer.modelexplorer" ref="_QOmSuAuoEeerFLNjd_A4cQ"/>
@@ -194,171 +194,9 @@
       <tags>categoryTag:Help</tags>
     </sharedElements>
     <sharedElements xsi:type="advanced:Area" xmi:id="_QOlscAuoEeerFLNjd_A4cQ" elementId="org.eclipse.ui.editorss" selectedElement="_QOlscQuoEeerFLNjd_A4cQ">
-      <children xsi:type="basic:PartStack" xmi:id="_QOlscQuoEeerFLNjd_A4cQ" elementId="org.eclipse.e4.primaryDataStack" selectedElement="_QOlscguoEeerFLNjd_A4cQ">
+      <children xsi:type="basic:PartStack" xmi:id="_QOlscQuoEeerFLNjd_A4cQ" elementId="org.eclipse.e4.primaryDataStack" selectedElement="_QOlszAuoEeerFLNjd_A4cQ">
         <tags>org.eclipse.e4.primaryDataStack</tags>
         <tags>EditorStack</tags>
-        <children xsi:type="basic:Part" xmi:id="_QOlscguoEeerFLNjd_A4cQ" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="model.di" iconURI="platform:/plugin/org.eclipse.papyrus.editor/icons/papyrus/Papyrus_16x16.gif" closeable="true">
-          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.eclipse.papyrus.infra.core.papyrusEditor&quot; name=&quot;model.di&quot; partName=&quot;model.di&quot; title=&quot;model.di&quot; tooltip=&quot;org.itea2.amalthea.example.hvac/model.di&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/org.itea2.amalthea.example.hvac/model.di&quot;/>&#xD;&#xA;&lt;/editor>"/>
-          <tags>Editor</tags>
-          <tags>org.eclipse.papyrus.infra.core.papyrusEditor</tags>
-          <tags>removeOnHide</tags>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlscwuoEeerFLNjd_A4cQ" elementId="org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu</tags>
-          </menus>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlsdAuoEeerFLNjd_A4cQ" elementId="org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu</tags>
-          </menus>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlsdQuoEeerFLNjd_A4cQ" elementId="org.eclipse.papyrus.infra.core.editor.ui.tabmenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.papyrus.infra.core.editor.ui.tabmenu</tags>
-          </menus>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlsdguoEeerFLNjd_A4cQ" elementId="org.eclipse.papyrus.infra.core.editor.ui.tabmenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.papyrus.infra.core.editor.ui.tabmenu</tags>
-          </menus>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlsdwuoEeerFLNjd_A4cQ" elementId="org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu</tags>
-          </menus>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlseAuoEeerFLNjd_A4cQ" elementId="org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu</tags>
-          </menus>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlseQuoEeerFLNjd_A4cQ" elementId="org.eclipse.papyrus.infra.core.editor.ui.tabmenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.papyrus.infra.core.editor.ui.tabmenu</tags>
-          </menus>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlseguoEeerFLNjd_A4cQ" elementId="org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu</tags>
-          </menus>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlsewuoEeerFLNjd_A4cQ" elementId="org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu</tags>
-          </menus>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlsfAuoEeerFLNjd_A4cQ" elementId="org.eclipse.papyrus.infra.core.editor.ui.tabmenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.papyrus.infra.core.editor.ui.tabmenu</tags>
-          </menus>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlsfQuoEeerFLNjd_A4cQ" elementId="org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu</tags>
-          </menus>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlsfguoEeerFLNjd_A4cQ" elementId="org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu</tags>
-          </menus>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlsfwuoEeerFLNjd_A4cQ" elementId="org.eclipse.papyrus.infra.core.editor.ui.tabmenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.papyrus.infra.core.editor.ui.tabmenu</tags>
-          </menus>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlsgAuoEeerFLNjd_A4cQ" elementId="org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu</tags>
-          </menus>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlsgQuoEeerFLNjd_A4cQ" elementId="org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu</tags>
-          </menus>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlsgguoEeerFLNjd_A4cQ" elementId="org.eclipse.papyrus.infra.core.editor.ui.tabmenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.papyrus.infra.core.editor.ui.tabmenu</tags>
-          </menus>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlsgwuoEeerFLNjd_A4cQ" elementId="org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu</tags>
-          </menus>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlshAuoEeerFLNjd_A4cQ" elementId="org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu</tags>
-          </menus>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlshQuoEeerFLNjd_A4cQ" elementId="org.eclipse.papyrus.infra.core.editor.ui.tabmenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.papyrus.infra.core.editor.ui.tabmenu</tags>
-          </menus>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlshguoEeerFLNjd_A4cQ" elementId="org.eclipse.papyrus.infra.core.editor.ui.tabmenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.papyrus.infra.core.editor.ui.tabmenu</tags>
-          </menus>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlshwuoEeerFLNjd_A4cQ" elementId="org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu</tags>
-          </menus>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlsiAuoEeerFLNjd_A4cQ" elementId="org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu</tags>
-          </menus>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlsiQuoEeerFLNjd_A4cQ" elementId="org.eclipse.papyrus.infra.core.editor.ui.tabmenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.papyrus.infra.core.editor.ui.tabmenu</tags>
-          </menus>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlsiguoEeerFLNjd_A4cQ" elementId="org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu</tags>
-          </menus>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlsiwuoEeerFLNjd_A4cQ" elementId="org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu</tags>
-          </menus>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlsjAuoEeerFLNjd_A4cQ" elementId="org.eclipse.papyrus.infra.core.editor.ui.tabmenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.papyrus.infra.core.editor.ui.tabmenu</tags>
-          </menus>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlsjQuoEeerFLNjd_A4cQ" elementId="org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu</tags>
-          </menus>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlsjguoEeerFLNjd_A4cQ" elementId="org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu</tags>
-          </menus>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlsjwuoEeerFLNjd_A4cQ" elementId="org.eclipse.papyrus.infra.core.editor.ui.tabmenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.papyrus.infra.core.editor.ui.tabmenu</tags>
-          </menus>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlskAuoEeerFLNjd_A4cQ" elementId="org.eclipse.papyrus.infra.core.editor.ui.tabmenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.papyrus.infra.core.editor.ui.tabmenu</tags>
-          </menus>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlskQuoEeerFLNjd_A4cQ" elementId="org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu</tags>
-          </menus>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlskguoEeerFLNjd_A4cQ" elementId="org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu</tags>
-          </menus>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlskwuoEeerFLNjd_A4cQ" elementId="org.eclipse.papyrus.infra.core.editor.ui.tabmenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.papyrus.infra.core.editor.ui.tabmenu</tags>
-          </menus>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlslAuoEeerFLNjd_A4cQ" elementId="org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu</tags>
-          </menus>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlslQuoEeerFLNjd_A4cQ" elementId="org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu</tags>
-          </menus>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlslguoEeerFLNjd_A4cQ" elementId="org.eclipse.papyrus.infra.core.editor.ui.tabmenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.papyrus.infra.core.editor.ui.tabmenu</tags>
-          </menus>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlslwuoEeerFLNjd_A4cQ" elementId="org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu</tags>
-          </menus>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlsmAuoEeerFLNjd_A4cQ" elementId="org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu</tags>
-          </menus>
-          <menus xsi:type="menu:PopupMenu" xmi:id="_QOlsmQuoEeerFLNjd_A4cQ" elementId="org.eclipse.papyrus.infra.core.editor.ui.tabmenu">
-            <tags>menuContribution:popup</tags>
-            <tags>popup:org.eclipse.papyrus.infra.core.editor.ui.tabmenu</tags>
-          </menus>
-        </children>
         <children xsi:type="basic:Part" xmi:id="_QOlsmguoEeerFLNjd_A4cQ" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="sysml.di" iconURI="platform:/plugin/org.eclipse.papyrus.editor/icons/papyrus/Papyrus_16x16.gif" closeable="true">
           <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.eclipse.papyrus.infra.core.papyrusEditor&quot; name=&quot;sysml.di&quot; partName=&quot;sysml.di&quot; title=&quot;sysml.di&quot; tooltip=&quot;org.itea2.amalthea.example.hvac/sysml.di&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/org.itea2.amalthea.example.hvac/sysml.di&quot;/>&#xD;&#xA;&lt;/editor>"/>
           <tags>Editor</tags>
@@ -614,6 +452,8 @@
       <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;view CommonNavigator.LINKING_ENABLED=&quot;0&quot; currentWorkingSetName=&quot;Aggregate for window 1488258415566&quot; org.eclipse.cdt.ui.cview.groupincludes=&quot;false&quot; org.eclipse.cdt.ui.cview.groupmacros=&quot;false&quot; org.eclipse.cdt.ui.editor.CUChildren=&quot;true&quot; org.eclipse.ui.navigator.resources.workingSets.showTopLevelWorkingSets=&quot;0&quot;/>"/>
       <tags>View</tags>
       <tags>categoryTag:General</tags>
+      <tags>active</tags>
+      <tags>activeOnClose</tags>
       <menus xmi:id="_QOls1QuoEeerFLNjd_A4cQ" elementId="org.eclipse.ui.navigator.ProjectExplorer">
         <tags>ViewMenu</tags>
         <tags>menuContribution:menu</tags>
@@ -1028,13 +868,11 @@
       <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;view/>"/>
       <tags>View</tags>
       <tags>categoryTag:PlantUml</tags>
-      <tags>active</tags>
-      <tags>activeOnClose</tags>
       <menus xmi:id="_QOltTguoEeerFLNjd_A4cQ" elementId="net.sourceforge.plantuml.eclipse.views.PlantUmlView">
         <tags>ViewMenu</tags>
         <tags>menuContribution:menu</tags>
       </menus>
-      <toolbar xmi:id="_QOltUguoEeerFLNjd_A4cQ" elementId="net.sourceforge.plantuml.eclipse.views.PlantUmlView"/>
+      <toolbar xmi:id="_QOltUguoEeerFLNjd_A4cQ" elementId="net.sourceforge.plantuml.eclipse.views.PlantUmlView" visible="false"/>
     </sharedElements>
     <sharedElements xsi:type="basic:Part" xmi:id="_QOmStQuoEeerFLNjd_A4cQ" elementId="org.eclipse.ui.views.PropertySheet" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Properties" iconURI="platform:/plugin/org.eclipse.ui.views/icons/full/eview16/prop_ps.png" tooltip="" closeable="true">
       <persistedState key="originalCompatibilityViewBundle" value="org.eclipse.ui.views"/>
@@ -1046,7 +884,7 @@
         <tags>ViewMenu</tags>
         <tags>menuContribution:menu</tags>
       </menus>
-      <toolbar xmi:id="_QOmStwuoEeerFLNjd_A4cQ" elementId="org.eclipse.ui.views.PropertySheet" visible="false"/>
+      <toolbar xmi:id="_QOmStwuoEeerFLNjd_A4cQ" elementId="org.eclipse.ui.views.PropertySheet"/>
     </sharedElements>
     <sharedElements xsi:type="basic:Part" xmi:id="_QOmSuAuoEeerFLNjd_A4cQ" elementId="org.eclipse.papyrus.views.modelexplorer.modelexplorer" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Model Explorer" iconURI="platform:/plugin/org.eclipse.papyrus.views.modelexplorer/icons/ModelExplorer.gif" tooltip="" closeable="true">
       <persistedState key="originalCompatibilityViewBundle" value="org.eclipse.papyrus.views.modelexplorer"/>
@@ -1079,7 +917,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_QOmSwQuoEeerFLNjd_A4cQ" elementId="org.eclipse.ui.workbench.file">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_m24HIAuoEeeyWvF78gsYjg" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_QOwrIwuoEeerFLNjd_A4cQ"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_JxnboAu9EeeKY_558CVDkw" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_QOwrIwuoEeerFLNjd_A4cQ"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_QOmSzwuoEeerFLNjd_A4cQ" elementId="additions" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -1103,7 +941,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_QOmTTAuoEeerFLNjd_A4cQ" elementId="org.eclipse.ui.workbench.navigate">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_m28_oAuoEeeyWvF78gsYjg" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_QOu2gguoEeerFLNjd_A4cQ"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_Jxs7MAu9EeeKY_558CVDkw" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_QOu2gguoEeerFLNjd_A4cQ"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_QOmTfguoEeerFLNjd_A4cQ" elementId="group.editor" toBeRendered="false">
         <tags>toolbarSeparator</tags>

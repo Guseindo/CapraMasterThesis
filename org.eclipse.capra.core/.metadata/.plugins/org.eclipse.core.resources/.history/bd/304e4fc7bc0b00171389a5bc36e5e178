@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_PSR1QPcsEea3FqLSFwaXsA" name="ModelRoot">
+  <packagedElement xmi:type="uml:Class" xmi:id="_R1CF4PcsEea3FqLSFwaXsA" name="Class1">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_V0K08PcsEea3FqLSFwaXsA" name="testRename" type="_SgSCUPcsEea3FqLSFwaXsA" aggregation="composite" association="_VzffgPcsEea3FqLSFwaXsA"/>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_tTK4MPc7EearXMtK9q-H3g" name="Attribute1" isUnique="false"/>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_VTNdgP7uEeaic_QQpwFfwA" name="class2" type="_SgSCUPcsEea3FqLSFwaXsA" association="_VS4tYP7uEeaic_QQpwFfwA"/>
+    <nestedClassifier xmi:type="uml:PrimitiveType" xmi:id="_qdg5sPc7EearXMtK9q-H3g" name="Test"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_SgSCUPcsEea3FqLSFwaXsA" name="Class2"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="_VzffgPcsEea3FqLSFwaXsA" memberEnd="_V0K08PcsEea3FqLSFwaXsA _V0LcAPcsEea3FqLSFwaXsA">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_VzopcPcsEea3FqLSFwaXsA" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_VzpQgPcsEea3FqLSFwaXsA" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_V0LcAPcsEea3FqLSFwaXsA" name="testRenameOtherProp" type="_R1CF4PcsEea3FqLSFwaXsA" association="_VzffgPcsEea3FqLSFwaXsA"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_W2UOcPcsEea3FqLSFwaXsA" name="SubClass1">
+    <generalization xmi:type="uml:Generalization" xmi:id="_a9A-EPcsEea3FqLSFwaXsA" general="_R1CF4PcsEea3FqLSFwaXsA"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Interface" xmi:id="_UoyeUPfZEeauWe7uNK_rBQ" name="Interface1"/>
+  <packagedElement xmi:type="uml:Realization" xmi:id="_AyKUQPisEeaSMqzS83z3Tg" client="_R1CF4PcsEea3FqLSFwaXsA" supplier="_UoyeUPfZEeauWe7uNK_rBQ"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_2gnmcPjAEeaBj5u00b5nNw" name="DependencyBranchTest"/>
+  <packagedElement xmi:type="uml:Dependency" xmi:id="_6JntcPjAEeaBj5u00b5nNw" client="_R1CF4PcsEea3FqLSFwaXsA" supplier="_2gnmcPjAEeaBj5u00b5nNw"/>
+  <packagedElement xmi:type="uml:AssociationClass" xmi:id="_VS4tYP7uEeaic_QQpwFfwA" name="AssociationClass1" memberEnd="_VTNdgP7uEeaic_QQpwFfwA _VTdVIP7uEeaic_QQpwFfwA">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_VTIlAP7uEeaic_QQpwFfwA" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_VTKaMP7uEeaic_QQpwFfwA" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_VTdVIP7uEeaic_QQpwFfwA" name="class1" type="_R1CF4PcsEea3FqLSFwaXsA" association="_VS4tYP7uEeaic_QQpwFfwA"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_iZ_zgAulEee-qNkiKmda8A" name="Class3">
+    <generalization xmi:type="uml:Generalization" xmi:id="_wGw-IAuoEeeyWvF78gsYjg" general="_uh__wAuoEeeyWvF78gsYjg"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Realization" xmi:id="_p8oegAulEee-qNkiKmda8A" client="_iZ_zgAulEee-qNkiKmda8A" supplier="_UoyeUPfZEeauWe7uNK_rBQ"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_uh__wAuoEeeyWvF78gsYjg" name="Class4"/>
+</uml:Model>

@@ -109,7 +109,7 @@ public interface TraceMetaModelAdapter {
 	 */
 	List<Connection> getTransitivelyConnectedElements(EObject element, EObject traceModel);
 
-	List<Connection> getInternalElements(EObject element);
+	List<Connection> getInternalElements(EObject element, EObject traceModel);
 
-	List<Connection> getInternalElementsTransitive(EObject element);
+	List<Connection> getInternalElementsTransitive(EObject element, EObject traceModel);
 }

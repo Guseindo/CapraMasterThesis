@@ -92,7 +92,7 @@ public class DiagramTextProviderHandler implements DiagramTextProvider {
 							} else {
 								SelectRelationshipsHandler.setPreviousElement(selectedObject);
 							}
-							traces.addAll(metamodelAdapter.getInternalElementsTransitive(selectedObject));
+							traces.addAll(metamodelAdapter.getInternalElementsTransitive(selectedObject, traceModel));
 						} else if (DisplayInternalLinksHandler.areInternalLinksShown()) {
 							EObject previousElement = SelectRelationshipsHandler.getPreviousElement();
 							if (previousElement != null) {
@@ -106,7 +106,7 @@ public class DiagramTextProviderHandler implements DiagramTextProvider {
 							} else {
 								SelectRelationshipsHandler.setPreviousElement(selectedObject);
 							}
-							traces.addAll(metamodelAdapter.getInternalElements(selectedObject));
+							traces.addAll(metamodelAdapter.getInternalElements(selectedObject, traceModel));
 						}
 						return VisualizationHelper.createNeighboursView(traces, selectedObject);
 					} else if (selectedModels.size() == 2) {
