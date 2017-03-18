@@ -21,6 +21,7 @@ import org.eclipse.capra.GenericTraceMetaModel.RelatedTo;
 import org.eclipse.capra.core.adapters.Connection;
 import org.eclipse.capra.core.adapters.TraceMetaModelAdapter;
 import org.eclipse.capra.core.helpers.EMFHelper;
+import org.eclipse.capra.ui.plantuml.SelectRelationshipsHandler;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -36,10 +37,6 @@ import org.eclipse.uml2.uml.Transition;
  * Provides generic functionality to deal with traceability meta models.
  */
 public class GenericMetaModelAdapter implements TraceMetaModelAdapter {
-
-	private static List<String> selectedRelationshipTypes = new ArrayList<>();
-	private static List<String> possibleRelationshipTypes = new ArrayList<>();
-	private static EObject previousElement = null;
 
 	public GenericMetaModelAdapter() {
 		// TODO Auto-generated constructor stub
@@ -139,25 +136,40 @@ public class GenericMetaModelAdapter implements TraceMetaModelAdapter {
 		return getTransitivelyConnectedElements(element, traceModel, accumulator);
 	}
 
+	public List<Connection> getInternalElementsTransitive(EObject element, List<Object> accumulator) {
+		List<Connection> directElements = getInternalElements(element);
+		List<Connection> allElements = new ArrayList<>();
+
+		directElements.forEach(connection -> {
+			if (!accumulator.contains(connection.getTlink())) {
+				allElements.add(connection);
+				accumulator.add(connection.getTlink());
+				connection.getTargets().forEach(e -> {
+					allElements.addAll(getInternalElementsTransitive(e, accumulator));
+				});
+			}
+		});
+
+		return allElements;
+	}
+
 	@Override
-	public List<Connection> getInternalElements(EObject element, EObject traceModel) {
-		previousElement = element;
-		List<Connection> directElements = getConnectedElements(element, traceModel);
+	public List<Connection> getInternalElementsTransitive(EObject element) {
+		List<Object> accumulator = new ArrayList<>();
+		return getInternalElementsTransitive(element, accumulator);
+	}
+
+	@Override
+	public List<Connection> getInternalElements(EObject element) {
 		List<Connection> allElements = new ArrayList<>();
 		ArrayList<String> duplicationCheck = new ArrayList<>();
-
-		for (Connection conn : directElements) {
-			for (EObject o : conn.getTargets()) {
-				addConnectionsForRelations(o, allElements, duplicationCheck);
-			}
-		}
 		addConnectionsForRelations(element, allElements, duplicationCheck);
-
 		return allElements;
 	}
 
 	private void addConnectionsForRelations(EObject o, List<Connection> allElements,
 			ArrayList<String> duplicationCheck) {
+		List<String> selectedRelationshipTypes = SelectRelationshipsHandler.getSelectedRelationshipTypes();
 		if (Relationship.class.isAssignableFrom(o.getClass())) {
 			if (selectedRelationshipTypes.size() == 0 || selectedRelationshipTypes.contains(o.eClass().getName())) {
 				Relationship rel = Relationship.class.cast(o);
@@ -165,7 +177,7 @@ public class GenericMetaModelAdapter implements TraceMetaModelAdapter {
 				rel.getRelatedElements().forEach(element -> relatedElements.add(element));
 				Connection conn = new Connection(o, relatedElements, rel);
 				allElements.add(conn);
-				addToPossibleRelationsForSelection(rel.eClass().getName());
+				SelectRelationshipsHandler.addToPossibleRelationsForSelection(rel.eClass().getName());
 			}
 		} else if (Transition.class.isAssignableFrom(o.getClass())) {
 			if (selectedRelationshipTypes.size() == 0 || selectedRelationshipTypes.contains(o.eClass().getName())) {
@@ -175,7 +187,7 @@ public class GenericMetaModelAdapter implements TraceMetaModelAdapter {
 				relatedElements.add(transition.getTarget());
 				Connection conn = new Connection(o, relatedElements, transition);
 				allElements.add(conn);
-				addToPossibleRelationsForSelection(transition.eClass().getName());
+				SelectRelationshipsHandler.addToPossibleRelationsForSelection(transition.eClass().getName());
 			}
 		} else if (Message.class.isAssignableFrom(o.getClass())) {
 			if (selectedRelationshipTypes.size() == 0 || selectedRelationshipTypes.contains(o.eClass().getName())) {
@@ -189,7 +201,7 @@ public class GenericMetaModelAdapter implements TraceMetaModelAdapter {
 					Connection conn = new Connection(o, relatedElements, msg);
 					allElements.add(conn);
 				}
-				addToPossibleRelationsForSelection(msg.eClass().getName());
+				SelectRelationshipsHandler.addToPossibleRelationsForSelection(msg.eClass().getName());
 			}
 		} else {
 			EObject root = EcoreUtil.getRootContainer(o);
@@ -222,7 +234,8 @@ public class GenericMetaModelAdapter implements TraceMetaModelAdapter {
 								Connection conn = new Connection(o, relatedElements, relation);
 								allElements.add(conn);
 								addPotentialStringsForConnection(o, relatedElements, relation, duplicationCheck);
-								addToPossibleRelationsForSelection(relation.eClass().getName());
+								SelectRelationshipsHandler
+										.addToPossibleRelationsForSelection(relation.eClass().getName());
 							}
 						}
 					} else if (Transition.class.isAssignableFrom(content.getClass())) {
@@ -234,7 +247,8 @@ public class GenericMetaModelAdapter implements TraceMetaModelAdapter {
 								Connection conn = new Connection(o, relatedElements, transition);
 								allElements.add(conn);
 								addPotentialStringsForConnection(o, relatedElements, transition, duplicationCheck);
-								addToPossibleRelationsForSelection(transition.eClass().getName());
+								SelectRelationshipsHandler
+										.addToPossibleRelationsForSelection(transition.eClass().getName());
 							}
 						} else if (EMFHelper.getNameAttribute(transition.getTarget())
 								.equals(EMFHelper.getNameAttribute(o))) {
@@ -243,7 +257,8 @@ public class GenericMetaModelAdapter implements TraceMetaModelAdapter {
 								Connection conn = new Connection(o, relatedElements, transition);
 								allElements.add(conn);
 								addPotentialStringsForConnection(o, relatedElements, transition, duplicationCheck);
-								addToPossibleRelationsForSelection(transition.eClass().getName());
+								SelectRelationshipsHandler
+										.addToPossibleRelationsForSelection(transition.eClass().getName());
 							}
 						}
 					} else if (Message.class.isAssignableFrom(content.getClass())) {
@@ -262,7 +277,8 @@ public class GenericMetaModelAdapter implements TraceMetaModelAdapter {
 									allElements.add(conn);
 									addPotentialStringsForConnection(o, relatedElements, msg, msg.getMessageSort(),
 											duplicationCheck);
-									addToPossibleRelationsForSelection(msg.eClass().getName());
+									SelectRelationshipsHandler
+											.addToPossibleRelationsForSelection(msg.eClass().getName());
 								}
 							} else if (EMFHelper.getNameAttribute(sender.getCovered())
 									.equals(EMFHelper.getNameAttribute(o))) {
@@ -273,7 +289,8 @@ public class GenericMetaModelAdapter implements TraceMetaModelAdapter {
 									allElements.add(conn);
 									addPotentialStringsForConnection(o, relatedElements, msg, msg.getMessageSort(),
 											duplicationCheck);
-									addToPossibleRelationsForSelection(msg.eClass().getName());
+									SelectRelationshipsHandler
+											.addToPossibleRelationsForSelection(msg.eClass().getName());
 								}
 							}
 						}
@@ -344,35 +361,5 @@ public class GenericMetaModelAdapter implements TraceMetaModelAdapter {
 		connectionString += EMFHelper.getNameAttribute(relation);
 		connectionString += msgSort.getName();
 		return duplicationCheck.contains(connectionString);
-	}
-
-	private void addToPossibleRelationsForSelection(String className) {
-		if (!possibleRelationshipTypes.contains(className)) {
-			possibleRelationshipTypes.add(className);
-		}
-	}
-
-	public List<String> getPossibleRelationsForSelection() {
-		return possibleRelationshipTypes;
-	}
-
-	public void clearPossibleRelationsForSelection() {
-		possibleRelationshipTypes.clear();
-	}
-
-	public void setSelectedRelationshipTypes(List<String> relationships) {
-		selectedRelationshipTypes = relationships;
-	}
-
-	public List<String> getSelectedRelationshipTypes() {
-		return selectedRelationshipTypes;
-	}
-
-	public void emptySelectedRelationshipTypes() {
-		selectedRelationshipTypes.clear();
-	}
-
-	public EObject getPreviousElement() {
-		return this.previousElement;
 	}
 }

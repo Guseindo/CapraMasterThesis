@@ -78,17 +78,35 @@ public class DiagramTextProviderHandler implements DiagramTextProvider {
 						} else {
 							traces = metamodelAdapter.getConnectedElements(selectedObject, traceModel);
 						}
-						if (DisplayInternalLinksHandler.areInternalLinksShown()) {
-							EObject previousElement = metamodelAdapter.getPreviousElement();
+						if (DisplayInternalLinksHandler.areInternalLinksShown()
+								&& DisplayTracesHandler.isTraceViewTransitive()) {
+							EObject previousElement = SelectRelationshipsHandler.getPreviousElement();
 							if (previousElement != null) {
 								String previousElementName = EMFHelper.getNameAttribute(previousElement);
 								String currentElementName = EMFHelper.getNameAttribute(selectedObject);
 								if (!previousElementName.equals(currentElementName)) {
-									metamodelAdapter.clearPossibleRelationsForSelection();
-									metamodelAdapter.emptySelectedRelationshipTypes();
+									SelectRelationshipsHandler.clearPossibleRelationsForSelection();
+									SelectRelationshipsHandler.emptySelectedRelationshipTypes();
+									SelectRelationshipsHandler.setPreviousElement(selectedObject);
 								}
+							} else {
+								SelectRelationshipsHandler.setPreviousElement(selectedObject);
 							}
-							traces.addAll(metamodelAdapter.getInternalElements(selectedObject, traceModel));
+							traces.addAll(metamodelAdapter.getInternalElementsTransitive(selectedObject));
+						} else if (DisplayInternalLinksHandler.areInternalLinksShown()) {
+							EObject previousElement = SelectRelationshipsHandler.getPreviousElement();
+							if (previousElement != null) {
+								String previousElementName = EMFHelper.getNameAttribute(previousElement);
+								String currentElementName = EMFHelper.getNameAttribute(selectedObject);
+								if (!previousElementName.equals(currentElementName)) {
+									SelectRelationshipsHandler.clearPossibleRelationsForSelection();
+									SelectRelationshipsHandler.emptySelectedRelationshipTypes();
+									SelectRelationshipsHandler.setPreviousElement(selectedObject);
+								}
+							} else {
+								SelectRelationshipsHandler.setPreviousElement(selectedObject);
+							}
+							traces.addAll(metamodelAdapter.getInternalElements(selectedObject));
 						}
 						return VisualizationHelper.createNeighboursView(traces, selectedObject);
 					} else if (selectedModels.size() == 2) {
