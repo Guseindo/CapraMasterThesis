@@ -55,7 +55,6 @@ public class ArtifactHelper {
 	public IArtifactHandler<Object> getHandler(Object artifact) {
 		List<IArtifactHandler<Object>> availableHandlers = handlers.stream().filter(h -> h.canHandleArtifact(artifact))
 				.collect(Collectors.toList());
-
 		// TODO: Could this be folded into the pipeline above?
 		if (availableHandlers.size() == 1) {
 			return availableHandlers.get(0);

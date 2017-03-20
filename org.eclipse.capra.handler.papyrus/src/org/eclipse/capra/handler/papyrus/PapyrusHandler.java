@@ -10,10 +10,6 @@
  *******************************************************************************/
 package org.eclipse.capra.handler.papyrus;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.eclipse.capra.core.adapters.Connection;
 import org.eclipse.capra.core.handlers.AbstractArtifactHandler;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.papyrus.emf.facet.custom.metamodel.v0_2_0.internal.treeproxy.EObjectTreeElement;
@@ -41,10 +37,6 @@ public class PapyrusHandler extends AbstractArtifactHandler<EObjectTreeElement> 
 	public String getDisplayName(EObjectTreeElement artifact) {
 		EObject sel = EMFHelper.getEObject(artifact);
 		return org.eclipse.capra.core.helpers.EMFHelper.getIdentifier(sel); // TODO
-	}
-
-	public List<Connection> getInternalElements(EObject element, EObject traceModel) {
-		return new ArrayList<Connection>();
 	}
 
 }

@@ -13,6 +13,7 @@ package org.eclipse.capra.core.adapters;
 import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.capra.core.handlers.IArtifactHandler;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 
@@ -109,7 +110,64 @@ public interface TraceMetaModelAdapter {
 	 */
 	List<Connection> getTransitivelyConnectedElements(EObject element, EObject traceModel);
 
+	/**
+	 * Determine a list of all objects internally connected to element (e.g.
+	 * UML)
+	 * 
+	 * @param element
+	 *            The element used to determine the list of connected objects.
+	 *            Note that this element could be a trace in the trace model
+	 * @param traceModel
+	 *            Trace model to base calculation on
+	 * @return A Map with the following structure: [Trace object t -> {list of
+	 *         all objects connected to element via t}]
+	 */
 	List<Connection> getInternalElements(EObject element, EObject traceModel);
 
+	/**
+	 * Determine a list of elements internally connected to the selected one
+	 * 
+	 * @param element
+	 *            The element used to determine the list of connected objects.
+	 *            Note that this element could be a trace in the trace model
+	 * @param traceModel
+	 *            Trace model to base calculation on
+	 * @return A Map with the following structure: [Trace object t -> {list of
+	 *         all objects connected to element via t}]
+	 */
 	List<Connection> getInternalElementsTransitive(EObject element, EObject traceModel);
+
+	/**
+	 * Decide if two objects are connected internally
+	 * 
+	 * @param first
+	 *            First object
+	 * @param second
+	 *            Second object
+	 * @return <code>true</code> if object are connected, <code>false</code>
+	 *         otherwise
+	 */
+	boolean isThereAnInternalTraceBetween(EObject first, EObject second);
+
+	/**
+	 * Returns a string for the plant uml matrix view for the trace type between
+	 * the last elements that have been checked for an internal trace
+	 * 
+	 * @param first
+	 *            Needed to determine the right {@link IArtifactHandler} for
+	 *            receiving the String
+	 * 
+	 * @return Type of trace
+	 */
+	String getRelationStringForMatrix(EObject first);
+
+	/**
+	 * Delegates to a {@link IArtifactHandler} to empty the string for the
+	 * previously checked elements
+	 * 
+	 * @param first
+	 *            Needed to determine the right {@link IArtifactHandler} for
+	 *            receiving the String
+	 */
+	void emptyRelationshipStrings(EObject first);
 }

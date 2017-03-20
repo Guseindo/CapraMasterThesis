@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.capra.core.handlers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.capra.core.adapters.Connection;
@@ -61,16 +62,50 @@ public interface IArtifactHandler<T> {
 	String getDisplayName(T artifact);
 
 	/**
-	 * Determine a list of all objects internally connected (e.g. in a UML
-	 * diagram) elements
+	 * Adds the internal links for a given element into the list of all
+	 * elements. This method is delegated to the right handler (e.g. Papyrus for
+	 * UML)
 	 * 
-	 * @param element
-	 *            The element used to determine the list of connected objects.
-	 *            Note that this element could be a trace in the trace model
-	 * @param traceModel
-	 *            Trace model to base calculation on
-	 * @return A Map with the following structure: [Trace object t -> {list of
-	 *         all objects connected to element via t}]
+	 * @param investigatedElement
+	 *            Element currently under investigation for links
+	 * @param allElements
+	 *            List of all elements for Plant-uml view
+	 * @param duplicationCheck
+	 *            List of String for checking for duplication
 	 */
-	List<Connection> getInternalElements(EObject element, EObject traceModel);
+	void addInternalLinks(EObject investigatedElement, List<Connection> allElements,
+			ArrayList<String> duplicationCheck);
+
+	/**
+	 * Decide if two objects are connected internally
+	 * 
+	 * @param first
+	 *            First object
+	 * @param second
+	 *            Second object
+	 * @return <code>true</code> if object are connected, <code>false</code>
+	 *         otherwise
+	 */
+	boolean isThereAnInternalTraceBetween(EObject first, EObject second);
+
+	/**
+	 * Returns a string for the plant uml matrix view for the trace type between
+	 * the last elements that have been checked for an internal trace
+	 * 
+	 * @return Type of trace
+	 */
+	String getRelationStringForMatrix();
+
+	/**
+	 * Empties the Strings created for storing the trace type(s) while checking
+	 * if two elements are internally connected.
+	 * 
+	 * This is used in order to avoid iterating the whole model twice and
+	 * storing the type of relationship(s) immediately while checking if the
+	 * elements are connected internally.
+	 * 
+	 * Can be ignored if no iteration is needed and trace type can be determined
+	 * differently.
+	 */
+	void emptyRelationshipStrings();
 }

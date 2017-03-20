@@ -115,6 +115,13 @@ public class DiagramTextProviderHandler implements DiagramTextProvider {
 									.linearize(handler.createWrapper(selectedModels.get(0), artifactModel));
 							secondModelElements = EMFHelper
 									.linearize(handler.createWrapper(selectedModels.get(1), artifactModel));
+							List<Connection> internalElements = new ArrayList<>();
+							ArrayList<String> duplicationCheck = new ArrayList<>();
+
+							for (EObject modelElement : firstModelElements) {
+								IArtifactHandler<Object> secondHandler = artifactHelper.getHandler(modelElement);
+								secondHandler.addInternalLinks(modelElement, internalElements, duplicationCheck);
+							}
 						} else {
 							List<EObject> firstObject = new ArrayList<>();
 							firstObject.add(handler.createWrapper(selectedModels.get(0), artifactModel));

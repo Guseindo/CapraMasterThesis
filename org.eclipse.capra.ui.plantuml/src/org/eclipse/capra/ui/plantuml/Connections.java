@@ -89,19 +89,19 @@ public class Connections {
 		connections.forEach(c -> {
 			c.getTargets().forEach(trg -> {
 				if (!trg.equals(c.getOrigin())) {
-					if(DirectedRelationship.class.isAssignableFrom(c.getTlink().getClass())){
+					if (DirectedRelationship.class.isAssignableFrom(c.getTlink().getClass())) {
 						DirectedRelationship dirRel = DirectedRelationship.class.cast(c.getTlink());
 						List<String> sourceNames = new ArrayList<>();
 						String arrowLeft = "<--";
 						String arrowRight = "-->";
-						for(Element elem : dirRel.getSources()){
+						for (Element elem : dirRel.getSources()) {
 							sourceNames.add(EMFHelper.getNameAttribute(elem));
 						}
-						if(Dependency.class.isAssignableFrom(c.getTlink().getClass())){
+						if (Dependency.class.isAssignableFrom(c.getTlink().getClass())) {
 							arrowLeft = "<|..";
 							arrowRight = "..|>";
 						}
-						if(sourceNames.contains(EMFHelper.getNameAttribute(c.getOrigin()))){
+						if (sourceNames.contains(EMFHelper.getNameAttribute(c.getOrigin()))) {
 							arrows.add(object2Id.get(c.getOrigin()) + arrowRight + object2Id.get(trg) + ":"
 									+ EMFHelper.getRelationIdentifier(c.getTlink()));
 						} else {
@@ -109,7 +109,7 @@ public class Connections {
 									+ EMFHelper.getRelationIdentifier(c.getTlink()));
 						}
 					} else {
-						if(EMFHelper.objectIsOfUML2Package(c.getTlink())){
+						if (EMFHelper.objectIsOfUML2Package(c.getTlink())) {
 							arrows.add(object2Id.get(c.getOrigin()) + "--" + object2Id.get(trg) + ":"
 									+ EMFHelper.getRelationIdentifier(c.getTlink()));
 						} else {
@@ -139,7 +139,6 @@ public class Connections {
 		if (object instanceof ArtifactWrapper) {
 			ArtifactWrapper wrapper = (ArtifactWrapper) object;
 			Collection<IArtifactHandler<Object>> artifactHandlers = ExtensionPointHelper.getArtifactHandlers();
-
 			for (IArtifactHandler<Object> handler : artifactHandlers) {
 				String handlerName = handler.toString().substring(0, handler.toString().indexOf('@'));
 				if (handlerName.equals(wrapper.getArtifactHandler())) {

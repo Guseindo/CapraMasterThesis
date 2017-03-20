@@ -10,11 +10,7 @@
  *******************************************************************************/
 package org.eclipse.capra.handler.hudson;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.capra.core.adapters.ArtifactMetaModelAdapter;
-import org.eclipse.capra.core.adapters.Connection;
 import org.eclipse.capra.core.handlers.AbstractArtifactHandler;
 import org.eclipse.capra.core.helpers.ExtensionPointHelper;
 import org.eclipse.emf.ecore.EObject;
@@ -43,11 +39,6 @@ public class BuildElementHandler extends AbstractArtifactHandler<BuildElement> {
 	@Override
 	public String getDisplayName(BuildElement build) {
 		return build.getName();
-	}
-
-	@Override
-	public List<Connection> getInternalElements(EObject element, EObject traceModel) {
-		return new ArrayList<Connection>();
 	}
 
 }

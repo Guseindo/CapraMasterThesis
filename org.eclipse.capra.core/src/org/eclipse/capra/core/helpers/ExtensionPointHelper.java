@@ -142,8 +142,8 @@ public class ExtensionPointHelper {
 	 */
 	public static Collection<IArtifactHandler<Object>> getArtifactHandlers() {
 		try {
-			return getExtensions(ARTIFACT_HANDLER_ID, ARTIFACT_HANDLER_CONFIG).stream().map(IArtifactHandler.class::cast)
-					.collect(Collectors.toList());
+			return getExtensions(ARTIFACT_HANDLER_ID, ARTIFACT_HANDLER_CONFIG).stream()
+					.map(IArtifactHandler.class::cast).collect(Collectors.toList());
 		} catch (Exception e) {
 			return Collections.<IArtifactHandler<Object>>emptyList();
 		}

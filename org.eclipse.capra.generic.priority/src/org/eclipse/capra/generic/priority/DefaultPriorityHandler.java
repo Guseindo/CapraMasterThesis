@@ -14,8 +14,11 @@ import java.util.Collection;
 
 import org.eclipse.capra.core.handlers.IArtifactHandler;
 import org.eclipse.capra.core.handlers.PriorityHandler;
+import org.eclipse.capra.handler.emf.EMFHandler;
 import org.eclipse.capra.handler.hudson.BuildElementHandler;
 import org.eclipse.capra.handler.hudson.TestElementHandler;
+import org.eclipse.capra.handler.uml.UMLHandler;
+import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.mylyn.builds.internal.core.BuildElement;
 import org.eclipse.mylyn.builds.internal.core.TestElement;
 
@@ -27,15 +30,21 @@ import org.eclipse.mylyn.builds.internal.core.TestElement;
 public class DefaultPriorityHandler implements PriorityHandler {
 
 	@Override
-	public IArtifactHandler<Object> getSelectedHandler(Collection<IArtifactHandler<Object>> handlers, Object selectedElement) {
-		// TODO: is this needed if HudsonHandler is split into Build/TestElementHandler?
+	public IArtifactHandler<Object> getSelectedHandler(Collection<IArtifactHandler<Object>> handlers,
+			Object selectedElement) {
+		// TODO: is this needed if HudsonHandler is split into
+		// Build/TestElementHandler?
 		if (selectedElement instanceof TestElement) {
-			return handlers.stream().filter(h -> h.getClass().isAssignableFrom(TestElementHandler.class)).findAny().get();
+			return handlers.stream().filter(h -> h.getClass().isAssignableFrom(TestElementHandler.class)).findAny()
+					.get();
 
 		} else if (selectedElement instanceof BuildElement) {
-			return handlers.stream().filter(h -> h.getClass().isAssignableFrom(BuildElementHandler.class)).findAny().get();
+			return handlers.stream().filter(h -> h.getClass().isAssignableFrom(BuildElementHandler.class)).findAny()
+					.get();
+		} else if (EModelElement.class.isAssignableFrom(selectedElement.getClass())) {
+			return handlers.stream().filter(h -> h.getClass().isAssignableFrom(UMLHandler.class)).findAny().get();
 		}
-		return null;
+		return handlers.stream().filter(h -> h.getClass().isAssignableFrom(EMFHandler.class)).findAny().get();
 	}
 
 }

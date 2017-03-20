@@ -10,11 +10,7 @@
  *******************************************************************************/
 package org.eclipse.capra.handler.file;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.capra.core.adapters.ArtifactMetaModelAdapter;
-import org.eclipse.capra.core.adapters.Connection;
 import org.eclipse.capra.core.handlers.AbstractArtifactHandler;
 import org.eclipse.capra.core.helpers.ExtensionPointHelper;
 import org.eclipse.core.resources.IFile;
@@ -47,11 +43,6 @@ public class IFileHandler extends AbstractArtifactHandler<IFile> {
 	@Override
 	public String getDisplayName(IFile file) {
 		return file.getName();
-	}
-
-	@Override
-	public List<Connection> getInternalElements(EObject element, EObject traceModel) {
-		return new ArrayList<Connection>();
 	}
 
 }

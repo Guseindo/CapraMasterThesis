@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.capra.handler.cdt;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
