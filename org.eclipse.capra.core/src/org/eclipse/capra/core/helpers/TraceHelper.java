@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.capra.core.helpers;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -64,8 +65,10 @@ public class TraceHelper {
 					// element
 					// TODO: maybe add an adapter method for this?
 					Set<EObject> connectedElements = new HashSet<EObject>();
+					List<String> selectedRelationshipTypes = new ArrayList<>();
 					final StringBuilder annotation = new StringBuilder();
-					List<Connection> connections = traceAdapter.getConnectedElements(wrapper, traceModel);
+					List<Connection> connections = traceAdapter.getConnectedElements(wrapper, traceModel,
+							selectedRelationshipTypes);
 					connections.forEach(c -> {
 						c.getTargets().forEach(t -> {
 							if (t != wrapper) {

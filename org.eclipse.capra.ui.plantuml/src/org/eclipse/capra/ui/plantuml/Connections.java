@@ -89,7 +89,7 @@ public class Connections {
 		connections.forEach(c -> {
 			c.getTargets().forEach(trg -> {
 				if (!trg.equals(c.getOrigin())) {
-					if (DirectedRelationship.class.isAssignableFrom(c.getTlink().getClass())) {
+					if (c.getTlink() != null && DirectedRelationship.class.isAssignableFrom(c.getTlink().getClass())) {
 						DirectedRelationship dirRel = DirectedRelationship.class.cast(c.getTlink());
 						List<String> sourceNames = new ArrayList<>();
 						String arrowLeft = "<--";
@@ -109,7 +109,7 @@ public class Connections {
 									+ EMFHelper.getRelationIdentifier(c.getTlink()));
 						}
 					} else {
-						if (EMFHelper.objectIsOfUML2Package(c.getTlink())) {
+						if (c.getTlink() != null && EMFHelper.objectIsOfUML2Package(c.getTlink())) {
 							arrows.add(object2Id.get(c.getOrigin()) + "--" + object2Id.get(trg) + ":"
 									+ EMFHelper.getRelationIdentifier(c.getTlink()));
 						} else {

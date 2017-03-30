@@ -105,10 +105,45 @@ public interface TraceMetaModelAdapter {
 	 *            Note that this element could be a trace in the trace model
 	 * @param traceModel
 	 *            Trace model to base calculation on
+	 * @param selectedRelationshipTypes
+	 *            List of selected relationship types from the context menu of
+	 *            plantuml
+	 * @return A Map with the following structure: [Trace object t -> {list of
+	 *         all objects connected to element via t}]
+	 */
+	List<Connection> getConnectedElements(EObject element, EObject traceModel, List<String> selectedRelationshipTypes);
+
+	/**
+	 * Determine a list of all objects connected to element according to the
+	 * given trace model
+	 * 
+	 * @param element
+	 *            The element used to determine the list of connected objects.
+	 *            Note that this element could be a trace in the trace model
+	 * @param traceModel
+	 *            Trace model to base calculation on
 	 * @return A Map with the following structure: [Trace object t -> {list of
 	 *         all objects connected to element via t}]
 	 */
 	List<Connection> getTransitivelyConnectedElements(EObject element, EObject traceModel);
+
+	/**
+	 * Determine a list of all objects connected to element according to the
+	 * given trace model
+	 * 
+	 * @param element
+	 *            The element used to determine the list of connected objects.
+	 *            Note that this element could be a trace in the trace model
+	 * @param traceModel
+	 *            Trace model to base calculation on
+	 * @param selectedRelationshipTypes
+	 *            List of selected relationship types from the context menu of
+	 *            plantuml
+	 * @return A Map with the following structure: [Trace object t -> {list of
+	 *         all objects connected to element via t}]
+	 */
+	List<Connection> getTransitivelyConnectedElements(EObject element, EObject traceModel,
+			List<String> selectedRelationshipTypes);
 
 	/**
 	 * Determine a list of all objects internally connected to element (e.g.
@@ -119,10 +154,13 @@ public interface TraceMetaModelAdapter {
 	 *            Note that this element could be a trace in the trace model
 	 * @param traceModel
 	 *            Trace model to base calculation on
+	 * @param selectedRelationshipTypes
+	 *            List of selected relationship types from the context menu of
+	 *            plantuml
 	 * @return A Map with the following structure: [Trace object t -> {list of
 	 *         all objects connected to element via t}]
 	 */
-	List<Connection> getInternalElements(EObject element, EObject traceModel);
+	List<Connection> getInternalElements(EObject element, EObject traceModel, List<String> selectedRelationshipTypes);
 
 	/**
 	 * Determine a list of elements internally connected to the selected one
@@ -135,7 +173,8 @@ public interface TraceMetaModelAdapter {
 	 * @return A Map with the following structure: [Trace object t -> {list of
 	 *         all objects connected to element via t}]
 	 */
-	List<Connection> getInternalElementsTransitive(EObject element, EObject traceModel);
+	List<Connection> getInternalElementsTransitive(EObject element, EObject traceModel,
+			List<String> selectedRelationshipTypes);
 
 	/**
 	 * Decide if two objects are connected internally

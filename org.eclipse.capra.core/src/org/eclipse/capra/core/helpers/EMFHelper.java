@@ -71,6 +71,10 @@ public class EMFHelper {
 	 * Relationship (e.g. Generalization).
 	 */
 	public static String getRelationIdentifier(EObject relation) {
+		if (relation == null)
+			return "<null>";
+		if (relation.eClass() == null)
+			return relation.toString();
 		StringBuilder identifier = new StringBuilder();
 
 		identifier.append(relation.eClass().getName());

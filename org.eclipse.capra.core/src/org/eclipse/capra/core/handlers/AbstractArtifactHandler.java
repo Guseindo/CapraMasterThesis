@@ -32,7 +32,7 @@ public abstract class AbstractArtifactHandler<T> implements IArtifactHandler<T> 
 
 	@Override
 	public void addInternalLinks(EObject investigatedElement, List<Connection> allElements,
-			ArrayList<String> duplicationCheck) {
+			ArrayList<String> duplicationCheck, List<String> selectedRelationshipTypes) {
 		// TODO Auto-generated method stub
 	}
 

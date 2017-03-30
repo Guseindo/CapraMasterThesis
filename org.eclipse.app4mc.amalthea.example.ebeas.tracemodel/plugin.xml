@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   
+   <!--extension
+         point="org.eclipse.capra.configuration.ArtifactMetaModel">
+      <ArtifactMetaModelAdapter
+            class="org.eclipse.app4mc.amalthea.example.ebeas.tracemodel.ArtifactMetaModelAdapter">
+      </ArtifactMetaModelAdapter>
+   </extension-->
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated traceModel -->
+      <package
+            uri="org.eclipse.app4mc.amalthea.example.ebeas.tracemodel"
+            class="org.eclipse.app4mc.amalthea.example.ebeas.tracemodel.TracemodelPackage"
+            genModel="model/traceModel.xcore"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated artifactModel -->
+      <package
+            uri="org.eclipse.capra.GenericArtifactMetaModel"
+            class="org.eclipse.capra.GenericArtifactMetaModel.GenericArtifactMetaModelPackage"
+            genModel="artifactModel.xcore"/>
+   </extension>
+   <extension
+         point="org.eclipse.capra.configuration.traceabilityMetaModel">
+      <TraceabilityMetaModelAdapter
+            class="org.eclipse.app4mc.amalthea.example.ebeas.tracemodel.TraceMetaModelAdapter">
+      </TraceabilityMetaModelAdapter>
+   </extension>
+
+</plugin>

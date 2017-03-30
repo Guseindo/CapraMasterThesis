@@ -73,8 +73,8 @@ public interface IArtifactHandler<T> {
 	 * @param duplicationCheck
 	 *            List of String for checking for duplication
 	 */
-	void addInternalLinks(EObject investigatedElement, List<Connection> allElements,
-			ArrayList<String> duplicationCheck);
+	void addInternalLinks(EObject investigatedElement, List<Connection> allElements, ArrayList<String> duplicationCheck,
+			List<String> selectedRelationshipTypes);
 
 	/**
 	 * Decide if two objects are connected internally
@@ -89,8 +89,8 @@ public interface IArtifactHandler<T> {
 	boolean isThereAnInternalTraceBetween(EObject first, EObject second);
 
 	/**
-	 * Returns a string for the plant uml matrix view for the trace type between
-	 * the last elements that have been checked for an internal trace
+	 * Returns a string for the traceability matrix view for the trace type
+	 * between the last elements that have been checked for an internal trace
 	 * 
 	 * @return Type of trace
 	 */

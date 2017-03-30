@@ -13,8 +13,8 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 public abstract class AbstractMetaModelAdapter implements TraceMetaModelAdapter {
 
 	private List<Connection> getInternalElementsTransitive(EObject element, EObject traceModel,
-			List<Object> accumulator) {
-		List<Connection> directElements = getInternalElements(element, traceModel);
+			List<Object> accumulator, List<String> selectedRelationshipTypes) {
+		List<Connection> directElements = getInternalElements(element, traceModel, selectedRelationshipTypes);
 		List<Connection> allElements = new ArrayList<>();
 
 		directElements.forEach(connection -> {
@@ -22,7 +22,8 @@ public abstract class AbstractMetaModelAdapter implements TraceMetaModelAdapter 
 				allElements.add(connection);
 				accumulator.add(connection.getTlink());
 				connection.getTargets().forEach(e -> {
-					allElements.addAll(getInternalElementsTransitive(e, traceModel, accumulator));
+					allElements.addAll(
+							getInternalElementsTransitive(e, traceModel, accumulator, selectedRelationshipTypes));
 				});
 			}
 		});
@@ -30,15 +31,17 @@ public abstract class AbstractMetaModelAdapter implements TraceMetaModelAdapter 
 		return allElements;
 	}
 
-	public List<Connection> getInternalElementsTransitive(EObject element, EObject traceModel) {
+	public List<Connection> getInternalElementsTransitive(EObject element, EObject traceModel,
+			List<String> selectedRelationshipTypes) {
 		List<Object> accumulator = new ArrayList<>();
-		return getInternalElementsTransitive(element, traceModel, accumulator);
+		return getInternalElementsTransitive(element, traceModel, accumulator, selectedRelationshipTypes);
 	}
 
-	public List<Connection> getInternalElements(EObject element, EObject traceModel) {
+	public List<Connection> getInternalElements(EObject element, EObject traceModel,
+			List<String> selectedRelationshipTypes) {
 		List<Connection> allElements = new ArrayList<>();
 		ArrayList<String> duplicationCheck = new ArrayList<>();
-		List<Connection> directElements = getConnectedElements(element, traceModel);
+		List<Connection> directElements = getConnectedElements(element, traceModel, selectedRelationshipTypes);
 
 		ResourceSet resourceSet = new ResourceSetImpl();
 		TracePersistenceAdapter persistenceAdapter = ExtensionPointHelper.getTracePersistenceAdapter().get();
@@ -48,12 +51,12 @@ public abstract class AbstractMetaModelAdapter implements TraceMetaModelAdapter 
 		for (Connection conn : directElements) {
 			for (EObject o : conn.getTargets()) {
 				IArtifactHandler<Object> handler = artifactHelper.getHandler(o);
-				handler.addInternalLinks(o, allElements, duplicationCheck);
+				handler.addInternalLinks(o, allElements, duplicationCheck, selectedRelationshipTypes);
 			}
 		}
 
 		IArtifactHandler<Object> handler = artifactHelper.getHandler(element);
-		handler.addInternalLinks(element, allElements, duplicationCheck);
+		handler.addInternalLinks(element, allElements, duplicationCheck, selectedRelationshipTypes);
 		return allElements;
 	}
 

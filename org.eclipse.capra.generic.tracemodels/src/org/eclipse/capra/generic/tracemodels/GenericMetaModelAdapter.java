@@ -41,7 +41,7 @@ public class GenericMetaModelAdapter extends AbstractMetaModelAdapter implements
 	@Override
 	public Collection<EClass> getAvailableTraceTypes(List<EObject> selection) {
 		Collection<EClass> traceTypes = new ArrayList<>();
-		if (selection.size() > 1) {
+		if (selection.size() >= 1) {
 			traceTypes.add(GenericTraceMetaModelPackage.eINSTANCE.getRelatedTo());
 		}
 		return traceTypes;
@@ -103,8 +103,32 @@ public class GenericMetaModelAdapter extends AbstractMetaModelAdapter implements
 		return connections;
 	}
 
+	@Override
+	public List<Connection> getConnectedElements(EObject element, EObject tracemodel,
+			List<String> selectedRelationshipTypes) {
+		GenericTraceModel root = (GenericTraceModel) tracemodel;
+		List<Connection> connections = new ArrayList<>();
+		List<RelatedTo> traces = root.getTraces();
+
+		if (selectedRelationshipTypes.size() == 0 || selectedRelationshipTypes
+				.contains(GenericTraceMetaModelPackage.eINSTANCE.getRelatedTo().getName())) {
+			if (element instanceof RelatedTo) {
+				RelatedTo trace = (RelatedTo) element;
+				connections.add(new Connection(element, trace.getItem(), trace));
+			} else {
+
+				for (RelatedTo trace : traces) {
+					if (trace.getItem().contains(element)) {
+						connections.add(new Connection(element, trace.getItem(), trace));
+					}
+				}
+			}
+		}
+		return connections;
+	}
+
 	private List<Connection> getTransitivelyConnectedElements(EObject element, EObject traceModel,
-			List<Object> accumulator) {
+			ArrayList<Object> accumulator) {
 		List<Connection> directElements = getConnectedElements(element, traceModel);
 		List<Connection> allElements = new ArrayList<>();
 
@@ -121,10 +145,36 @@ public class GenericMetaModelAdapter extends AbstractMetaModelAdapter implements
 		return allElements;
 	}
 
+	private List<Connection> getTransitivelyConnectedElements(EObject element, EObject traceModel,
+			List<Object> accumulator, List<String> selectedRelationshipTypes) {
+		List<Connection> directElements = getConnectedElements(element, traceModel, selectedRelationshipTypes);
+		List<Connection> allElements = new ArrayList<>();
+
+		directElements.forEach(connection -> {
+			if (!accumulator.contains(connection.getTlink())) {
+				allElements.add(connection);
+				accumulator.add(connection.getTlink());
+				connection.getTargets().forEach(e -> {
+					allElements.addAll(
+							getTransitivelyConnectedElements(e, traceModel, accumulator, selectedRelationshipTypes));
+				});
+			}
+		});
+
+		return allElements;
+	}
+
 	@Override
 	public List<Connection> getTransitivelyConnectedElements(EObject element, EObject traceModel) {
-		List<Object> accumulator = new ArrayList<>();
+		ArrayList<Object> accumulator = new ArrayList<>();
 		return getTransitivelyConnectedElements(element, traceModel, accumulator);
+	}
+
+	@Override
+	public List<Connection> getTransitivelyConnectedElements(EObject element, EObject traceModel,
+			List<String> selectedRelationshipTypes) {
+		List<Object> accumulator = new ArrayList<>();
+		return getTransitivelyConnectedElements(element, traceModel, accumulator, selectedRelationshipTypes);
 	}
 
 }

@@ -71,12 +71,19 @@ public class DiagramTextProviderHandler implements DiagramTextProvider {
 				if (selectedObject != null) {
 					resourceSet = selectedObject.eResource().getResourceSet();
 					traceModel = persistenceAdapter.getTraceModel(resourceSet);
+					List<String> selectedRelationshipTypes = SelectRelationshipsHandler.getSelectedRelationshipTypes();
+					List<EObject> selectedObjects = new ArrayList<>();
+					selectedObjects.add(selectedObject);
+					SelectRelationshipsHandler.addToPossibleRelationsForSelection(
+							metamodelAdapter.getAvailableTraceTypes(selectedObjects));
 
 					if (selectedModels.size() == 1) {
 						if (DisplayTracesHandler.isTraceViewTransitive()) {
-							traces = metamodelAdapter.getTransitivelyConnectedElements(selectedObject, traceModel);
+							traces = metamodelAdapter.getTransitivelyConnectedElements(selectedObject, traceModel,
+									selectedRelationshipTypes);
 						} else {
-							traces = metamodelAdapter.getConnectedElements(selectedObject, traceModel);
+							traces = metamodelAdapter.getConnectedElements(selectedObject, traceModel,
+									selectedRelationshipTypes);
 						}
 						if (DisplayInternalLinksHandler.areInternalLinksShown()
 								&& DisplayTracesHandler.isTraceViewTransitive()) {
@@ -92,7 +99,8 @@ public class DiagramTextProviderHandler implements DiagramTextProvider {
 							} else {
 								SelectRelationshipsHandler.setPreviousElement(selectedObject);
 							}
-							traces.addAll(metamodelAdapter.getInternalElementsTransitive(selectedObject, traceModel));
+							traces.addAll(metamodelAdapter.getInternalElementsTransitive(selectedObject, traceModel,
+									selectedRelationshipTypes));
 						} else if (DisplayInternalLinksHandler.areInternalLinksShown()) {
 							EObject previousElement = SelectRelationshipsHandler.getPreviousElement();
 							if (previousElement != null) {
@@ -102,11 +110,14 @@ public class DiagramTextProviderHandler implements DiagramTextProvider {
 									SelectRelationshipsHandler.clearPossibleRelationsForSelection();
 									SelectRelationshipsHandler.emptySelectedRelationshipTypes();
 									SelectRelationshipsHandler.setPreviousElement(selectedObject);
+									SelectRelationshipsHandler.addToPossibleRelationsForSelection(
+											metamodelAdapter.getAvailableTraceTypes(selectedObjects));
 								}
 							} else {
 								SelectRelationshipsHandler.setPreviousElement(selectedObject);
 							}
-							traces.addAll(metamodelAdapter.getInternalElements(selectedObject, traceModel));
+							traces.addAll(metamodelAdapter.getInternalElements(selectedObject, traceModel,
+									selectedRelationshipTypes));
 						}
 						return VisualizationHelper.createNeighboursView(traces, selectedObject);
 					} else if (selectedModels.size() == 2) {

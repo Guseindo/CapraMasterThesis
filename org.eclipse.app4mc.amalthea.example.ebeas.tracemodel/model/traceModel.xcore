@@ -1,0 +1,52 @@
+/*******************************************************************************
+ * Copyright (c) 2017 Fraunhofer IEM.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    David Schmelter - initial implementation
+ *******************************************************************************/
+package org.eclipse.app4mc.amalthea.example.ebeas.tracemodel
+
+class EBEASTracelinkModel {
+    contains TraceLink[0..*] item
+}
+
+abstract class TraceLink {
+}
+
+class MUMLMsgTypeRepository2UMLInterface extends TraceLink {
+    refers org.eclipse.uml2.uml.Interface[1..1] msgInterface
+    refers org.muml.pim.msgtype.MessageTypeRepository[1..1] msgTypeRepository
+}
+
+class MUMLSoftwareComponent2UMLClass extends TraceLink {
+    refers org.eclipse.uml2.uml.Class[1..1] scenarioType
+    refers org.muml.pim.component.Component[1..1] component
+}
+
+class MUMLDiscretePort2UMLPort extends TraceLink {
+    refers org.eclipse.uml2.uml.Port[1..*] port
+    refers org.muml.pim.component.DiscretePort[1..*] discretePort
+}
+
+class MUMLSoftwareComponent2UMLCollaboration extends TraceLink {
+    refers org.eclipse.uml2.uml.Collaboration[1..*] collaboration
+    refers org.muml.pim.component.Component[1..*] component
+}
+
+class MUMLRegion2UMLCollaboration extends TraceLink {
+    refers org.eclipse.uml2.uml.Collaboration[1..*] collaboration
+    refers org.muml.pim.realtimestatechart.Region[1..*] region
+}
+
+class APP4MCRunnable2MUMLRegion extends TraceLink {
+    refers org.muml.pim.realtimestatechart.Region[1..1] region
+    refers org.eclipse.app4mc.amalthea.model.Runnable[1..1] runnable
+}
+
+class RelatedTo extends TraceLink {
+    refers org.eclipse.emf.ecore.EObject [2..*] items
+}
