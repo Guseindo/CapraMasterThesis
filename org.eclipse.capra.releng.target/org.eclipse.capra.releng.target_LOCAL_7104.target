@@ -1,57 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="Neon" sequenceNumber="75">
+<?pde version="3.8"?><target name="Neon" sequenceNumber="74">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="net.sourceforge.plantuml.feature.feature.group" version="0.0.0"/>
 <repository location="http://basar.idi.ntnu.no/svn/tdt4100/anonymous/trunk/updatesite"/>
-</location>
-<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.rmf.reqif10.sdk.feature.feature.group" version="0.13.0.201509161042"/>
-<unit id="org.eclipse.rmf.reqif10.pror.sdk.feature.feature.group" version="0.13.0.201509161042"/>
-<repository location="http://download.eclipse.org/releases/neon"/>
-<repository location="http://download.eclipse.org/rmf/updates/releases"/>
-</location>
-<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.apache.poi.ooxml" version="3.9.0.v201405241905"/>
-<unit id="org.apache.xmlbeans" version="2.3.0.v201605172150"/>
-<unit id="com.google.guava" version="15.0.0.v201403281430"/>
-<unit id="com.google.guava.source" version="15.0.0.v201403281430"/>
-<unit id="org.apache.commons.collections" version="3.2.2.v201511171945"/>
-<unit id="org.apache.poi.ooxml.schemas" version="3.9.0.v201405241750"/>
-<unit id="org.apache.poi" version="3.9.0.v201405241750"/>
-<unit id="com.fasterxml.jackson.core.jackson-core" version="2.5.0.v201504151636"/>
-<unit id="org.eclipse.app4mc.amalthea.editors.sdk.feature.group" version="0.7.2.201701311233"/>
-<unit id="org.eclipse.app4mc.amalthea.multicore.feature.group" version="0.7.2.201701311233"/>
-<unit id="org.eclipse.app4mc.docu.sdk.feature.group" version="0.7.2.201701311034"/>
-<unit id="org.eclipse.app4mc.validation.feature.group" version="0.7.2.201701311233"/>
-<unit id="org.eclipse.app4mc.amalthea.workflow.feature.group" version="0.7.2.201701311233"/>
-<unit id="org.eclipse.app4mc.amalthea.converters.feature.group" version="0.7.2.201701311300"/>
-<unit id="org.eclipse.app4mc.platform.sdk.feature.group" version="0.7.2.201701311300"/>
-<unit id="org.eclipse.app4mc.amalthea.converters.sdk.feature.group" version="0.7.2.201701311300"/>
-<unit id="org.eclipse.app4mc.amalthea.workflow.scripting.sdk.feature.group" version="0.7.2.201611040740"/>
-<unit id="org.eclipse.app4mc.amalthea.workflow.sdk.feature.group" version="0.7.2.201701311233"/>
-<unit id="org.eclipse.app4mc.examples.feature.group" version="0.7.2.201701261435"/>
-<unit id="org.eclipse.app4mc.tracing.feature.group" version="0.7.2.201611040740"/>
-<unit id="org.eclipse.app4mc.amalthea.workflow.scripting.feature.group" version="0.7.2.201611040740"/>
-<unit id="org.eclipse.app4mc.amalthea.export.sdk.feature.group" version="0.7.2.201701311233"/>
-<unit id="org.eclipse.app4mc.amalthea.workflow.common.sdk.feature.group" version="0.7.2.201701121625"/>
-<unit id="org.eclipse.app4mc.amalthea.models.feature.group" version="0.7.2.201701311233"/>
-<unit id="org.eclipse.app4mc.amalthea.models.sdk.feature.group" version="0.7.2.201701311233"/>
-<unit id="org.eclipse.app4mc.amalthea.edit.sdk.feature.group" version="0.7.2.201701311233"/>
-<unit id="org.eclipse.app4mc.amalthea.editors.feature.group" version="0.7.2.201701311233"/>
-<unit id="org.eclipse.app4mc.amalthea.import.feature.group" version="0.7.2.201701311233"/>
-<unit id="org.eclipse.app4mc.amalthea.edit.feature.group" version="0.7.2.201701311233"/>
-<unit id="org.eclipse.app4mc.validation.sdk.feature.group" version="0.7.2.201701311233"/>
-<unit id="org.eclipse.app4mc.platform.feature.group" version="0.7.2.201701311300"/>
-<unit id="org.eclipse.app4mc.tracing.sdk.feature.group" version="0.7.2.201611040740"/>
-<unit id="org.eclipse.app4mc.amalthea.workflow.common.feature.group" version="0.7.2.201701121625"/>
-<unit id="org.eclipse.app4mc.docu.feature.group" version="0.7.2.201701311034"/>
-<unit id="org.eclipse.app4mc.amalthea.import.sdk.feature.group" version="0.7.2.201701311233"/>
-<unit id="org.eclipse.app4mc.amalthea.multicore.sdk.feature.group" version="0.7.2.201701311233"/>
-<unit id="org.eclipse.app4mc.amalthea.export.feature.group" version="0.7.2.201701311233"/>
-<unit id="org.eclipse.app4mc.examples.sdk.feature.group" version="0.7.2.201701261435"/>
-<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20160520211859/repository"/>
-<repository location="http://download.eclipse.org/app4mc/updatesites/releases/0.7.2/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.rmf.reqif10.sdk.feature.feature.group" version="0.13.0.201509161042"/>
@@ -90,6 +42,14 @@
 <unit id="org.eclipse.gef4.dot.sdk.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.gef4.cloudio.sdk.feature.group" version="0.0.0"/>
 <repository location="http://download.eclipse.org/tools/gef/gef4/updates/releases"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.ease.feature.feature.group" version="0.5.0.I201703211740"/>
+<unit id="org.eclipse.ease.ui.feature.feature.group" version="0.5.0.I201703230313"/>
+<repository location="http://download.eclipse.org/ease/update/nightly"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<repository location="http://download.eclipse.org/releases/neon"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.xtext.sdk.feature.group" version="0.0.0"/>
@@ -148,6 +108,39 @@
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.mylyn.github.feature.feature.group" version="0.0.0"/>
 <repository location="http://download.eclipse.org/egit/github/updates/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.app4mc.amalthea.editors.sdk.feature.group" version="0.7.2.201701311233"/>
+<unit id="org.eclipse.app4mc.amalthea.multicore.feature.group" version="0.7.2.201701311233"/>
+<unit id="org.eclipse.app4mc.docu.sdk.feature.group" version="0.7.2.201701311034"/>
+<unit id="org.eclipse.app4mc.validation.feature.group" version="0.7.2.201701311233"/>
+<unit id="org.eclipse.app4mc.amalthea.workflow.feature.group" version="0.7.2.201701311233"/>
+<unit id="org.eclipse.app4mc.amalthea.converters.feature.group" version="0.7.2.201701311300"/>
+<unit id="org.eclipse.app4mc.platform.sdk.feature.group" version="0.7.2.201701311300"/>
+<unit id="org.eclipse.app4mc.amalthea.converters.sdk.feature.group" version="0.7.2.201701311300"/>
+<unit id="org.eclipse.app4mc.amalthea.workflow.scripting.sdk.feature.group" version="0.7.2.201611040740"/>
+<unit id="org.eclipse.app4mc.amalthea.workflow.sdk.feature.group" version="0.7.2.201701311233"/>
+<unit id="org.eclipse.app4mc.examples.feature.group" version="0.7.2.201701261435"/>
+<unit id="org.eclipse.app4mc.tracing.feature.group" version="0.7.2.201611040740"/>
+<unit id="org.eclipse.app4mc.amalthea.workflow.scripting.feature.group" version="0.7.2.201611040740"/>
+<unit id="org.eclipse.app4mc.amalthea.export.sdk.feature.group" version="0.7.2.201701311233"/>
+<unit id="org.eclipse.app4mc.amalthea.workflow.common.sdk.feature.group" version="0.7.2.201701121625"/>
+<unit id="org.eclipse.app4mc.amalthea.models.feature.group" version="0.7.2.201701311233"/>
+<unit id="org.eclipse.app4mc.amalthea.models.sdk.feature.group" version="0.7.2.201701311233"/>
+<unit id="org.eclipse.app4mc.amalthea.edit.sdk.feature.group" version="0.7.2.201701311233"/>
+<unit id="org.eclipse.app4mc.amalthea.editors.feature.group" version="0.7.2.201701311233"/>
+<unit id="org.eclipse.app4mc.amalthea.import.feature.group" version="0.7.2.201701311233"/>
+<unit id="org.eclipse.app4mc.amalthea.edit.feature.group" version="0.7.2.201701311233"/>
+<unit id="org.eclipse.app4mc.validation.sdk.feature.group" version="0.7.2.201701311233"/>
+<unit id="org.eclipse.app4mc.platform.feature.group" version="0.7.2.201701311300"/>
+<unit id="org.eclipse.app4mc.tracing.sdk.feature.group" version="0.7.2.201611040740"/>
+<unit id="org.eclipse.app4mc.amalthea.workflow.common.feature.group" version="0.7.2.201701121625"/>
+<unit id="org.eclipse.app4mc.docu.feature.group" version="0.7.2.201701311034"/>
+<unit id="org.eclipse.app4mc.amalthea.import.sdk.feature.group" version="0.7.2.201701311233"/>
+<unit id="org.eclipse.app4mc.amalthea.multicore.sdk.feature.group" version="0.7.2.201701311233"/>
+<unit id="org.eclipse.app4mc.amalthea.export.feature.group" version="0.7.2.201701311233"/>
+<unit id="org.eclipse.app4mc.examples.sdk.feature.group" version="0.7.2.201701261435"/>
+<repository location="http://download.eclipse.org/app4mc/updatesites/releases/0.7.2/"/>
 </location>
 </locations>
 </target>
