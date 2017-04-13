@@ -13,7 +13,6 @@ package org.eclipse.capra.core.adapters;
 import java.util.Collection;
 import java.util.List;
 
-import org.eclipse.capra.core.handlers.IArtifactHandler;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 
@@ -70,6 +69,8 @@ public interface TraceMetaModelAdapter {
 
 	/**
 	 * Decide if two objects are connected according to the given trace model
+	 * and returns a String with the Type of connection for the trace matrix
+	 * (empty String if no connection exists)
 	 * 
 	 * @param first
 	 *            First object
@@ -80,7 +81,7 @@ public interface TraceMetaModelAdapter {
 	 * @return <code>true</code> if object are connected, <code>false</code>
 	 *         otherwise
 	 */
-	boolean isThereATraceBetween(EObject first, EObject second, EObject traceModel);
+	String isThereATraceBetween(EObject first, EObject second, EObject traceModel);
 
 	/**
 	 * Determine a list of all objects connected to element according to the
@@ -176,37 +177,4 @@ public interface TraceMetaModelAdapter {
 	List<Connection> getInternalElementsTransitive(EObject element, EObject traceModel,
 			List<String> selectedRelationshipTypes);
 
-	/**
-	 * Decide if two objects are connected internally
-	 * 
-	 * @param first
-	 *            First object
-	 * @param second
-	 *            Second object
-	 * @return <code>true</code> if object are connected, <code>false</code>
-	 *         otherwise
-	 */
-	boolean isThereAnInternalTraceBetween(EObject first, EObject second);
-
-	/**
-	 * Returns a string for the plant uml matrix view for the trace type between
-	 * the last elements that have been checked for an internal trace
-	 * 
-	 * @param first
-	 *            Needed to determine the right {@link IArtifactHandler} for
-	 *            receiving the String
-	 * 
-	 * @return Type of trace
-	 */
-	String getRelationStringForMatrix(EObject first);
-
-	/**
-	 * Delegates to a {@link IArtifactHandler} to empty the string for the
-	 * previously checked elements
-	 * 
-	 * @param first
-	 *            Needed to determine the right {@link IArtifactHandler} for
-	 *            receiving the String
-	 */
-	void emptyRelationshipStrings(EObject first);
 }

@@ -18,7 +18,7 @@ class VisualizationHelper {
 	.«FOR e : secondElements»|«Connections.getArtifactLabel(e)»«ENDFOR»
 	«FOR first : firstElements»
 	«Connections.getArtifactLabel(first)» «FOR second : secondElements»|
-	«IF traceAdapter.isThereATraceBetween(first, second, traceModel) || traceAdapter.isThereAnInternalTraceBetween(first, second)»«traceAdapter.getRelationStringForMatrix(first)»«ELSE».«ENDIF»«traceAdapter.emptyRelationshipStrings(first)»«ENDFOR»	
+	«var traceString = traceAdapter.isThereATraceBetween(first, second, traceModel)»«IF !traceString.equals("")»«traceString»«ELSE».«ENDIF»«ENDFOR»	
 	«ENDFOR»
 	«ELSE»
 	Choose two containers to show a traceability matrix of their contents.

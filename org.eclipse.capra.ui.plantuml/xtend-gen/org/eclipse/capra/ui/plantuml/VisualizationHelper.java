@@ -46,15 +46,16 @@ public class VisualizationHelper {
                 for(final EObject second : secondElements) {
                   _builder.append("|");
                   _builder.newLineIfNotEmpty();
+                  String traceString = traceAdapter.isThereATraceBetween(first, second, traceModel);
                   {
-                    if ((traceAdapter.isThereATraceBetween(first, second, traceModel) || traceAdapter.isThereAnInternalTraceBetween(first, second))) {
-                      String _relationStringForMatrix = traceAdapter.getRelationStringForMatrix(first);
-                      _builder.append(_relationStringForMatrix, "");
+                    boolean _equals = traceString.equals("");
+                    boolean _not = (!_equals);
+                    if (_not) {
+                      _builder.append(traceString, "");
                     } else {
                       _builder.append(".");
                     }
                   }
-                  traceAdapter.emptyRelationshipStrings(first);
                 }
               }
               _builder.append("\t");

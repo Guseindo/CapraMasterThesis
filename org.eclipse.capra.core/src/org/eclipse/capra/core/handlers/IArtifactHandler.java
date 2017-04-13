@@ -77,35 +77,18 @@ public interface IArtifactHandler<T> {
 			List<String> selectedRelationshipTypes);
 
 	/**
-	 * Decide if two objects are connected internally
+	 * Decide if two objects are connected according to the given trace model
+	 * and returns a String with the Type of connection for the trace matrix
+	 * (empty String if no connection exists)
 	 * 
 	 * @param first
 	 *            First object
 	 * @param second
 	 *            Second object
+	 * @param traceModel
+	 *            Trace model to base decision on
 	 * @return <code>true</code> if object are connected, <code>false</code>
 	 *         otherwise
 	 */
-	boolean isThereAnInternalTraceBetween(EObject first, EObject second);
-
-	/**
-	 * Returns a string for the traceability matrix view for the trace type
-	 * between the last elements that have been checked for an internal trace
-	 * 
-	 * @return Type of trace
-	 */
-	String getRelationStringForMatrix();
-
-	/**
-	 * Empties the Strings created for storing the trace type(s) while checking
-	 * if two elements are internally connected.
-	 * 
-	 * This is used in order to avoid iterating the whole model twice and
-	 * storing the type of relationship(s) immediately while checking if the
-	 * elements are connected internally.
-	 * 
-	 * Can be ignored if no iteration is needed and trace type can be determined
-	 * differently.
-	 */
-	void emptyRelationshipStrings();
+	String isThereATraceBetween(EObject first, EObject second, EObject traceModel);
 }

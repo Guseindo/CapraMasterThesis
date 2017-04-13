@@ -173,7 +173,7 @@ public class TestHelper {
 		TracePersistenceAdapter persistenceAdapter = ExtensionPointHelper.getTracePersistenceAdapter().get();
 		TraceMetaModelAdapter traceAdapter = ExtensionPointHelper.getTraceMetamodelAdapter().get();
 		return traceAdapter.isThereATraceBetween(a, b,
-				persistenceAdapter.getTraceModel(a.eResource().getResourceSet()));
+				persistenceAdapter.getTraceModel(a.eResource().getResourceSet())) != "";
 	}
 
 	public static boolean thereIsATraceBetween(EObject a, IType b) {

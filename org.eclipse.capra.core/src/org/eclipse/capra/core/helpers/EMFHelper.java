@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Message;
 
@@ -174,12 +175,14 @@ public class EMFHelper {
 	 * @param object
 	 *            the object to linearize
 	 * @return a list of {@link EObject}s originally contained in the tree
-	 *         structure of the parameter or an empty list if the paramter was
+	 *         structure of the parameter or an empty list if the parameter was
 	 *         not an {@link EObject}
 	 */
 	public static List<EObject> linearize(Object object) {
 		ArrayList<EObject> elementList = new ArrayList<EObject>();
-		if (object instanceof EObject) {
+		if (object instanceof EModelElement) {
+			elementList.add((EObject) object);
+		} else if (object instanceof EObject) {
 			EObject root = (EObject) object;
 			root.eAllContents().forEachRemaining(element -> elementList.add(element));
 			elementList.add(root);

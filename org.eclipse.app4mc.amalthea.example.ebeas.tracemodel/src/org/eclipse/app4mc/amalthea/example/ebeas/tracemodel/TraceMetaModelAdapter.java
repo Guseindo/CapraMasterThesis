@@ -107,33 +107,33 @@ public class TraceMetaModelAdapter extends AbstractMetaModelAdapter
 	}
 
 	@Override
-	public boolean isThereATraceBetween(EObject first, EObject second, EObject traceModel) {
+	public String isThereATraceBetween(EObject first, EObject second, EObject traceModel) {
 
 		if (first.equals(second))
-			return false;
+			return "";
 
 		EBEASTracelinkModel tm = (EBEASTracelinkModel) traceModel;
 		List<TraceLink> traces = tm.getItem();
 
 		for (TraceLink traceLink : traces) {
 			if (compareHelper.analyzeMUMLMsgTypeRepository2UMLInterface(traceLink, first, second)) {
-				return true;
+				return "X";
 			} else if (compareHelper.analyzeMUMLSoftwareComponent2UMLClass(traceLink, first, second)) {
-				return true;
+				return "X";
 			} else if (compareHelper.analyzeMUMLDiscretePort2UMLPort(traceLink, first, second)) {
-				return true;
+				return "X";
 			} else if (compareHelper.analyzeMUMLSoftwareComponent2UMLCollaboration(traceLink, first, second)) {
-				return true;
+				return "X";
 			} else if (compareHelper.analyzeMUMLRegion2UMLCollaboration(traceLink, first, second)) {
-				return true;
+				return "X";
 			} else if (compareHelper.analyzeAPP4MCRunnable2MUMLRegion(traceLink, first, second)) {
-				return true;
+				return "X";
 			} else if (compareHelper.analyzeRelatedTo(traceLink, first, second)) {
-				return true;
+				return "X";
 			}
 		}
 
-		return false;
+		return "";
 	}
 
 	@Override

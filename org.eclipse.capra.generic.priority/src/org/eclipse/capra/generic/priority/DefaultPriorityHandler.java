@@ -37,7 +37,6 @@ public class DefaultPriorityHandler implements PriorityHandler {
 		if (selectedElement instanceof TestElement) {
 			return handlers.stream().filter(h -> h.getClass().isAssignableFrom(TestElementHandler.class)).findAny()
 					.get();
-
 		} else if (selectedElement instanceof BuildElement) {
 			return handlers.stream().filter(h -> h.getClass().isAssignableFrom(BuildElementHandler.class)).findAny()
 					.get();

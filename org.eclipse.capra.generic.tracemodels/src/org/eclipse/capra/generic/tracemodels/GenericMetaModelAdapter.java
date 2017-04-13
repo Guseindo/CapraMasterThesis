@@ -65,25 +65,6 @@ public class GenericMetaModelAdapter extends AbstractMetaModelAdapter implements
 	}
 
 	@Override
-	public boolean isThereATraceBetween(EObject firstElement, EObject secondElement, EObject traceModel) {
-		GenericTraceModel root = (GenericTraceModel) traceModel;
-		List<RelatedTo> relevantLinks = new ArrayList<RelatedTo>();
-		List<RelatedTo> allTraces = root.getTraces();
-
-		for (RelatedTo trace : allTraces) {
-			if (firstElement != secondElement) {
-				if (trace.getItem().contains(firstElement) && trace.getItem().contains(secondElement)) {
-					relevantLinks.add(trace);
-				}
-			}
-		}
-		if (relevantLinks.size() > 0) {
-			return true;
-		} else
-			return false;
-	}
-
-	@Override
 	public List<Connection> getConnectedElements(EObject element, EObject tracemodel) {
 		GenericTraceModel root = (GenericTraceModel) tracemodel;
 		List<Connection> connections = new ArrayList<>();

@@ -121,30 +121,33 @@ public class DiagramTextProviderHandler implements DiagramTextProvider {
 						}
 						return VisualizationHelper.createNeighboursView(traces, selectedObject);
 					} else if (selectedModels.size() == 2) {
+						IArtifactHandler<Object> handlerSecondElement = artifactHelper
+								.getHandler(selectedModels.get(1));
 						if (DisplayTracesHandler.isTraceViewTransitive()) {
 							firstModelElements = EMFHelper
 									.linearize(handler.createWrapper(selectedModels.get(0), artifactModel));
-							secondModelElements = EMFHelper
-									.linearize(handler.createWrapper(selectedModels.get(1), artifactModel));
+							secondModelElements = EMFHelper.linearize(
+									handlerSecondElement.createWrapper(selectedModels.get(1), artifactModel));
 						} else {
 							List<EObject> firstObject = new ArrayList<>();
 							firstObject.add(handler.createWrapper(selectedModels.get(0), artifactModel));
 							List<EObject> secondObject = new ArrayList<>();
-							secondObject.add(handler.createWrapper(selectedModels.get(1), artifactModel));
+							secondObject.add(handlerSecondElement.createWrapper(selectedModels.get(1), artifactModel));
 							firstModelElements = firstObject;
 							secondModelElements = secondObject;
 						}
 					} else if (selectedModels.size() > 2) {
 						if (DisplayTracesHandler.isTraceViewTransitive()) {
-							firstModelElements = selectedModels.stream()
-									.flatMap(r -> EMFHelper.linearize(handler.createWrapper(r, artifactModel)).stream())
-									.collect(Collectors.toList());
+							firstModelElements = selectedModels.stream().flatMap(r -> {
+								IArtifactHandler<Object> individualhandler = artifactHelper.getHandler(r);
+								return EMFHelper.linearize(individualhandler.createWrapper(r, artifactModel)).stream();
+							}).collect(Collectors.toList());
 							secondModelElements = firstModelElements;
 						} else {
 							List<EObject> Objects = new ArrayList<>();
 							selectedModels.stream().forEach(o -> {
-								Objects.add(handler.createWrapper(o, artifactModel));
-
+								IArtifactHandler<Object> individualhandler = artifactHelper.getHandler(o);
+								Objects.add(individualhandler.createWrapper(o, artifactModel));
 							});
 							firstModelElements = Objects;
 							secondModelElements = firstModelElements;

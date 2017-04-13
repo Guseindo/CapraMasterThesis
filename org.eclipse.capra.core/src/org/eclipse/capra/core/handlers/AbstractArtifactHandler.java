@@ -14,6 +14,8 @@ import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.capra.GenericTraceMetaModel.GenericTraceModel;
+import org.eclipse.capra.GenericTraceMetaModel.RelatedTo;
 import org.eclipse.capra.core.adapters.Connection;
 import org.eclipse.emf.ecore.EObject;
 
@@ -37,18 +39,21 @@ public abstract class AbstractArtifactHandler<T> implements IArtifactHandler<T> 
 	}
 
 	@Override
-	public boolean isThereAnInternalTraceBetween(EObject first, EObject second) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	public String isThereATraceBetween(EObject first, EObject second, EObject traceModel) {
+		GenericTraceModel root = (GenericTraceModel) traceModel;
+		List<RelatedTo> relevantLinks = new ArrayList<RelatedTo>();
+		List<RelatedTo> allTraces = root.getTraces();
 
-	@Override
-	public String getRelationStringForMatrix() {
-		return "X";
-	}
-
-	@Override
-	public void emptyRelationshipStrings() {
-		// TODO Auto-generated method stub
+		for (RelatedTo trace : allTraces) {
+			if (first != second) {
+				if (trace.getItem().contains(first) && trace.getItem().contains(second)) {
+					relevantLinks.add(trace);
+				}
+			}
+		}
+		if (relevantLinks.size() > 0) {
+			return "X";
+		} else
+			return "";
 	}
 }

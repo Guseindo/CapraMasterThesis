@@ -12,3 +12,4 @@ Export-Package: org.eclipse.capra.core.adapters,
  org.eclipse.capra.core.handlers,
  org.eclipse.capra.core.helpers
 Bundle-Vendor: Capra Development Team
+Import-Package: org.eclipse.capra.GenericTraceMetaModel

@@ -61,32 +61,19 @@ public abstract class AbstractMetaModelAdapter implements TraceMetaModelAdapter 
 	}
 
 	@Override
-	public boolean isThereAnInternalTraceBetween(EObject first, EObject second) {
+	public String isThereATraceBetween(EObject first, EObject second, EObject traceModel) {
 		ResourceSet resourceSet = new ResourceSetImpl();
 		TracePersistenceAdapter persistenceAdapter = ExtensionPointHelper.getTracePersistenceAdapter().get();
 		EObject artifactModel = persistenceAdapter.getArtifactWrappers(resourceSet);
 		ArtifactHelper artifactHelper = new ArtifactHelper(artifactModel);
 		IArtifactHandler<Object> handler = artifactHelper.getHandler(first);
-		return handler.isThereAnInternalTraceBetween(first, second);
-	}
-
-	@Override
-	public String getRelationStringForMatrix(EObject first) {
-		ResourceSet resourceSet = new ResourceSetImpl();
-		TracePersistenceAdapter persistenceAdapter = ExtensionPointHelper.getTracePersistenceAdapter().get();
-		EObject artifactModel = persistenceAdapter.getArtifactWrappers(resourceSet);
-		ArtifactHelper artifactHelper = new ArtifactHelper(artifactModel);
-		IArtifactHandler<Object> handler = artifactHelper.getHandler(first);
-		return handler.getRelationStringForMatrix();
-	}
-
-	@Override
-	public void emptyRelationshipStrings(EObject first) {
-		ResourceSet resourceSet = new ResourceSetImpl();
-		TracePersistenceAdapter persistenceAdapter = ExtensionPointHelper.getTracePersistenceAdapter().get();
-		EObject artifactModel = persistenceAdapter.getArtifactWrappers(resourceSet);
-		ArtifactHelper artifactHelper = new ArtifactHelper(artifactModel);
-		IArtifactHandler<Object> handler = artifactHelper.getHandler(first);
-		handler.emptyRelationshipStrings();
+		IArtifactHandler<Object> handlerSecondElement = artifactHelper.getHandler(second);
+		if (handler.getClass().equals(handlerSecondElement.getClass())) {
+			return handler.isThereATraceBetween(first, second, traceModel);
+		} else {
+			String firstTraceString = handler.isThereATraceBetween(first, second, traceModel);
+			String spacer = firstTraceString.equals("") ? "" : ", ";
+			return firstTraceString + spacer + handlerSecondElement.isThereATraceBetween(first, second, traceModel);
+		}
 	}
 }
