@@ -414,7 +414,7 @@ public class UMLHandler extends AbstractArtifactHandler<EModelElement> {
 	}
 
 	@Override
-	public String isThereATraceBetween(EObject first, EObject second, EObject traceModel) {
+	public String isThereAnInternalTraceBetween(EObject first, EObject second, EObject traceModel) {
 		String traceString = "";
 		if (Relationship.class.isAssignableFrom(first.getClass())
 				|| Relationship.class.isAssignableFrom(second.getClass())) {

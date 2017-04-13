@@ -108,6 +108,30 @@ public class GenericMetaModelAdapter extends AbstractMetaModelAdapter implements
 		return connections;
 	}
 
+	@Override
+	public String isThereATraceBetween(EObject first, EObject second, EObject traceModel) {
+		GenericTraceModel root = (GenericTraceModel) traceModel;
+		List<RelatedTo> relevantLinks = new ArrayList<RelatedTo>();
+		List<RelatedTo> allTraces = root.getTraces();
+		String traceString = "";
+
+		for (RelatedTo trace : allTraces) {
+			if (first != second) {
+				if (trace.getItem().contains(first) && trace.getItem().contains(second)) {
+					relevantLinks.add(trace);
+				}
+			}
+		}
+		if (relevantLinks.size() > 0) {
+			traceString = "X";
+		}
+
+		String spacer = "";
+		String internalTraceString = this.isThereAnInternalTraceBetween(first, second, traceModel);
+		spacer = (!traceString.equals("") && !internalTraceString.equals("")) ? ", " : "";
+		return traceString + spacer + internalTraceString;
+	}
+
 	private List<Connection> getTransitivelyConnectedElements(EObject element, EObject traceModel,
 			ArrayList<Object> accumulator) {
 		List<Connection> directElements = getConnectedElements(element, traceModel);

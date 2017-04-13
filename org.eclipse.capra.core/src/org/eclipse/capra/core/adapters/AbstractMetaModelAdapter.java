@@ -60,8 +60,12 @@ public abstract class AbstractMetaModelAdapter implements TraceMetaModelAdapter 
 		return allElements;
 	}
 
-	@Override
 	public String isThereATraceBetween(EObject first, EObject second, EObject traceModel) {
+		return "";
+	}
+
+	@Override
+	public String isThereAnInternalTraceBetween(EObject first, EObject second, EObject traceModel) {
 		ResourceSet resourceSet = new ResourceSetImpl();
 		TracePersistenceAdapter persistenceAdapter = ExtensionPointHelper.getTracePersistenceAdapter().get();
 		EObject artifactModel = persistenceAdapter.getArtifactWrappers(resourceSet);
@@ -69,11 +73,12 @@ public abstract class AbstractMetaModelAdapter implements TraceMetaModelAdapter 
 		IArtifactHandler<Object> handler = artifactHelper.getHandler(first);
 		IArtifactHandler<Object> handlerSecondElement = artifactHelper.getHandler(second);
 		if (handler.getClass().equals(handlerSecondElement.getClass())) {
-			return handler.isThereATraceBetween(first, second, traceModel);
+			return handler.isThereAnInternalTraceBetween(first, second, traceModel);
 		} else {
-			String firstTraceString = handler.isThereATraceBetween(first, second, traceModel);
+			String firstTraceString = handler.isThereAnInternalTraceBetween(first, second, traceModel);
 			String spacer = firstTraceString.equals("") ? "" : ", ";
-			return firstTraceString + spacer + handlerSecondElement.isThereATraceBetween(first, second, traceModel);
+			return firstTraceString + spacer
+					+ handlerSecondElement.isThereAnInternalTraceBetween(first, second, traceModel);
 		}
 	}
 }

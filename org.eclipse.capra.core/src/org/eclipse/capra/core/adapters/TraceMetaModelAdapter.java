@@ -84,6 +84,24 @@ public interface TraceMetaModelAdapter {
 	String isThereATraceBetween(EObject first, EObject second, EObject traceModel);
 
 	/**
+	 * Decide if two objects are connected internally by passing the selected
+	 * objects down to the artifact handlers and returns a String with the Type
+	 * of connection for the trace matrix (empty String if no connection exists)
+	 * This is implemented in the {@link AbstractMetaModelAdapter} and does not
+	 * need to be overwritten but can be used like it is.
+	 * 
+	 * @param first
+	 *            First object
+	 * @param second
+	 *            Second object
+	 * @param traceModel
+	 *            Trace model to base decision on
+	 * @return <code>true</code> if object are connected, <code>false</code>
+	 *         otherwise
+	 */
+	String isThereAnInternalTraceBetween(EObject first, EObject second, EObject traceModel);
+
+	/**
 	 * Determine a list of all objects connected to element according to the
 	 * given trace model
 	 * 

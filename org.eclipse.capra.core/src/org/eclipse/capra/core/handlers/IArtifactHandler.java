@@ -90,5 +90,5 @@ public interface IArtifactHandler<T> {
 	 * @return <code>true</code> if object are connected, <code>false</code>
 	 *         otherwise
 	 */
-	String isThereATraceBetween(EObject first, EObject second, EObject traceModel);
+	String isThereAnInternalTraceBetween(EObject first, EObject second, EObject traceModel);
 }
