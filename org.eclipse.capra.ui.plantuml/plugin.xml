@@ -33,6 +33,10 @@
             id="org.eclipse.capra.ui.plantuml.selectRelationships"
             name="Select Relationship types">
       </command>
+      <command
+            id="org.eclipse.capra.ui.plantuml.transitivtyDepth"
+            name="Set transitivity Depth">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -47,6 +51,10 @@
       <handler
             class="org.eclipse.capra.ui.plantuml.SelectRelationshipsHandler"
             commandId="org.eclipse.capra.ui.plantuml.selectRelationships">
+      </handler>
+      <handler
+            class="org.eclipse.capra.ui.plantuml.TransitivityDepthHandler"
+            commandId="org.eclipse.capra.ui.plantuml.transitivtyDepth">
       </handler>
    </extension>
 	<extension
@@ -73,6 +81,15 @@
          <command
                commandId="org.eclipse.capra.ui.plantuml.selectRelationships"
                label="Select Relationship types"
+               style="push">
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:net.sourceforge.plantuml.eclipse.views.PlantUmlView?after=additions">
+         <command
+               commandId="org.eclipse.capra.ui.plantuml.transitivtyDepth"
+               label="Set transitivity Depth"
                style="push">
          </command>
       </menuContribution>

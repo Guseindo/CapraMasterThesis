@@ -17,10 +17,12 @@ import org.eclipse.capra.core.handlers.PriorityHandler;
 import org.eclipse.capra.handler.emf.EMFHandler;
 import org.eclipse.capra.handler.hudson.BuildElementHandler;
 import org.eclipse.capra.handler.hudson.TestElementHandler;
+import org.eclipse.capra.handler.muml.MUMLHandler;
 import org.eclipse.capra.handler.uml.UMLHandler;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.mylyn.builds.internal.core.BuildElement;
 import org.eclipse.mylyn.builds.internal.core.TestElement;
+import org.muml.core.ExtendableElement;
 
 /**
  * Provides a simple default policy for selecting an {@link ArtifactHandler} in
@@ -42,6 +44,8 @@ public class DefaultPriorityHandler implements PriorityHandler {
 					.get();
 		} else if (EModelElement.class.isAssignableFrom(selectedElement.getClass())) {
 			return handlers.stream().filter(h -> h.getClass().isAssignableFrom(UMLHandler.class)).findAny().get();
+		} else if (ExtendableElement.class.isAssignableFrom(selectedElement.getClass())) {
+			return handlers.stream().filter(h -> h.getClass().isAssignableFrom(MUMLHandler.class)).findAny().get();
 		}
 		return handlers.stream().filter(h -> h.getClass().isAssignableFrom(EMFHandler.class)).findAny().get();
 	}

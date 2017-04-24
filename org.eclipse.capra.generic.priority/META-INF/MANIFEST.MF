@@ -7,7 +7,9 @@ Require-Bundle: org.eclipse.capra.handler.hudson,
  org.eclipse.capra.core,
  org.eclipse.emf.ecore;bundle-version="2.10.2",
  org.eclipse.capra.handler.emf;bundle-version="0.7.0",
- org.eclipse.capra.handler.uml;bundle-version="0.7.0"
+ org.eclipse.capra.handler.uml;bundle-version="0.7.0",
+ org.muml.pim;bundle-version="1.0.0",
+ org.eclipse.capra.handler.muml;bundle-version="0.7.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.eclipse.mylyn.builds.internal.core
 Bundle-Vendor: Capra Development Team

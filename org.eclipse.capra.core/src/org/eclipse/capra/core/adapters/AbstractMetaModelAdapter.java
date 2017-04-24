@@ -13,28 +13,31 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 public abstract class AbstractMetaModelAdapter implements TraceMetaModelAdapter {
 
 	private List<Connection> getInternalElementsTransitive(EObject element, EObject traceModel,
-			List<Object> accumulator, List<String> selectedRelationshipTypes) {
+			List<Object> accumulator, List<String> selectedRelationshipTypes, int currentDepth, int maximumDepth) {
 		List<Connection> directElements = getInternalElements(element, traceModel, selectedRelationshipTypes);
 		List<Connection> allElements = new ArrayList<>();
-
-		directElements.forEach(connection -> {
+		int currDepth = currentDepth + 1;
+		for (Connection connection : directElements) {
 			if (!accumulator.contains(connection.getTlink())) {
 				allElements.add(connection);
 				accumulator.add(connection.getTlink());
-				connection.getTargets().forEach(e -> {
-					allElements.addAll(
-							getInternalElementsTransitive(e, traceModel, accumulator, selectedRelationshipTypes));
-				});
+				for (EObject e : connection.getTargets()) {
+					if (maximumDepth == 0 || currDepth <= maximumDepth) {
+						allElements.addAll(getInternalElementsTransitive(e, traceModel, accumulator,
+								selectedRelationshipTypes, currDepth, maximumDepth));
+					}
+				}
 			}
-		});
+		}
 
 		return allElements;
 	}
 
 	public List<Connection> getInternalElementsTransitive(EObject element, EObject traceModel,
-			List<String> selectedRelationshipTypes) {
+			List<String> selectedRelationshipTypes, int maximumDepth) {
 		List<Object> accumulator = new ArrayList<>();
-		return getInternalElementsTransitive(element, traceModel, accumulator, selectedRelationshipTypes);
+		return getInternalElementsTransitive(element, traceModel, accumulator, selectedRelationshipTypes, 0,
+				maximumDepth);
 	}
 
 	public List<Connection> getInternalElements(EObject element, EObject traceModel,

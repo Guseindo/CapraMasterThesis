@@ -11,13 +11,11 @@
 package org.eclipse.capra.ui.plantuml;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -68,9 +66,9 @@ public class SelectRelationshipsHandler extends AbstractHandler {
 		}
 	}
 
-	public static void addToPossibleRelationsForSelection(Collection<EClass> classes) {
-		for (EClass obj : classes) {
-			String className = obj.getName();
+	public static void addToPossibleRelationsForSelection(List<EObject> objects) {
+		for (EObject obj : objects) {
+			String className = obj.eClass().getName();
 			if (!possibleRelationshipTypes.contains(className)) {
 				possibleRelationshipTypes.add(className);
 			}

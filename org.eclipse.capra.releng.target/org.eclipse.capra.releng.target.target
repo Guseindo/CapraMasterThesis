@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="Neon" sequenceNumber="67">
+<?pde version="3.8"?><target name="Neon" sequenceNumber="92">
 <locations>
-<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="net.sourceforge.plantuml.feature.feature.group" version="0.0.0"/>
-<repository location="http://basar.idi.ntnu.no/svn/tdt4100/anonymous/trunk/updatesite"/>
-</location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.mortbay.jetty.util" version="6.1.23.v201012071420"/>
 <unit id="org.mortbay.jetty.server" version="6.1.23.v201012071420"/>
@@ -49,6 +45,40 @@
 <repository location="http://muml-build.cs.upb.de/job/UpdateSite/2878/artifact/targetPlatform/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.app4mc.amalthea.editors.sdk.feature.group" version="0.7.2.201701311233"/>
+<unit id="org.eclipse.app4mc.docu.sdk.feature.group" version="0.7.2.201701311034"/>
+<unit id="org.eclipse.app4mc.platform.sdk.feature.group" version="0.7.2.201701311300"/>
+<unit id="org.eclipse.app4mc.amalthea.workflow.scripting.sdk.feature.group" version="0.7.2.201611040740"/>
+<unit id="org.eclipse.app4mc.amalthea.workflow.sdk.feature.group" version="0.7.2.201701311233"/>
+<unit id="org.eclipse.app4mc.amalthea.workflow.scripting.feature.group" version="0.7.2.201611040740"/>
+<unit id="org.eclipse.app4mc.amalthea.import.feature.group" version="0.7.2.201701311233"/>
+<unit id="org.eclipse.app4mc.platform.feature.group" version="0.7.2.201701311300"/>
+<unit id="org.eclipse.equinox.p2.discovery.feature.feature.group" version="1.0.300.v20150430-1836"/>
+<unit id="org.eclipse.app4mc.amalthea.workflow.common.feature.group" version="0.7.2.201701121625"/>
+<unit id="org.eclipse.app4mc.docu.feature.group" version="0.7.2.201701311034"/>
+<unit id="org.eclipse.app4mc.amalthea.multicore.sdk.feature.group" version="0.7.2.201701311233"/>
+<unit id="org.eclipse.app4mc.amalthea.export.feature.group" version="0.7.2.201701311233"/>
+<unit id="org.eclipse.app4mc.amalthea.multicore.feature.group" version="0.7.2.201701311233"/>
+<unit id="org.eclipse.app4mc.amalthea.workflow.feature.group" version="0.7.2.201701311233"/>
+<unit id="org.eclipse.app4mc.validation.feature.group" version="0.7.2.201701311233"/>
+<unit id="org.eclipse.app4mc.amalthea.converters.feature.group" version="0.7.2.201701311300"/>
+<unit id="org.eclipse.app4mc.amalthea.converters.sdk.feature.group" version="0.7.2.201701311300"/>
+<unit id="org.eclipse.app4mc.examples.feature.group" version="0.7.2.201701261435"/>
+<unit id="org.eclipse.app4mc.tracing.feature.group" version="0.7.2.201611040740"/>
+<unit id="org.eclipse.app4mc.amalthea.export.sdk.feature.group" version="0.7.2.201701311233"/>
+<unit id="org.eclipse.app4mc.amalthea.workflow.common.sdk.feature.group" version="0.7.2.201701121625"/>
+<unit id="org.eclipse.app4mc.amalthea.models.feature.group" version="0.7.2.201701311233"/>
+<unit id="org.eclipse.app4mc.amalthea.models.sdk.feature.group" version="0.7.2.201701311233"/>
+<unit id="org.eclipse.app4mc.amalthea.edit.sdk.feature.group" version="0.7.2.201701311233"/>
+<unit id="org.eclipse.app4mc.amalthea.editors.feature.group" version="0.7.2.201701311233"/>
+<unit id="org.eclipse.app4mc.amalthea.edit.feature.group" version="0.7.2.201701311233"/>
+<unit id="org.eclipse.app4mc.validation.sdk.feature.group" version="0.7.2.201701311233"/>
+<unit id="org.eclipse.app4mc.tracing.sdk.feature.group" version="0.7.2.201611040740"/>
+<unit id="org.eclipse.app4mc.amalthea.import.sdk.feature.group" version="0.7.2.201701311233"/>
+<unit id="org.eclipse.app4mc.examples.sdk.feature.group" version="0.7.2.201701261435"/>
+<repository location="http://download.eclipse.org/app4mc/updatesites/releases/0.7.2/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.sdk.ide" version="0.0.0"/>
 <repository location="http://download.eclipse.org/eclipse/updates/4.6"/>
 </location>
@@ -78,42 +108,19 @@
 <repository location="https://svn-serv.cs.uni-paderborn.de/updatesites/trunk/de.upb.swt.qvt.tgg-updatesite/3.7/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.ease.feature.feature.group" version="0.4.0.I201611181551"/>
+<unit id="org.eclipse.ease.ui.feature.feature.group" version="0.4.0.I201701130652"/>
+<repository location="http://download.eclipse.org/ease/update/release"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.franca.core.sdk.feature.group" version="0.11.0.201607111218"/>
 <unit id="org.franca.core.feature.group" version="0.11.0.201607111218"/>
 <repository location="http://franca.github.io/franca/update_site/releases"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.app4mc.amalthea.editors.sdk.feature.group" version="0.7.2.201701311233"/>
-<unit id="org.eclipse.app4mc.amalthea.multicore.feature.group" version="0.7.2.201701311233"/>
-<unit id="org.eclipse.app4mc.docu.sdk.feature.group" version="0.7.2.201701311034"/>
-<unit id="org.eclipse.app4mc.validation.feature.group" version="0.7.2.201701311233"/>
-<unit id="org.eclipse.app4mc.amalthea.workflow.feature.group" version="0.7.2.201701311233"/>
-<unit id="org.eclipse.app4mc.amalthea.converters.feature.group" version="0.7.2.201701311300"/>
-<unit id="org.eclipse.app4mc.platform.sdk.feature.group" version="0.7.2.201701311300"/>
-<unit id="org.eclipse.app4mc.amalthea.converters.sdk.feature.group" version="0.7.2.201701311300"/>
-<unit id="org.eclipse.app4mc.amalthea.workflow.scripting.sdk.feature.group" version="0.7.2.201611040740"/>
-<unit id="org.eclipse.app4mc.amalthea.workflow.sdk.feature.group" version="0.7.2.201701311233"/>
-<unit id="org.eclipse.app4mc.examples.feature.group" version="0.7.2.201701261435"/>
-<unit id="org.eclipse.app4mc.tracing.feature.group" version="0.7.2.201611040740"/>
-<unit id="org.eclipse.app4mc.amalthea.workflow.scripting.feature.group" version="0.7.2.201611040740"/>
-<unit id="org.eclipse.app4mc.amalthea.export.sdk.feature.group" version="0.7.2.201701311233"/>
-<unit id="org.eclipse.app4mc.amalthea.workflow.common.sdk.feature.group" version="0.7.2.201701121625"/>
-<unit id="org.eclipse.app4mc.amalthea.models.feature.group" version="0.7.2.201701311233"/>
-<unit id="org.eclipse.app4mc.amalthea.models.sdk.feature.group" version="0.7.2.201701311233"/>
-<unit id="org.eclipse.app4mc.amalthea.edit.sdk.feature.group" version="0.7.2.201701311233"/>
-<unit id="org.eclipse.app4mc.amalthea.editors.feature.group" version="0.7.2.201701311233"/>
-<unit id="org.eclipse.app4mc.amalthea.import.feature.group" version="0.7.2.201701311233"/>
-<unit id="org.eclipse.app4mc.amalthea.edit.feature.group" version="0.7.2.201701311233"/>
-<unit id="org.eclipse.app4mc.validation.sdk.feature.group" version="0.7.2.201701311233"/>
-<unit id="org.eclipse.app4mc.platform.feature.group" version="0.7.2.201701311300"/>
-<unit id="org.eclipse.app4mc.tracing.sdk.feature.group" version="0.7.2.201611040740"/>
-<unit id="org.eclipse.app4mc.amalthea.workflow.common.feature.group" version="0.7.2.201701121625"/>
-<unit id="org.eclipse.app4mc.docu.feature.group" version="0.7.2.201701311034"/>
-<unit id="org.eclipse.app4mc.amalthea.import.sdk.feature.group" version="0.7.2.201701311233"/>
-<unit id="org.eclipse.app4mc.amalthea.multicore.sdk.feature.group" version="0.7.2.201701311233"/>
-<unit id="org.eclipse.app4mc.amalthea.export.feature.group" version="0.7.2.201701311233"/>
-<unit id="org.eclipse.app4mc.examples.sdk.feature.group" version="0.7.2.201701261435"/>
-<repository location="http://download.eclipse.org/app4mc/updatesites/releases/0.7.2/"/>
+<unit id="org.artop.eel.feature.group" version="1.0.0.201302082307"/>
+<unit id="org.artop.eel.sdk.feature.group" version="1.0.0.201302082307"/>
+<repository location="https://www.artop.org/containers/artop-eel-update-site-1.0"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.xtext.sdk.feature.group" version="0.0.0"/>
@@ -156,14 +163,22 @@
 <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20160520211859/repository"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.ease.ui.feature.feature.group" version="0.5.0.I201704120314"/>
-<unit id="org.eclipse.ease.feature.feature.group" version="0.5.0.I201704100912"/>
-<repository location="http://download.eclipse.org/ease/update/nightly"/>
-</location>
-<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.papyrus.sysml14.feature.feature.group" version="0.10.0"/>
 <unit id="org.eclipse.papyrus.sysml14.feature.source.feature.group" version="0.10.0"/>
 <repository location="http://download.eclipse.org/modeling/mdt/papyrus/components/sysml14/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.eatop.examples.feature.group" version="0.5.0.201409172334"/>
+<unit id="org.eclipse.eatop.feature.group" version="0.5.0.201409172334"/>
+<unit id="org.eclipse.eatop.eastadl2112.sdk.feature.group" version="0.5.0.201409172334"/>
+<unit id="org.eclipse.eatop.base.sdk.feature.group" version="0.5.0.201409172334"/>
+<unit id="org.eclipse.eatop.sdk.feature.group" version="0.5.0.201409172334"/>
+<unit id="org.eclipse.eatop.base.feature.group" version="0.5.0.201409172334"/>
+<repository location="http://download.eclipse.org/eatop/updates/interim/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="net.sourceforge.plantuml.feature.feature.group" version="1.1.8.8057"/>
+<repository location="http://plantuml.sourceforge.net/updatesitejuno/"/>
 </location>
 </locations>
 </target>

@@ -38,11 +38,11 @@
             class="org.eclipse.capra.GenericArtifactMetaModel.GenericArtifactMetaModelPackage"
             genModel="model/artifact.xcore"/>
    </extension>
-   <extension
+   <!--<extension
          point="org.eclipse.capra.configuration.traceabilityMetaModel">
       <TraceabilityMetaModelAdapter
             class="org.eclipse.capra.generic.tracemodels.GenericMetaModelAdapter">
       </TraceabilityMetaModelAdapter>
-   </extension>
+   </extension>-->
 
 </plugin>

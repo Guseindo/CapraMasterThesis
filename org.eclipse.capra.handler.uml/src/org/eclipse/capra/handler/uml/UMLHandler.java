@@ -16,7 +16,6 @@ import java.util.List;
 import org.eclipse.capra.core.adapters.Connection;
 import org.eclipse.capra.core.handlers.AbstractArtifactHandler;
 import org.eclipse.capra.core.helpers.EMFHelper;
-import org.eclipse.capra.ui.plantuml.SelectRelationshipsHandler;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EModelElement;
@@ -67,7 +66,6 @@ public class UMLHandler extends AbstractArtifactHandler<EModelElement> {
 					Connection conn = new Connection(investigatedElement, relatedElements, rel);
 					allElements.add(conn);
 					addPotentialStringsForConnection(investigatedElement, relatedElements, rel, duplicationCheck);
-					SelectRelationshipsHandler.addToPossibleRelationsForSelection(rel.eClass().getName());
 				}
 			}
 		} else if (Transition.class.isAssignableFrom(investigatedElement.getClass())) {
@@ -82,7 +80,6 @@ public class UMLHandler extends AbstractArtifactHandler<EModelElement> {
 					allElements.add(conn);
 					addPotentialStringsForConnection(investigatedElement, relatedElements, transition,
 							duplicationCheck);
-					SelectRelationshipsHandler.addToPossibleRelationsForSelection(transition.eClass().getName());
 				}
 			}
 		} else if (Message.class.isAssignableFrom(investigatedElement.getClass())) {
@@ -101,27 +98,42 @@ public class UMLHandler extends AbstractArtifactHandler<EModelElement> {
 						allElements.add(conn);
 						addPotentialStringsForConnection(investigatedElement, relatedElements, msg,
 								msg.getMessageSort(), duplicationCheck);
-						SelectRelationshipsHandler.addToPossibleRelationsForSelection(msg.eClass().getName());
 					}
 				}
 			}
-		} else if (Connector.class.isAssignableFrom(investigatedElement.getClass())) {
-			Connector connector = Connector.class.cast(investigatedElement);
-			System.out.println(connector.getType());
-			EList<ConnectorEnd> connectedEnds = connector.getEnds();
-			List<EObject> relatedElements = new ArrayList<>();
-			connectedEnds.forEach(connectedEnd -> {
-				if (connectedEnd.getPartWithPort() != null) {
-					relatedElements.add(connectedEnd.getPartWithPort());
-				} else {
-					relatedElements.add(connectedEnd);
+		} else if (Port.class.isAssignableFrom(investigatedElement.getClass())) {
+			if (selectedRelationshipTypes.size() == 0
+					|| selectedRelationshipTypes.contains(investigatedElement.eClass().getName())) {
+				Port port = Port.class.cast(investigatedElement);
+				EList<Interface> provideds = port.getProvideds();
+				EList<Interface> requireds = port.getRequireds();
+				List<EObject> relatedElements = new ArrayList<>();
+				relatedElements.addAll(requireds);
+				relatedElements.addAll(provideds);
+				if (!isDuplicatedEntry(investigatedElement, relatedElements, port, duplicationCheck)) {
+					Connection conn = new Connection(investigatedElement, relatedElements, port);
+					allElements.add(conn);
+					addPotentialStringsForConnection(investigatedElement, relatedElements, port, duplicationCheck);
 				}
-			});
-			if (!isDuplicatedEntry(investigatedElement, relatedElements, connector, duplicationCheck)) {
-				Connection conn = new Connection(investigatedElement, relatedElements, connector);
-				allElements.add(conn);
-				addPotentialStringsForConnection(investigatedElement, relatedElements, connector, duplicationCheck);
-				SelectRelationshipsHandler.addToPossibleRelationsForSelection(connector.eClass().getName());
+			}
+		} else if (Connector.class.isAssignableFrom(investigatedElement.getClass())) {
+			if (selectedRelationshipTypes.size() == 0
+					|| selectedRelationshipTypes.contains(investigatedElement.eClass().getName())) {
+				Connector connector = Connector.class.cast(investigatedElement);
+				EList<ConnectorEnd> connectedEnds = connector.getEnds();
+				List<EObject> relatedElements = new ArrayList<>();
+				connectedEnds.forEach(connectedEnd -> {
+					if (connectedEnd.getPartWithPort() != null) {
+						relatedElements.add(connectedEnd.getPartWithPort());
+					} else {
+						relatedElements.add(connectedEnd);
+					}
+				});
+				if (!isDuplicatedEntry(investigatedElement, relatedElements, connector, duplicationCheck)) {
+					Connection conn = new Connection(investigatedElement, relatedElements, connector);
+					allElements.add(conn);
+					addPotentialStringsForConnection(investigatedElement, relatedElements, connector, duplicationCheck);
+				}
 			}
 		} else {
 			EObject root = EcoreUtil.getRootContainer(investigatedElement);
@@ -131,25 +143,27 @@ public class UMLHandler extends AbstractArtifactHandler<EModelElement> {
 				if (selectedRelationshipTypes.size() == 0
 						|| selectedRelationshipTypes.contains(content.eClass().getName())) {
 					if (Relationship.class.isAssignableFrom(content.getClass())) {
-						Relationship relation = Relationship.class.cast(content);
-						boolean isRelatedToElement = false;
-						List<EObject> relatedElements = new ArrayList<>();
-						for (Element relatedElement : relation.getRelatedElements()) {
-							if (EMFHelper.getNameAttribute(relatedElement)
-									.equals(EMFHelper.getNameAttribute(investigatedElement))) {
-								isRelatedToElement = true;
-							} else {
-								relatedElements.add(relatedElement);
+						if (selectedRelationshipTypes.size() == 0
+								|| selectedRelationshipTypes.contains(content.eClass().getName())) {
+							Relationship relation = Relationship.class.cast(content);
+							boolean isRelatedToElement = false;
+							List<EObject> relatedElements = new ArrayList<>();
+							for (Element relatedElement : relation.getRelatedElements()) {
+								if (EMFHelper.getNameAttribute(relatedElement)
+										.equals(EMFHelper.getNameAttribute(investigatedElement))) {
+									isRelatedToElement = true;
+								} else {
+									relatedElements.add(relatedElement);
+								}
 							}
-						}
-						if (isRelatedToElement) {
-							if (!isDuplicatedEntry(investigatedElement, relatedElements, relation, duplicationCheck)) {
-								Connection conn = new Connection(investigatedElement, relatedElements, relation);
-								allElements.add(conn);
-								addPotentialStringsForConnection(investigatedElement, relatedElements, relation,
-										duplicationCheck);
-								SelectRelationshipsHandler
-										.addToPossibleRelationsForSelection(relation.eClass().getName());
+							if (isRelatedToElement) {
+								if (!isDuplicatedEntry(investigatedElement, relatedElements, relation,
+										duplicationCheck)) {
+									Connection conn = new Connection(investigatedElement, relatedElements, relation);
+									allElements.add(conn);
+									addPotentialStringsForConnection(investigatedElement, relatedElements, relation,
+											duplicationCheck);
+								}
 							}
 						}
 					} else if (Transition.class.isAssignableFrom(content.getClass())) {
@@ -164,8 +178,6 @@ public class UMLHandler extends AbstractArtifactHandler<EModelElement> {
 								allElements.add(conn);
 								addPotentialStringsForConnection(investigatedElement, relatedElements, transition,
 										duplicationCheck);
-								SelectRelationshipsHandler
-										.addToPossibleRelationsForSelection(transition.eClass().getName());
 							}
 						} else if (EMFHelper.getNameAttribute(transition.getTarget())
 								.equals(EMFHelper.getNameAttribute(investigatedElement))) {
@@ -176,46 +188,43 @@ public class UMLHandler extends AbstractArtifactHandler<EModelElement> {
 								allElements.add(conn);
 								addPotentialStringsForConnection(investigatedElement, relatedElements, transition,
 										duplicationCheck);
-								SelectRelationshipsHandler
-										.addToPossibleRelationsForSelection(transition.eClass().getName());
 							}
 						}
 					} else if (Message.class.isAssignableFrom(content.getClass())) {
-						Message msg = Message.class.cast(content);
-						MessageOccurrenceSpecification receiver = (MessageOccurrenceSpecification) msg
-								.getReceiveEvent();
-						MessageOccurrenceSpecification sender = (MessageOccurrenceSpecification) msg.getSendEvent();
-						List<EObject> relatedElements = new ArrayList<>();
-						if (receiver != null) {
-							if (EMFHelper.getNameAttribute(receiver.getCovered())
-									.equals(EMFHelper.getNameAttribute(investigatedElement))) {
-								relatedElements.add(sender.getCovered());
-								if (!isDuplicatedEntry(investigatedElement, relatedElements, msg, msg.getMessageSort(),
-										duplicationCheck)) {
-									Connection conn = new Connection(investigatedElement, relatedElements, msg);
-									allElements.add(conn);
-									addPotentialStringsForConnection(investigatedElement, relatedElements, msg,
-											msg.getMessageSort(), duplicationCheck);
-									SelectRelationshipsHandler
-											.addToPossibleRelationsForSelection(msg.eClass().getName());
-								}
-							} else if (EMFHelper.getNameAttribute(sender.getCovered())
-									.equals(EMFHelper.getNameAttribute(investigatedElement))) {
-								relatedElements.add(receiver.getCovered());
-								if (!isDuplicatedEntry(investigatedElement, relatedElements, msg, msg.getMessageSort(),
-										duplicationCheck)) {
-									Connection conn = new Connection(investigatedElement, relatedElements, msg);
-									allElements.add(conn);
-									addPotentialStringsForConnection(investigatedElement, relatedElements, msg,
-											msg.getMessageSort(), duplicationCheck);
-									SelectRelationshipsHandler
-											.addToPossibleRelationsForSelection(msg.eClass().getName());
+						if (selectedRelationshipTypes.size() == 0
+								|| selectedRelationshipTypes.contains(content.eClass().getName())) {
+							Message msg = Message.class.cast(content);
+							MessageOccurrenceSpecification receiver = (MessageOccurrenceSpecification) msg
+									.getReceiveEvent();
+							MessageOccurrenceSpecification sender = (MessageOccurrenceSpecification) msg.getSendEvent();
+							List<EObject> relatedElements = new ArrayList<>();
+							if (receiver != null) {
+								if (EMFHelper.getNameAttribute(receiver.getCovered())
+										.equals(EMFHelper.getNameAttribute(investigatedElement))) {
+									relatedElements.add(sender.getCovered());
+									if (!isDuplicatedEntry(investigatedElement, relatedElements, msg,
+											msg.getMessageSort(), duplicationCheck)) {
+										Connection conn = new Connection(investigatedElement, relatedElements, msg);
+										allElements.add(conn);
+										addPotentialStringsForConnection(investigatedElement, relatedElements, msg,
+												msg.getMessageSort(), duplicationCheck);
+									}
+								} else if (EMFHelper.getNameAttribute(sender.getCovered())
+										.equals(EMFHelper.getNameAttribute(investigatedElement))) {
+									relatedElements.add(receiver.getCovered());
+									if (!isDuplicatedEntry(investigatedElement, relatedElements, msg,
+											msg.getMessageSort(), duplicationCheck)) {
+										Connection conn = new Connection(investigatedElement, relatedElements, msg);
+										allElements.add(conn);
+										addPotentialStringsForConnection(investigatedElement, relatedElements, msg,
+												msg.getMessageSort(), duplicationCheck);
+									}
 								}
 							}
 						}
 					} else if (Port.class.isAssignableFrom(content.getClass())) {
 						if (selectedRelationshipTypes.size() == 0
-								|| selectedRelationshipTypes.contains(investigatedElement.eClass().getName())) {
+								|| selectedRelationshipTypes.contains(content.eClass().getName())) {
 							Port port = Port.class.cast(content);
 							EList<Interface> provideds = port.getProvideds();
 							boolean investigatedIsProvided = false;
@@ -247,42 +256,41 @@ public class UMLHandler extends AbstractArtifactHandler<EModelElement> {
 									allElements.add(conn);
 									addPotentialStringsForConnection(investigatedElement, relatedElements, port,
 											duplicationCheck);
-									SelectRelationshipsHandler
-											.addToPossibleRelationsForSelection(port.eClass().getName());
 								}
 							}
 						}
 					} else if (Connector.class.isAssignableFrom(content.getClass())) {
-						Connector connector = Connector.class.cast(content);
-						EList<ConnectorEnd> connectedEnds = connector.getEnds();
-						List<EObject> relatedElements = new ArrayList<>();
-						boolean isConnected = false;
-						for (ConnectorEnd connectedEnd : connectedEnds) {
-							if (connectedEnd.getPartWithPort() != null) {
-								relatedElements.add(connectedEnd.getPartWithPort());
-								if (EMFHelper.getNameAttribute(investigatedElement)
-										.equals(EMFHelper.getNameAttribute(connectedEnd.getPartWithPort()))) {
-									isConnected = true;
-									relatedElements.remove(connectedEnd.getPartWithPort());
-								}
-							} else {
-								relatedElements.add(connectedEnd);
-								if (EMFHelper.getNameAttribute(investigatedElement)
-										.equals(EMFHelper.getNameAttribute(connectedEnd))) {
-									isConnected = true;
-									relatedElements.remove(connectedEnd);
+						if (selectedRelationshipTypes.size() == 0
+								|| selectedRelationshipTypes.contains(content.eClass().getName())) {
+							Connector connector = Connector.class.cast(content);
+							EList<ConnectorEnd> connectedEnds = connector.getEnds();
+							List<EObject> relatedElements = new ArrayList<>();
+							boolean isConnected = false;
+							for (ConnectorEnd connectedEnd : connectedEnds) {
+								if (connectedEnd.getPartWithPort() != null) {
+									relatedElements.add(connectedEnd.getPartWithPort());
+									if (EMFHelper.getNameAttribute(investigatedElement)
+											.equals(EMFHelper.getNameAttribute(connectedEnd.getPartWithPort()))) {
+										isConnected = true;
+										relatedElements.remove(connectedEnd.getPartWithPort());
+									}
+								} else {
+									relatedElements.add(connectedEnd);
+									if (EMFHelper.getNameAttribute(investigatedElement)
+											.equals(EMFHelper.getNameAttribute(connectedEnd))) {
+										isConnected = true;
+										relatedElements.remove(connectedEnd);
+									}
 								}
 							}
-						}
-						;
-						if (isConnected) {
-							if (!isDuplicatedEntry(investigatedElement, relatedElements, connector, duplicationCheck)) {
-								Connection conn = new Connection(investigatedElement, relatedElements, connector);
-								allElements.add(conn);
-								addPotentialStringsForConnection(investigatedElement, relatedElements, connector,
-										duplicationCheck);
-								SelectRelationshipsHandler
-										.addToPossibleRelationsForSelection(connector.eClass().getName());
+							if (isConnected) {
+								if (!isDuplicatedEntry(investigatedElement, relatedElements, connector,
+										duplicationCheck)) {
+									Connection conn = new Connection(investigatedElement, relatedElements, connector);
+									allElements.add(conn);
+									addPotentialStringsForConnection(investigatedElement, relatedElements, connector,
+											duplicationCheck);
+								}
 							}
 						}
 					}
@@ -440,7 +448,7 @@ public class UMLHandler extends AbstractArtifactHandler<EModelElement> {
 		} else if (Transition.class.isAssignableFrom(first.getClass())
 				|| Transition.class.isAssignableFrom(second.getClass())) {
 			Transition transition;
-			if (Relationship.class.isAssignableFrom(first.getClass())) {
+			if (Transition.class.isAssignableFrom(first.getClass())) {
 				transition = Transition.class.cast(first);
 			} else {
 				transition = Transition.class.cast(second);
@@ -460,7 +468,7 @@ public class UMLHandler extends AbstractArtifactHandler<EModelElement> {
 		} else if (Message.class.isAssignableFrom(first.getClass())
 				|| Message.class.isAssignableFrom(second.getClass())) {
 			Message msg;
-			if (Relationship.class.isAssignableFrom(first.getClass())) {
+			if (Message.class.isAssignableFrom(first.getClass())) {
 				msg = Message.class.cast(first);
 			} else {
 				msg = Message.class.cast(second);

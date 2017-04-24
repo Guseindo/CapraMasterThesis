@@ -26,48 +26,20 @@ import org.osgi.service.prefs.Preferences;
  * 
  * @author Anthony Anjorin, Salome Maro
  */
-public class DisplayTracesHandler extends AbstractHandler {
+public class TransitivityDepthHandler extends AbstractHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		if (isTraceViewTransitive()) {
-			setTransitivityDepth("0");
-			setTraceViewTransitive(false);
-		} else {
-			IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
-			String initialValue = getTransitivityDepth();
-			InputDialog depthInput = new InputDialog(window.getShell(), "Transitivity depth",
-					"Input the wished depth limit for transitivity. Enter 0 if no limit is wished.", initialValue,
-					null);
-			if (depthInput.open() == Window.OK) {
-				String depth = depthInput.getValue();
-				setTransitivityDepth(depth);
-				setTraceViewTransitive(true);
-			} else {
-				setTransitivityDepth("0");
-				setTraceViewTransitive(true);
-			}
+		IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
+		String initialValue = getTransitivityDepth();
+		InputDialog depthInput = new InputDialog(window.getShell(), "Transitivity depth",
+				"Input the wished depth limit for transitivity. Enter 0 if no limit is wished.", initialValue, null);
+		if (depthInput.open() == Window.OK) {
+			String depth = depthInput.getValue();
+			setTransitivityDepth(depth);
 		}
 
 		return null;
-	}
-
-	/**
-	 * Checks whether the trace view is set to show transitive traces.
-	 * 
-	 * @return {@code true} if transitive traces are enabled, {@code false}
-	 *         otherwise
-	 */
-	public static boolean isTraceViewTransitive() {
-		Preferences transitivity = getPreference();
-
-		return transitivity.get("option", "direct").equals("transitive");
-	}
-
-	private static Preferences getPreference() {
-		Preferences preferences = InstanceScope.INSTANCE.getNode("org.eclipse.capra.ui.plantuml.toggleTransitivity");
-		Preferences transitivity = preferences.node("transitivity");
-		return transitivity;
 	}
 
 	/**
@@ -77,11 +49,11 @@ public class DisplayTracesHandler extends AbstractHandler {
 	 * @return
 	 */
 	public static String getTransitivityDepth() {
-		Preferences transitivity = getDepthPreference();
+		Preferences transitivity = getPreference();
 		return transitivity.get("option", "0");
 	}
 
-	private static Preferences getDepthPreference() {
+	private static Preferences getPreference() {
 		Preferences preferences = InstanceScope.INSTANCE.getNode("org.eclipse.capra.ui.plantuml.transitivityDepth");
 		Preferences transitivity = preferences.node("transitivityDepth");
 		return transitivity;
@@ -93,27 +65,8 @@ public class DisplayTracesHandler extends AbstractHandler {
 	 * @param value
 	 *            indicates whether transitive traces should be shown
 	 */
-	public static void setTraceViewTransitive(boolean value) {
-		Preferences transitivity = getPreference();
-
-		transitivity.put("option", value ? "transitive" : "direct");
-
-		try {
-			// forces the application to save the preferences
-			transitivity.flush();
-		} catch (BackingStoreException e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Sets whether the trace view is set to show transitive traces.
-	 * 
-	 * @param value
-	 *            indicates whether transitive traces should be shown
-	 */
 	public static void setTransitivityDepth(String depth) {
-		Preferences transitivity = getDepthPreference();
+		Preferences transitivity = getPreference();
 
 		transitivity.put("option", depth);
 

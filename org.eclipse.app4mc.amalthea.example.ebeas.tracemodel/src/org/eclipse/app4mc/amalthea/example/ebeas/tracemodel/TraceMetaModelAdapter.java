@@ -109,31 +109,35 @@ public class TraceMetaModelAdapter extends AbstractMetaModelAdapter
 	@Override
 	public String isThereATraceBetween(EObject first, EObject second, EObject traceModel) {
 
+		String traceString = "";
 		if (first.equals(second))
-			return "";
+			traceString = "";
 
 		EBEASTracelinkModel tm = (EBEASTracelinkModel) traceModel;
 		List<TraceLink> traces = tm.getItem();
 
 		for (TraceLink traceLink : traces) {
 			if (compareHelper.analyzeMUMLMsgTypeRepository2UMLInterface(traceLink, first, second)) {
-				return "X";
+				traceString = "X";
 			} else if (compareHelper.analyzeMUMLSoftwareComponent2UMLClass(traceLink, first, second)) {
-				return "X";
+				traceString = "X";
 			} else if (compareHelper.analyzeMUMLDiscretePort2UMLPort(traceLink, first, second)) {
-				return "X";
+				traceString = "X";
 			} else if (compareHelper.analyzeMUMLSoftwareComponent2UMLCollaboration(traceLink, first, second)) {
-				return "X";
+				traceString = "X";
 			} else if (compareHelper.analyzeMUMLRegion2UMLCollaboration(traceLink, first, second)) {
-				return "X";
+				traceString = "X";
 			} else if (compareHelper.analyzeAPP4MCRunnable2MUMLRegion(traceLink, first, second)) {
-				return "X";
+				traceString = "X";
 			} else if (compareHelper.analyzeRelatedTo(traceLink, first, second)) {
-				return "X";
+				traceString = "X";
 			}
 		}
 
-		return "";
+		String spacer = "";
+		String internalTraceString = this.isThereAnInternalTraceBetween(first, second, traceModel);
+		spacer = (!traceString.equals("") && !internalTraceString.equals("")) ? ", " : "";
+		return traceString + spacer + internalTraceString;
 	}
 
 	@Override
@@ -182,22 +186,26 @@ public class TraceMetaModelAdapter extends AbstractMetaModelAdapter
 	}
 
 	@Override
-	public List<Connection> getTransitivelyConnectedElements(EObject element, EObject traceModel) {
+	public List<Connection> getTransitivelyConnectedElements(EObject element, EObject traceModel, int maximumDepth) {
 		ArrayList<Object> accumulator = new ArrayList<>();
-		return getTransitivelyConnectedElements(element, traceModel, accumulator);
+		return getTransitivelyConnectedElements(element, traceModel, accumulator, -2, maximumDepth);
 	}
 
 	private List<Connection> getTransitivelyConnectedElements(EObject element, EObject traceModel,
-			ArrayList<Object> accumulator) {
+			ArrayList<Object> accumulator, int currentDepth, int maximumDepth) {
 		List<Connection> directElements = getConnectedElements(element, traceModel);
 		List<Connection> allElements = new ArrayList<>();
 
+		int currDepth = currentDepth + 1;
 		directElements.forEach(connection -> {
 			if (!accumulator.contains(connection.getTlink())) {
 				allElements.add(connection);
 				accumulator.add(connection.getTlink());
 				connection.getTargets().forEach(e -> {
-					allElements.addAll(getTransitivelyConnectedElements(e, traceModel, accumulator));
+					if (maximumDepth == 0 || currDepth <= maximumDepth) {
+						allElements.addAll(
+								getTransitivelyConnectedElements(e, traceModel, accumulator, currDepth, maximumDepth));
+					}
 				});
 			}
 		});
@@ -207,23 +215,28 @@ public class TraceMetaModelAdapter extends AbstractMetaModelAdapter
 
 	@Override
 	public List<Connection> getTransitivelyConnectedElements(EObject element, EObject traceModel,
-			List<String> selectedRelationshipTypes) {
+			List<String> selectedRelationshipTypes, int maximumDepth) {
 		List<Object> accumulator = new ArrayList<>();
-		return getTransitivelyConnectedElements(element, traceModel, accumulator, selectedRelationshipTypes);
+		return getTransitivelyConnectedElements(element, traceModel, accumulator, selectedRelationshipTypes, -2,
+				maximumDepth);
 	}
 
 	private List<Connection> getTransitivelyConnectedElements(EObject element, EObject traceModel,
-			List<Object> accumulator, List<String> selectedRelationshipTypes) {
+			List<Object> accumulator, List<String> selectedRelationshipTypes, int currentDepth, int maximumDepth) {
 		List<Connection> directElements = getConnectedElements(element, traceModel, selectedRelationshipTypes);
 		List<Connection> allElements = new ArrayList<>();
 
+		int currDepth = currentDepth + 1;
 		directElements.forEach(connection -> {
 			if (!accumulator.contains(connection.getTlink())) {
 				allElements.add(connection);
 				accumulator.add(connection.getTlink());
 				connection.getTargets().forEach(e -> {
-					allElements.addAll(
-							getTransitivelyConnectedElements(e, traceModel, accumulator, selectedRelationshipTypes));
+					if (maximumDepth == 0 || currDepth <= maximumDepth) {
+						allElements.addAll(getTransitivelyConnectedElements(e, traceModel, accumulator,
+								selectedRelationshipTypes, currDepth, maximumDepth));
+					}
+
 				});
 			}
 		});

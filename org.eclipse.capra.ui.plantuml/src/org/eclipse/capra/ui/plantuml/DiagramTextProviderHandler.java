@@ -26,7 +26,6 @@ import org.eclipse.capra.ui.helpers.TraceCreationHelper;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorPart;
 
 import net.sourceforge.plantuml.eclipse.utils.DiagramTextProvider;
@@ -41,7 +40,7 @@ public class DiagramTextProviderHandler implements DiagramTextProvider {
 	private EObject artifactModel = null;
 
 	@Override
-	public String getDiagramText(IEditorPart editor, ISelection input) {
+	public String getDiagramText(IEditorPart editor) {
 		List<Object> selectedModels = TraceCreationHelper
 				.extractSelectedElements(editor.getSite().getSelectionProvider().getSelection());
 		return getDiagramText(selectedModels);
@@ -67,20 +66,15 @@ public class DiagramTextProviderHandler implements DiagramTextProvider {
 			IArtifactHandler<Object> handler = artifactHelper.getHandler(selectedModels.get(0));
 			if (handler != null) {
 				selectedObject = handler.createWrapper(selectedModels.get(0), artifactModel);
-
 				if (selectedObject != null) {
 					resourceSet = selectedObject.eResource().getResourceSet();
 					traceModel = persistenceAdapter.getTraceModel(resourceSet);
 					List<String> selectedRelationshipTypes = SelectRelationshipsHandler.getSelectedRelationshipTypes();
-					List<EObject> selectedObjects = new ArrayList<>();
-					selectedObjects.add(selectedObject);
-					SelectRelationshipsHandler.addToPossibleRelationsForSelection(
-							metamodelAdapter.getAvailableTraceTypes(selectedObjects));
-
 					if (selectedModels.size() == 1) {
 						if (DisplayTracesHandler.isTraceViewTransitive()) {
+							int transitivityDepth = Integer.parseInt(TransitivityDepthHandler.getTransitivityDepth());
 							traces = metamodelAdapter.getTransitivelyConnectedElements(selectedObject, traceModel,
-									selectedRelationshipTypes);
+									selectedRelationshipTypes, transitivityDepth);
 						} else {
 							traces = metamodelAdapter.getConnectedElements(selectedObject, traceModel,
 									selectedRelationshipTypes);
@@ -88,6 +82,7 @@ public class DiagramTextProviderHandler implements DiagramTextProvider {
 						if (DisplayInternalLinksHandler.areInternalLinksShown()
 								&& DisplayTracesHandler.isTraceViewTransitive()) {
 							EObject previousElement = SelectRelationshipsHandler.getPreviousElement();
+							int transitivityDepth = Integer.parseInt(TransitivityDepthHandler.getTransitivityDepth());
 							if (previousElement != null) {
 								String previousElementName = EMFHelper.getNameAttribute(previousElement);
 								String currentElementName = EMFHelper.getNameAttribute(selectedObject);
@@ -100,7 +95,7 @@ public class DiagramTextProviderHandler implements DiagramTextProvider {
 								SelectRelationshipsHandler.setPreviousElement(selectedObject);
 							}
 							traces.addAll(metamodelAdapter.getInternalElementsTransitive(selectedObject, traceModel,
-									selectedRelationshipTypes));
+									selectedRelationshipTypes, transitivityDepth));
 						} else if (DisplayInternalLinksHandler.areInternalLinksShown()) {
 							EObject previousElement = SelectRelationshipsHandler.getPreviousElement();
 							if (previousElement != null) {
@@ -110,8 +105,6 @@ public class DiagramTextProviderHandler implements DiagramTextProvider {
 									SelectRelationshipsHandler.clearPossibleRelationsForSelection();
 									SelectRelationshipsHandler.emptySelectedRelationshipTypes();
 									SelectRelationshipsHandler.setPreviousElement(selectedObject);
-									SelectRelationshipsHandler.addToPossibleRelationsForSelection(
-											metamodelAdapter.getAvailableTraceTypes(selectedObjects));
 								}
 							} else {
 								SelectRelationshipsHandler.setPreviousElement(selectedObject);
@@ -119,6 +112,8 @@ public class DiagramTextProviderHandler implements DiagramTextProvider {
 							traces.addAll(metamodelAdapter.getInternalElements(selectedObject, traceModel,
 									selectedRelationshipTypes));
 						}
+						List<EObject> links = extractLinksFromTraces(traces);
+						SelectRelationshipsHandler.addToPossibleRelationsForSelection(links);
 						return VisualizationHelper.createNeighboursView(traces, selectedObject);
 					} else if (selectedModels.size() == 2) {
 						IArtifactHandler<Object> handlerSecondElement = artifactHelper
@@ -156,9 +151,7 @@ public class DiagramTextProviderHandler implements DiagramTextProvider {
 				}
 			}
 		}
-		String umlString = VisualizationHelper.createMatrix(traceModel, firstModelElements, secondModelElements);
-
-		return umlString;
+		return VisualizationHelper.createMatrix(traceModel, firstModelElements, secondModelElements);
 	}
 
 	@Override
@@ -166,8 +159,13 @@ public class DiagramTextProviderHandler implements DiagramTextProvider {
 		return true;
 	}
 
-	@Override
-	public boolean supportsSelection(ISelection selection) {
-		return true;
+	private static List<EObject> extractLinksFromTraces(List<Connection> traces) {
+		List<EObject> links = new ArrayList<>();
+		for (Connection trace : traces) {
+			if (!links.contains(trace.getTlink())) {
+				links.add(trace.getTlink());
+			}
+		}
+		return links;
 	}
 }

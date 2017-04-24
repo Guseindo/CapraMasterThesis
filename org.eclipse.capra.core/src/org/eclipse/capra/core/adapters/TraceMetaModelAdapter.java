@@ -141,10 +141,13 @@ public interface TraceMetaModelAdapter {
 	 *            Note that this element could be a trace in the trace model
 	 * @param traceModel
 	 *            Trace model to base calculation on
+	 * @param transitivityDepth
+	 *            The maximum depth the user wants to go down transitively. 0
+	 *            indicates no limit.
 	 * @return A Map with the following structure: [Trace object t -> {list of
 	 *         all objects connected to element via t}]
 	 */
-	List<Connection> getTransitivelyConnectedElements(EObject element, EObject traceModel);
+	List<Connection> getTransitivelyConnectedElements(EObject element, EObject traceModel, int transitivityDepth);
 
 	/**
 	 * Determine a list of all objects connected to element according to the
@@ -158,11 +161,14 @@ public interface TraceMetaModelAdapter {
 	 * @param selectedRelationshipTypes
 	 *            List of selected relationship types from the context menu of
 	 *            plantuml
+	 * @param transitivityDepth
+	 *            The maximum depth the user wants to go down transitively. 0
+	 *            indicates no limit.
 	 * @return A Map with the following structure: [Trace object t -> {list of
 	 *         all objects connected to element via t}]
 	 */
 	List<Connection> getTransitivelyConnectedElements(EObject element, EObject traceModel,
-			List<String> selectedRelationshipTypes);
+			List<String> selectedRelationshipTypes, int transitivityDepth);
 
 	/**
 	 * Determine a list of all objects internally connected to element (e.g.
@@ -189,10 +195,13 @@ public interface TraceMetaModelAdapter {
 	 *            Note that this element could be a trace in the trace model
 	 * @param traceModel
 	 *            Trace model to base calculation on
+	 * @param transitivityDepth
+	 *            The maximum depth the user wants to go down transitively. 0
+	 *            indicates no limit.
 	 * @return A Map with the following structure: [Trace object t -> {list of
 	 *         all objects connected to element via t}]
 	 */
 	List<Connection> getInternalElementsTransitive(EObject element, EObject traceModel,
-			List<String> selectedRelationshipTypes);
+			List<String> selectedRelationshipTypes, int transitivityDepth);
 
 }
