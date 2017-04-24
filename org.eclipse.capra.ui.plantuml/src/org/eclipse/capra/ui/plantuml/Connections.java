@@ -138,13 +138,20 @@ public class Connections {
 		String artifactLabel = null;
 		if (object instanceof ArtifactWrapper) {
 			ArtifactWrapper wrapper = (ArtifactWrapper) object;
+<<<<<<< HEAD
 			Collection<IArtifactHandler<Object>> artifactHandlers = ExtensionPointHelper.getArtifactHandlers();
 			for (IArtifactHandler<Object> handler : artifactHandlers) {
+=======
+			Collection<IArtifactHandler<?>> artifactHandlers = ExtensionPointHelper.getArtifactHandlers();
+
+			for (IArtifactHandler<?> handler : artifactHandlers) {
+>>>>>>> 69f6db53a8fae491968cf438522a731ab5c8fd46
 				String handlerName = handler.toString().substring(0, handler.toString().indexOf('@'));
 				if (handlerName.equals(wrapper.getArtifactHandler())) {
 					Object originalObject = handler.resolveWrapper(object);
 					if (originalObject != null) {
-						artifactLabel = handler.getDisplayName(originalObject);
+						artifactLabel = handler.withCastedHandler(originalObject, (h, o) -> h.getDisplayName(o))
+							.orElseThrow(IllegalArgumentException::new);
 					} else { // original object cannot be resolved
 								// therefore use the wrapper name
 						String label = EMFHelper.getIdentifier(object);

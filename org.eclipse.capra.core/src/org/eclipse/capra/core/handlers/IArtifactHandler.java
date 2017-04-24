@@ -12,6 +12,8 @@ package org.eclipse.capra.core.handlers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.BiFunction;
 
 import org.eclipse.capra.core.adapters.Connection;
 import org.eclipse.emf.ecore.EObject;
@@ -19,7 +21,10 @@ import org.eclipse.emf.ecore.EObject;
 /**
  * This interface defines functionality required to map chosen Objects in the
  * Eclipse workspace to wrappers which can then be traced and persisted in EMF
- * models.
+ * models.@param <T> The type of artifact that this object can handle. A handler
+ * with a parameter T should return true when
+ * {@link IArtifactHandler#canHandleArtifact} is called with an object of that
+ * type.
  */
 public interface IArtifactHandler<T> {
 
@@ -31,7 +36,42 @@ public interface IArtifactHandler<T> {
 	 * @return <code>true</code> if object can be handled, <code>false</code>
 	 *         otherwise.
 	 */
-	boolean canHandleArtifact(T artifact);
+	// It should be possible to test any object if it is of the right type, even
+	// if the type of this
+	// handler is unknown. Therefore use Object here instead of T.
+	boolean canHandleArtifact(Object artifact);
+
+	/**
+	 * If this handler can handle artifact, then call the functions with the
+	 * argument and this handler as arguments.
+	 * <p/>
+	 * This methods can be used to handle artifacts in a type safe manner when
+	 * the caller is sure that the artifact can be handled. Inside the handle
+	 * function it will be possible to use the handler with this specific
+	 * artifact only.
+	 * 
+	 * @param artifact
+	 *            The artifact to be handled
+	 * @param handleFunction
+	 *            Must not return null.
+	 * @return An optional with the result returned from the handle function if
+	 *         the artifact can be handled; otherwise an empty optional.
+	 */
+	// This method works by casting the artifact and the handler to the right
+	// type. This it not type safe
+	// in itself, but by doing these casts with this methods a caller can be
+	// sure that artifacts and handlers
+	// of incompatible types are not mixed up.
+	<R> Optional<R> withCastedHandler(Object artifact, BiFunction<IArtifactHandler<T>, T, R> handleFunction);
+
+	/**
+	 * Convenience method that calls {@link IArtifactHandler#withCastedHandler}
+	 * if caller knows that the artifact can be handled.
+	 * 
+	 * @throws IllegalArgumentException
+	 *             If this handler can not handle the artifact.
+	 */
+	<R> R withCastedHandlerUnchecked(Object artifact, BiFunction<IArtifactHandler<T>, T, R> handleFunction);
 
 	/**
 	 * Create a wrapper for the object
@@ -62,9 +102,9 @@ public interface IArtifactHandler<T> {
 	String getDisplayName(T artifact);
 
 	/**
-	 * Adds the internal links for a given element into the list of all
-	 * elements. This method is delegated to the right handler (e.g. Papyrus for
-	 * UML)
+	 * <<<<<<< HEAD Adds the internal links for a given element into the list of
+	 * all elements. This method is delegated to the right handler (e.g. Papyrus
+	 * for UML)
 	 * 
 	 * @param investigatedElement
 	 *            Element currently under investigation for links
@@ -91,4 +131,10 @@ public interface IArtifactHandler<T> {
 	 *         otherwise
 	 */
 	String isThereAnInternalTraceBetween(EObject first, EObject second, EObject traceModel);
+
+	/**
+	 * Returns the type that is handled by
+	 * this<code>IArtifactHandler</code>.**@return the type that
+	 */
+	Class<T> getHandledClass();
 }
