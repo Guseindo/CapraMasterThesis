@@ -62,9 +62,9 @@ public class DiagramTextProviderHandler implements DiagramTextProvider {
 			ArtifactHelper artifactHelper = new ArtifactHelper(artifactModel);
 			// check if there is a hander for the selected and get its Wrapper
 			@SuppressWarnings("unchecked")
-			IArtifactHandler<Object> handler = (IArtifactHandler<Object>) 
-				artifactHelper.getHandler(selectedModels.get(0)).orElse(null);
-			
+			IArtifactHandler<Object> handler = (IArtifactHandler<Object>) artifactHelper
+					.getHandler(selectedModels.get(0)).orElse(null);
+
 			if (handler != null) {
 				selectedObject = handler.createWrapper(selectedModels.get(0), artifactModel);
 				if (selectedObject != null) {
@@ -117,8 +117,9 @@ public class DiagramTextProviderHandler implements DiagramTextProvider {
 						SelectRelationshipsHandler.addToPossibleRelationsForSelection(links);
 						return VisualizationHelper.createNeighboursView(traces, selectedObject);
 					} else if (selectedModels.size() == 2) {
-						IArtifactHandler<Object> handlerSecondElement = artifactHelper
-								.getHandler(selectedModels.get(1));
+						@SuppressWarnings("unchecked")
+						IArtifactHandler<Object> handlerSecondElement = (IArtifactHandler<Object>) artifactHelper
+								.getHandler(selectedModels.get(1)).orElse(null);
 						if (DisplayTracesHandler.isTraceViewTransitive()) {
 							firstModelElements = EMFHelper
 									.linearize(handler.createWrapper(selectedModels.get(0), artifactModel));
@@ -135,14 +136,18 @@ public class DiagramTextProviderHandler implements DiagramTextProvider {
 					} else if (selectedModels.size() > 2) {
 						if (DisplayTracesHandler.isTraceViewTransitive()) {
 							firstModelElements = selectedModels.stream().flatMap(r -> {
-								IArtifactHandler<Object> individualhandler = artifactHelper.getHandler(r);
+								@SuppressWarnings("unchecked")
+								IArtifactHandler<Object> individualhandler = (IArtifactHandler<Object>) artifactHelper
+										.getHandler(r).orElse(null);
 								return EMFHelper.linearize(individualhandler.createWrapper(r, artifactModel)).stream();
 							}).collect(Collectors.toList());
 							secondModelElements = firstModelElements;
 						} else {
 							List<EObject> Objects = new ArrayList<>();
 							selectedModels.stream().forEach(o -> {
-								IArtifactHandler<Object> individualhandler = artifactHelper.getHandler(o);
+								@SuppressWarnings("unchecked")
+								IArtifactHandler<Object> individualhandler = (IArtifactHandler<Object>) artifactHelper
+										.getHandler(o).orElse(null);
 								Objects.add(individualhandler.createWrapper(o, artifactModel));
 							});
 							firstModelElements = Objects;

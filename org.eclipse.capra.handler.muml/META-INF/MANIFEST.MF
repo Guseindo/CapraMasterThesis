@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Capra Handler for MUML Models
+Bundle-SymbolicName: org.eclipse.capra.handler.muml;singleton:=true
+Bundle-Version: 0.7.0.qualifier
+Require-Bundle: org.eclipse.emf.ecore,
+ org.eclipse.capra.core;bundle-version="0.7.0",
+ org.eclipse.capra.ui.plantuml;bundle-version="0.7.0",
+ org.muml.pim;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-Vendor: Capra Development Team
+Export-Package: org.eclipse.capra.handler.muml

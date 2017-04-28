@@ -140,32 +140,20 @@ public class ExtensionPointHelper {
 	 *         collects all plugins that have an extension to the
 	 *         ArtifactHandler Extension point
 	 */
-<<<<<<< HEAD
-	public static Collection<IArtifactHandler<Object>> getArtifactHandlers() {
-		try {
-			return getExtensions(ARTIFACT_HANDLER_ID, ARTIFACT_HANDLER_CONFIG).stream()
-					.map(IArtifactHandler.class::cast).collect(Collectors.toList());
-		} catch (Exception e) {
-			return Collections.<IArtifactHandler<Object>>emptyList();
-		}
-=======
-	// Change type to IArtifactHandler<?>, since IArtifactHandler<Object> means a handler which
+	// Change type to IArtifactHandler<?>, since IArtifactHandler<Object> means
+	// a handler which
 	// can handle ALL kinds of objects.
 	public static Collection<IArtifactHandler<?>> getArtifactHandlers() {
-			List<Object> extensions = getExtensions(ARTIFACT_HANDLER_ID, ARTIFACT_HANDLER_CONFIG);
+		List<Object> extensions = getExtensions(ARTIFACT_HANDLER_ID, ARTIFACT_HANDLER_CONFIG);
 
-			List<Object> illegalClasses = extensions.stream()
-				.filter(c -> !(c instanceof IArtifactHandler))
+		List<Object> illegalClasses = extensions.stream().filter(c -> !(c instanceof IArtifactHandler))
 				.collect(toList());
-			
-			if (!illegalClasses.isEmpty()) {
-				throw new IllegalStateException("Illegal classes at " + ARTIFACT_HANDLER_ID + ": "+ illegalClasses);
-			}
-			
-			return extensions.stream()
-				.map(IArtifactHandler.class::cast)
-				.collect(toList());
->>>>>>> 69f6db53a8fae491968cf438522a731ab5c8fd46
+
+		if (!illegalClasses.isEmpty()) {
+			throw new IllegalStateException("Illegal classes at " + ARTIFACT_HANDLER_ID + ": " + illegalClasses);
+		}
+
+		return extensions.stream().map(IArtifactHandler.class::cast).collect(toList());
 	}
 
 	/**

@@ -53,12 +53,14 @@ public abstract class AbstractMetaModelAdapter implements TraceMetaModelAdapter 
 
 		for (Connection conn : directElements) {
 			for (EObject o : conn.getTargets()) {
-				IArtifactHandler<Object> handler = artifactHelper.getHandler(o);
+				@SuppressWarnings("unchecked")
+				IArtifactHandler<Object> handler = (IArtifactHandler<Object>) artifactHelper.getHandler(o).orElse(null);
 				handler.addInternalLinks(o, allElements, duplicationCheck, selectedRelationshipTypes);
 			}
 		}
 
-		IArtifactHandler<Object> handler = artifactHelper.getHandler(element);
+		@SuppressWarnings("unchecked")
+		IArtifactHandler<Object> handler = (IArtifactHandler<Object>) artifactHelper.getHandler(element).orElse(null);
 		handler.addInternalLinks(element, allElements, duplicationCheck, selectedRelationshipTypes);
 		return allElements;
 	}
@@ -73,8 +75,11 @@ public abstract class AbstractMetaModelAdapter implements TraceMetaModelAdapter 
 		TracePersistenceAdapter persistenceAdapter = ExtensionPointHelper.getTracePersistenceAdapter().get();
 		EObject artifactModel = persistenceAdapter.getArtifactWrappers(resourceSet);
 		ArtifactHelper artifactHelper = new ArtifactHelper(artifactModel);
-		IArtifactHandler<Object> handler = artifactHelper.getHandler(first);
-		IArtifactHandler<Object> handlerSecondElement = artifactHelper.getHandler(second);
+		@SuppressWarnings("unchecked")
+		IArtifactHandler<Object> handler = (IArtifactHandler<Object>) artifactHelper.getHandler(first).orElse(null);
+		@SuppressWarnings("unchecked")
+		IArtifactHandler<Object> handlerSecondElement = (IArtifactHandler<Object>) artifactHelper.getHandler(second)
+				.orElse(null);
 		if (handler.getClass().equals(handlerSecondElement.getClass())) {
 			return handler.isThereAnInternalTraceBetween(first, second, traceModel);
 		} else {
