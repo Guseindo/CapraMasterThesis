@@ -15,7 +15,6 @@ import java.util.List;
 
 import org.eclipse.capra.core.adapters.Connection;
 import org.eclipse.capra.core.handlers.AbstractArtifactHandler;
-import org.eclipse.capra.core.helpers.EMFHelper;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
@@ -47,7 +46,7 @@ public class MUMLHandler extends AbstractArtifactHandler<ExtendableElement> {
 
 	@Override
 	public void addInternalLinks(EObject investigatedElement, List<Connection> allElements,
-			ArrayList<String> duplicationCheck, List<String> selectedRelationshipTypes) {
+			ArrayList<Integer> duplicationCheck, List<String> selectedRelationshipTypes) {
 		if (Transition.class.isAssignableFrom(investigatedElement.getClass())) {
 			if (selectedRelationshipTypes.size() == 0
 					|| selectedRelationshipTypes.contains(investigatedElement.eClass().getName())) {
@@ -55,11 +54,12 @@ public class MUMLHandler extends AbstractArtifactHandler<ExtendableElement> {
 				List<EObject> relatedElements = new ArrayList<>();
 				relatedElements.add(transition.getSource());
 				relatedElements.add(transition.getTarget());
-				if (!isDuplicatedEntry(investigatedElement, relatedElements, transition, duplicationCheck)) {
+				int connectionHash = investigatedElement.hashCode() + transition.hashCode()
+						+ transition.getTarget().hashCode() + transition.getSource().hashCode();
+				if (!duplicationCheck.contains(connectionHash)) {
 					Connection conn = new Connection(investigatedElement, relatedElements, transition);
 					allElements.add(conn);
-					addPotentialStringsForConnection(investigatedElement, relatedElements, transition,
-							duplicationCheck);
+					duplicationCheck.add(connectionHash);
 				}
 			}
 		} else if (Connector.class.isAssignableFrom(investigatedElement.getClass())) {
@@ -71,10 +71,14 @@ public class MUMLHandler extends AbstractArtifactHandler<ExtendableElement> {
 				connectedEnds.forEach(connectedEnd -> {
 					relatedElements.add(connectedEnd);
 				});
-				if (!isDuplicatedEntry(investigatedElement, relatedElements, connector, duplicationCheck)) {
+				int connectionHash = investigatedElement.hashCode() + connector.hashCode();
+				for (EObject el : relatedElements) {
+					connectionHash += el.hashCode();
+				}
+				if (!duplicationCheck.contains(connectionHash)) {
 					Connection conn = new Connection(investigatedElement, relatedElements, connector);
 					allElements.add(conn);
-					addPotentialStringsForConnection(investigatedElement, relatedElements, connector, duplicationCheck);
+					duplicationCheck.add(connectionHash);
 				}
 			}
 		} else {
@@ -87,26 +91,26 @@ public class MUMLHandler extends AbstractArtifactHandler<ExtendableElement> {
 					if (Transition.class.isAssignableFrom(content.getClass())) {
 						Transition transition = Transition.class.cast(content);
 						List<EObject> relatedElements = new ArrayList<>();
-						if (EMFHelper.getNameAttribute(transition.getSource())
-								.equals(EMFHelper.getNameAttribute(investigatedElement))) {
+						if (transition.getSource().hashCode() == investigatedElement.hashCode()) {
 							relatedElements.add(transition.getTarget());
-							if (!isDuplicatedEntry(investigatedElement, relatedElements, transition,
-									duplicationCheck)) {
+							int connectionHash = investigatedElement.hashCode() + transition.hashCode()
+									+ transition.getTarget().hashCode();
+							if (!duplicationCheck.contains(connectionHash)) {
 								Connection conn = new Connection(investigatedElement, relatedElements, transition);
 								allElements.add(conn);
-								addPotentialStringsForConnection(investigatedElement, relatedElements, transition,
-										duplicationCheck);
+								duplicationCheck.add(connectionHash);
 							}
-						} else if (EMFHelper.getNameAttribute(transition.getTarget())
-								.equals(EMFHelper.getNameAttribute(investigatedElement))) {
+						} else if (transition.getTarget().hashCode() == investigatedElement.hashCode()) {
 							relatedElements.add(transition.getSource());
-							if (!isDuplicatedEntry(investigatedElement, relatedElements, transition,
-									duplicationCheck)) {
+							int connectionHash = investigatedElement.hashCode() + transition.hashCode()
+									+ transition.getSource().hashCode();
+							if (!duplicationCheck.contains(connectionHash)) {
 								Connection conn = new Connection(investigatedElement, relatedElements, transition);
 								allElements.add(conn);
-								addPotentialStringsForConnection(investigatedElement, relatedElements, transition,
-										duplicationCheck);
+								duplicationCheck.add(connectionHash);
 							}
+							Connection conn = new Connection(investigatedElement, relatedElements, transition);
+							allElements.add(conn);
 						}
 					} else if (Connector.class.isAssignableFrom(content.getClass())) {
 						if (selectedRelationshipTypes.size() == 0
@@ -117,19 +121,20 @@ public class MUMLHandler extends AbstractArtifactHandler<ExtendableElement> {
 							boolean isConnected = false;
 							for (ConnectorEndpoint connectedEnd : connectedEnds) {
 								relatedElements.add(connectedEnd);
-								if (EMFHelper.getNameAttribute(investigatedElement)
-										.equals(EMFHelper.getNameAttribute(connectedEnd))) {
+								if (connectedEnd.hashCode() == investigatedElement.hashCode()) {
 									isConnected = true;
 									relatedElements.remove(connectedEnd);
 								}
 							}
 							if (isConnected) {
-								if (!isDuplicatedEntry(investigatedElement, relatedElements, connector,
-										duplicationCheck)) {
+								int connectionHash = investigatedElement.hashCode() + connector.hashCode();
+								for (EObject el : relatedElements) {
+									connectionHash += el.hashCode();
+								}
+								if (!duplicationCheck.contains(connectionHash)) {
 									Connection conn = new Connection(investigatedElement, relatedElements, connector);
 									allElements.add(conn);
-									addPotentialStringsForConnection(investigatedElement, relatedElements, connector,
-											duplicationCheck);
+									duplicationCheck.add(connectionHash);
 								}
 							}
 						}
@@ -137,62 +142,6 @@ public class MUMLHandler extends AbstractArtifactHandler<ExtendableElement> {
 				}
 			}
 		}
-	}
-
-	/**
-	 * Adds all possible relations-ship strings as a concatenated string for a
-	 * relation between two elements
-	 * 
-	 * @param source
-	 *            The source element of the relation
-	 * @param targets
-	 *            The target element of the relation
-	 * @param relation
-	 *            The relation between the elements
-	 * @param duplicationCheck
-	 *            The list of strings the potential relation-ship strings are
-	 *            added to
-	 */
-	private static void addPotentialStringsForConnection(EObject source, List<EObject> targets, EObject relation,
-			List<String> duplicationCheck) {
-		String potentialString = EMFHelper.getNameAttribute(source);
-		for (EObject target : targets) {
-			potentialString += EMFHelper.getNameAttribute(target);
-		}
-		potentialString += EMFHelper.getNameAttribute(relation);
-		duplicationCheck.add(potentialString);
-
-		potentialString = "";
-		for (EObject target : targets) {
-			potentialString += EMFHelper.getNameAttribute(target);
-		}
-		potentialString += EMFHelper.getNameAttribute(source);
-		potentialString += EMFHelper.getNameAttribute(relation);
-		duplicationCheck.add(potentialString);
-	}
-
-	/**
-	 * Checks if a connection for a relation between two elements already exists
-	 * 
-	 * @param source
-	 *            The source element of the relation
-	 * @param targets
-	 *            The target element of the relation
-	 * @param relation
-	 *            The relation between the elements
-	 * @param duplicationCheck
-	 *            List of concatenated strings containing all possible
-	 *            combinations for each relationship added to the tracemodel
-	 * @return
-	 */
-	private static boolean isDuplicatedEntry(EObject source, List<EObject> targets, EObject relation,
-			List<String> duplicationCheck) {
-		String connectionString = EMFHelper.getNameAttribute(source);
-		for (EObject target : targets) {
-			connectionString += EMFHelper.getNameAttribute(target);
-		}
-		connectionString += EMFHelper.getNameAttribute(relation);
-		return duplicationCheck.contains(connectionString);
 	}
 
 	@Override
@@ -206,14 +155,10 @@ public class MUMLHandler extends AbstractArtifactHandler<ExtendableElement> {
 			} else {
 				transition = Transition.class.cast(second);
 			}
-			String sourceName = EMFHelper.getNameAttribute(transition.getSource());
-			String targetName = EMFHelper.getNameAttribute(transition.getTarget());
-			String firstElementName = EMFHelper.getNameAttribute(first);
-			String secondElementName = EMFHelper.getNameAttribute(second);
-			boolean relationContainsFirstElement = sourceName.equals(firstElementName)
-					|| targetName.equals(firstElementName);
-			boolean relationContainsSecondElement = sourceName.equals(secondElementName)
-					|| targetName.equals(secondElementName);
+			int sourceHash = transition.getSource().hashCode();
+			int targetHash = transition.getTarget().hashCode();
+			boolean relationContainsFirstElement = sourceHash == first.hashCode() || targetHash == first.hashCode();
+			boolean relationContainsSecondElement = sourceHash == second.hashCode() || targetHash == second.hashCode();
 			if (relationContainsFirstElement && relationContainsSecondElement) {
 				return "X";
 			}
@@ -227,13 +172,9 @@ public class MUMLHandler extends AbstractArtifactHandler<ExtendableElement> {
 				connector = Connector.class.cast(second);
 			}
 			EList<ConnectorEndpoint> connectedEnds = connector.getConnectorEndpoints();
-			String firstElementName = EMFHelper.getNameAttribute(first);
-			String secondElementName = EMFHelper.getNameAttribute(second);
 			boolean isRelated = false;
 			for (ConnectorEndpoint connectedEnd : connectedEnds) {
-				String relatedElementName = "";
-				relatedElementName = EMFHelper.getNameAttribute(connectedEnd);
-				if (relatedElementName.equals(firstElementName) || relatedElementName.equals(secondElementName)) {
+				if (connectedEnd.hashCode() == first.hashCode() || connectedEnd.hashCode() == second.hashCode()) {
 					isRelated = true;
 				}
 			}
@@ -251,19 +192,17 @@ public class MUMLHandler extends AbstractArtifactHandler<ExtendableElement> {
 				EObject content = modelContents.next();
 				if (Transition.class.isAssignableFrom(content.getClass())) {
 					Transition transition = Transition.class.cast(content);
-					String sourceName = EMFHelper.getNameAttribute(transition.getSource());
-					String targetName = EMFHelper.getNameAttribute(transition.getTarget());
-					String firstElementName = EMFHelper.getNameAttribute(first);
-					String secondElementName = EMFHelper.getNameAttribute(second);
-					boolean relationContainsFirstElement = sourceName.equals(firstElementName)
-							|| targetName.equals(firstElementName);
-					boolean relationContainsSecondElement = sourceName.equals(secondElementName)
-							|| targetName.equals(secondElementName);
+					int sourceHash = transition.getSource().hashCode();
+					int targetHash = transition.getTarget().hashCode();
+					boolean relationContainsFirstElement = sourceHash == first.hashCode()
+							|| targetHash == first.hashCode();
+					boolean relationContainsSecondElement = sourceHash == second.hashCode()
+							|| targetHash == second.hashCode();
 					if (!isRelated) {
 						isRelated = relationContainsFirstElement && relationContainsSecondElement;
 					}
 					if (relationContainsFirstElement && relationContainsSecondElement) {
-						if (sourceName.equals(firstElementName)) {
+						if (sourceHash == first.hashCode()) {
 							if (traceString == "") {
 								traceString = transition.eClass().getName() + upArrow;
 							} else {
@@ -286,14 +225,10 @@ public class MUMLHandler extends AbstractArtifactHandler<ExtendableElement> {
 					EList<ConnectorEndpoint> connectedEnds = connector.getConnectorEndpoints();
 					boolean relationContainsFirstElement = false;
 					boolean relationContainsSecondElement = false;
-					String firstElementName = EMFHelper.getNameAttribute(first);
-					String secondElementName = EMFHelper.getNameAttribute(second);
 					for (ConnectorEndpoint connectedEnd : connectedEnds) {
-						String relatedElementName = "";
-						relatedElementName = EMFHelper.getNameAttribute(connectedEnd);
-						if (relatedElementName.equals(firstElementName)) {
+						if (connectedEnd.hashCode() == first.hashCode()) {
 							relationContainsFirstElement = true;
-						} else if (relatedElementName.equals(secondElementName)) {
+						} else if (connectedEnd.hashCode() == second.hashCode()) {
 							relationContainsSecondElement = true;
 						}
 					}

@@ -5,7 +5,8 @@ Bundle-SymbolicName: org.eclipse.capra.core;singleton:=true
 Bundle-Version: 0.7.0.qualifier
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;bundle-version="2.11.2";visibility:=reexport,
- org.eclipse.uml2.uml;bundle-version="5.2.2"
+ org.eclipse.uml2.uml;bundle-version="5.2.2",
+ org.eclipse.capra.handler.eastadl;bundle-version="0.7.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.capra.core.adapters,

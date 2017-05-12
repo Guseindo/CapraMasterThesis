@@ -113,8 +113,8 @@ public interface IArtifactHandler<T> {
 	 * @param duplicationCheck
 	 *            List of String for checking for duplication
 	 */
-	void addInternalLinks(EObject investigatedElement, List<Connection> allElements, ArrayList<String> duplicationCheck,
-			List<String> selectedRelationshipTypes);
+	void addInternalLinks(EObject investigatedElement, List<Connection> allElements,
+			ArrayList<Integer> duplicationCheck, List<String> selectedRelationshipTypes);
 
 	/**
 	 * Decide if two objects are connected according to the given trace model

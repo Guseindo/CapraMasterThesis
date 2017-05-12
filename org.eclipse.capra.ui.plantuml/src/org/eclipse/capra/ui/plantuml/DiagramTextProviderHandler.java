@@ -45,6 +45,7 @@ public class DiagramTextProviderHandler implements DiagramTextProvider {
 		return getDiagramText(selectedModels);
 	}
 
+	@SuppressWarnings("unchecked")
 	public String getDiagramText(List<Object> selectedModels) {
 		List<EObject> firstModelElements = null;
 		List<EObject> secondModelElements = null;
@@ -61,10 +62,13 @@ public class DiagramTextProviderHandler implements DiagramTextProvider {
 		if (selectedModels.size() > 0) {
 			ArtifactHelper artifactHelper = new ArtifactHelper(artifactModel);
 			// check if there is a hander for the selected and get its Wrapper
-			@SuppressWarnings("unchecked")
-			IArtifactHandler<Object> handler = (IArtifactHandler<Object>) artifactHelper
-					.getHandler(selectedModels.get(0)).orElse(null);
-
+			IArtifactHandler<Object> handler;
+			if (selectedModels.get(0).getClass().getPackage().toString().contains("org.eclpse.eatop")) {
+				handler = (IArtifactHandler<Object>) artifactHelper.getEastAdlHandler(selectedModels.get(0))
+						.orElse(null);
+			} else {
+				handler = (IArtifactHandler<Object>) artifactHelper.getHandler(selectedModels.get(0)).orElse(null);
+			}
 			if (handler != null) {
 				selectedObject = handler.createWrapper(selectedModels.get(0), artifactModel);
 				if (selectedObject != null) {
@@ -117,9 +121,14 @@ public class DiagramTextProviderHandler implements DiagramTextProvider {
 						SelectRelationshipsHandler.addToPossibleRelationsForSelection(links);
 						return VisualizationHelper.createNeighboursView(traces, selectedObject);
 					} else if (selectedModels.size() == 2) {
-						@SuppressWarnings("unchecked")
-						IArtifactHandler<Object> handlerSecondElement = (IArtifactHandler<Object>) artifactHelper
-								.getHandler(selectedModels.get(1)).orElse(null);
+						IArtifactHandler<Object> handlerSecondElement;
+						if (selectedModels.get(1).getClass().getPackage().toString().contains("org.eclpse.eatop")) {
+							handlerSecondElement = (IArtifactHandler<Object>) artifactHelper
+									.getEastAdlHandler(selectedModels.get(1)).orElse(null);
+						} else {
+							handlerSecondElement = (IArtifactHandler<Object>) artifactHelper
+									.getHandler(selectedModels.get(1)).orElse(null);
+						}
 						if (DisplayTracesHandler.isTraceViewTransitive()) {
 							firstModelElements = EMFHelper
 									.linearize(handler.createWrapper(selectedModels.get(0), artifactModel));
@@ -136,18 +145,29 @@ public class DiagramTextProviderHandler implements DiagramTextProvider {
 					} else if (selectedModels.size() > 2) {
 						if (DisplayTracesHandler.isTraceViewTransitive()) {
 							firstModelElements = selectedModels.stream().flatMap(r -> {
-								@SuppressWarnings("unchecked")
-								IArtifactHandler<Object> individualhandler = (IArtifactHandler<Object>) artifactHelper
-										.getHandler(r).orElse(null);
+								IArtifactHandler<Object> individualhandler;
+								if (r.getClass().getPackage().toString().contains("org.eclpse.eatop")) {
+									individualhandler = (IArtifactHandler<Object>) artifactHelper.getEastAdlHandler(r)
+											.orElse(null);
+								} else {
+									individualhandler = (IArtifactHandler<Object>) artifactHelper.getHandler(r)
+											.orElse(null);
+								}
 								return EMFHelper.linearize(individualhandler.createWrapper(r, artifactModel)).stream();
 							}).collect(Collectors.toList());
 							secondModelElements = firstModelElements;
 						} else {
 							List<EObject> Objects = new ArrayList<>();
 							selectedModels.stream().forEach(o -> {
-								@SuppressWarnings("unchecked")
-								IArtifactHandler<Object> individualhandler = (IArtifactHandler<Object>) artifactHelper
-										.getHandler(o).orElse(null);
+								IArtifactHandler<Object> individualhandler;
+								if (o.getClass().getPackage().toString().contains("org.eclpse.eatop")) {
+									individualhandler = (IArtifactHandler<Object>) artifactHelper.getEastAdlHandler(o)
+											.orElse(null);
+									Objects.add(individualhandler.createWrapper(o, artifactModel));
+								} else {
+									individualhandler = (IArtifactHandler<Object>) artifactHelper.getHandler(o)
+											.orElse(null);
+								}
 								Objects.add(individualhandler.createWrapper(o, artifactModel));
 							});
 							firstModelElements = Objects;

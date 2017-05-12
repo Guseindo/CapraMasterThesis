@@ -43,7 +43,7 @@ public abstract class AbstractMetaModelAdapter implements TraceMetaModelAdapter 
 	public List<Connection> getInternalElements(EObject element, EObject traceModel,
 			List<String> selectedRelationshipTypes) {
 		List<Connection> allElements = new ArrayList<>();
-		ArrayList<String> duplicationCheck = new ArrayList<>();
+		ArrayList<Integer> duplicationCheck = new ArrayList<>();
 		List<Connection> directElements = getConnectedElements(element, traceModel, selectedRelationshipTypes);
 
 		ResourceSet resourceSet = new ResourceSetImpl();
@@ -53,15 +53,31 @@ public abstract class AbstractMetaModelAdapter implements TraceMetaModelAdapter 
 
 		for (Connection conn : directElements) {
 			for (EObject o : conn.getTargets()) {
-				@SuppressWarnings("unchecked")
-				IArtifactHandler<Object> handler = (IArtifactHandler<Object>) artifactHelper.getHandler(o).orElse(null);
-				handler.addInternalLinks(o, allElements, duplicationCheck, selectedRelationshipTypes);
+				if (o.getClass().getPackage().toString().contains("org.eclipse.eatop")) {
+					@SuppressWarnings("unchecked")
+					IArtifactHandler<Object> eastAdlHandler = (IArtifactHandler<Object>) artifactHelper
+							.getEastAdlHandler(o).orElse(null);
+					eastAdlHandler.addInternalLinks(o, allElements, duplicationCheck, selectedRelationshipTypes);
+				} else {
+					@SuppressWarnings("unchecked")
+					IArtifactHandler<Object> handler = (IArtifactHandler<Object>) artifactHelper.getHandler(o)
+							.orElse(null);
+					handler.addInternalLinks(o, allElements, duplicationCheck, selectedRelationshipTypes);
+				}
 			}
 		}
 
-		@SuppressWarnings("unchecked")
-		IArtifactHandler<Object> handler = (IArtifactHandler<Object>) artifactHelper.getHandler(element).orElse(null);
-		handler.addInternalLinks(element, allElements, duplicationCheck, selectedRelationshipTypes);
+		if (element.getClass().getPackage().toString().contains("org.eclipse.eatop")) {
+			@SuppressWarnings("unchecked")
+			IArtifactHandler<Object> eastAdlHandler = (IArtifactHandler<Object>) artifactHelper
+					.getEastAdlHandler(element).orElse(null);
+			eastAdlHandler.addInternalLinks(element, allElements, duplicationCheck, selectedRelationshipTypes);
+		} else {
+			@SuppressWarnings("unchecked")
+			IArtifactHandler<Object> handler = (IArtifactHandler<Object>) artifactHelper.getHandler(element)
+					.orElse(null);
+			handler.addInternalLinks(element, allElements, duplicationCheck, selectedRelationshipTypes);
+		}
 		return allElements;
 	}
 
@@ -69,17 +85,25 @@ public abstract class AbstractMetaModelAdapter implements TraceMetaModelAdapter 
 		return "";
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public String isThereAnInternalTraceBetween(EObject first, EObject second, EObject traceModel) {
 		ResourceSet resourceSet = new ResourceSetImpl();
 		TracePersistenceAdapter persistenceAdapter = ExtensionPointHelper.getTracePersistenceAdapter().get();
 		EObject artifactModel = persistenceAdapter.getArtifactWrappers(resourceSet);
 		ArtifactHelper artifactHelper = new ArtifactHelper(artifactModel);
-		@SuppressWarnings("unchecked")
-		IArtifactHandler<Object> handler = (IArtifactHandler<Object>) artifactHelper.getHandler(first).orElse(null);
-		@SuppressWarnings("unchecked")
-		IArtifactHandler<Object> handlerSecondElement = (IArtifactHandler<Object>) artifactHelper.getHandler(second)
-				.orElse(null);
+		IArtifactHandler<Object> handler;
+		IArtifactHandler<Object> handlerSecondElement;
+		if (first.getClass().getPackage().toString().contains("org.eclipse.eatop")) {
+			handler = (IArtifactHandler<Object>) artifactHelper.getEastAdlHandler(first).orElse(null);
+		} else {
+			handler = (IArtifactHandler<Object>) artifactHelper.getHandler(first).orElse(null);
+		}
+		if (first.getClass().getPackage().toString().contains("org.eclipse.eatop")) {
+			handlerSecondElement = (IArtifactHandler<Object>) artifactHelper.getEastAdlHandler(first).orElse(null);
+		} else {
+			handlerSecondElement = (IArtifactHandler<Object>) artifactHelper.getHandler(first).orElse(null);
+		}
 		if (handler.getClass().equals(handlerSecondElement.getClass())) {
 			return handler.isThereAnInternalTraceBetween(first, second, traceModel);
 		} else {

@@ -17,6 +17,7 @@ import java.util.Optional;
 import java.util.function.BiFunction;
 
 import org.eclipse.capra.core.adapters.Connection;
+import org.eclipse.capra.core.helpers.EMFHelper;
 import org.eclipse.emf.ecore.EObject;
 
 public abstract class AbstractArtifactHandler<T> implements IArtifactHandler<T> {
@@ -59,13 +60,69 @@ public abstract class AbstractArtifactHandler<T> implements IArtifactHandler<T> 
 
 	@Override
 	public void addInternalLinks(EObject investigatedElement, List<Connection> allElements,
-			ArrayList<String> duplicationCheck, List<String> selectedRelationshipTypes) {
+			ArrayList<Integer> duplicationCheck, List<String> selectedRelationshipTypes) {
 		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public String isThereAnInternalTraceBetween(EObject first, EObject second, EObject traceModel) {
 		return "";
+	}
+
+	/**
+	 * Checks if a connection for a relation between two elements already exists
+	 * 
+	 * @param source
+	 *            The source element of the relation
+	 * @param targets
+	 *            The target element of the relation
+	 * @param relation
+	 *            The relation between the elements
+	 * @param duplicationCheck
+	 *            List of concatenated strings containing all possible
+	 *            combinations for each relationship added to the tracemodel
+	 * @return
+	 */
+	public static boolean isDuplicatedEntry(EObject source, List<EObject> targets, EObject relation,
+			List<String> duplicationCheck) {
+		String connectionString = EMFHelper.getNameAttribute(source);
+		for (EObject target : targets) {
+			connectionString += EMFHelper.getNameAttribute(target);
+		}
+		connectionString += EMFHelper.getNameAttribute(relation);
+		return duplicationCheck.contains(connectionString);
+	}
+
+	/**
+	 * Adds all possible relations-ship strings as a concatenated string for a
+	 * relation between two elements
+	 * 
+	 * @param source
+	 *            The source element of the relation
+	 * @param targets
+	 *            The target element of the relation
+	 * @param relation
+	 *            The relation between the elements
+	 * @param duplicationCheck
+	 *            The list of strings the potential relation-ship strings are
+	 *            added to
+	 */
+	public static void addPotentialStringsForConnection(EObject source, List<EObject> targets, EObject relation,
+			List<String> duplicationCheck) {
+		String potentialString = EMFHelper.getNameAttribute(source);
+		for (EObject target : targets) {
+			potentialString += EMFHelper.getNameAttribute(target);
+		}
+		potentialString += EMFHelper.getNameAttribute(relation);
+		duplicationCheck.add(potentialString);
+
+		potentialString = "";
+		for (EObject target : targets) {
+			potentialString += EMFHelper.getNameAttribute(target);
+		}
+		potentialString += EMFHelper.getNameAttribute(source);
+		potentialString += EMFHelper.getNameAttribute(relation);
+		duplicationCheck.add(potentialString);
 	}
 
 }

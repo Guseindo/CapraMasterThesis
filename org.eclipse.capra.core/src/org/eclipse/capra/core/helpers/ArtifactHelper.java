@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import org.eclipse.capra.core.handlers.IArtifactHandler;
 import org.eclipse.capra.core.handlers.PriorityHandler;
+import org.eclipse.capra.handler.eastadl.EASTADLHandler;
 import org.eclipse.emf.ecore.EObject;
 
 public class ArtifactHelper {
@@ -70,5 +71,11 @@ public class ArtifactHelper {
 		} else {
 			return priorityHandler.map(h -> h.getSelectedHandler(availableHandlers, artifact));
 		}
+	}
+
+	public <T> Optional<IArtifactHandler<?>> getEastAdlHandler(Object artifact) {
+		List<IArtifactHandler<?>> availableHandlers = handlers.stream()
+				.filter(h -> h.getClass().isAssignableFrom(EASTADLHandler.class)).collect(toList());
+		return Optional.of(availableHandlers.get(0));
 	}
 }

@@ -20,7 +20,6 @@ import org.eclipse.app4mc.amalthea.model.IAnnotatable;
 import org.eclipse.app4mc.amalthea.model.QualifiedPort;
 import org.eclipse.capra.core.adapters.Connection;
 import org.eclipse.capra.core.handlers.AbstractArtifactHandler;
-import org.eclipse.capra.core.helpers.EMFHelper;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -47,7 +46,18 @@ public class APP4MCHandler extends AbstractArtifactHandler<IAnnotatable> {
 
 	@Override
 	public void addInternalLinks(EObject investigatedElement, List<Connection> allElements,
-			ArrayList<String> duplicationCheck, List<String> selectedRelationshipTypes) {
+			ArrayList<Integer> duplicationCheck, List<String> selectedRelationshipTypes) {
+		for (EObject obj : investigatedElement.eClass().getEAllContainments()) {
+			List<EObject> relElements = new ArrayList<>();
+			relElements.add(obj);
+			int connectionHash = investigatedElement.hashCode() + obj.eClass().hashCode() + obj.hashCode();
+			if (!duplicationCheck.contains(connectionHash)) {
+				Connection conn = new Connection(investigatedElement, relElements, obj.eClass());
+				allElements.add(conn);
+				duplicationCheck.add(connectionHash);
+			}
+		}
+
 		if (Connector.class.isAssignableFrom(investigatedElement.getClass())) {
 			if (selectedRelationshipTypes.size() == 0
 					|| selectedRelationshipTypes.contains(investigatedElement.eClass().getName())) {
@@ -57,10 +67,12 @@ public class APP4MCHandler extends AbstractArtifactHandler<IAnnotatable> {
 				List<EObject> relatedElements = new ArrayList<>();
 				relatedElements.add(sourcePort);
 				relatedElements.add(targetPort);
-				if (!isDuplicatedEntry(investigatedElement, relatedElements, connector, duplicationCheck)) {
+				int connectionHash = investigatedElement.hashCode() + connector.hashCode() + sourcePort.hashCode()
+						+ targetPort.hashCode();
+				if (!duplicationCheck.contains(connectionHash)) {
 					Connection conn = new Connection(investigatedElement, relatedElements, connector);
 					allElements.add(conn);
-					addPotentialStringsForConnection(investigatedElement, relatedElements, connector, duplicationCheck);
+					duplicationCheck.add(connectionHash);
 				}
 			}
 		} else if (AccessPath.class.isAssignableFrom(investigatedElement.getClass())) {
@@ -70,10 +82,12 @@ public class APP4MCHandler extends AbstractArtifactHandler<IAnnotatable> {
 			List<EObject> relatedElements = new ArrayList<>();
 			relatedElements.add(source);
 			relatedElements.add(target);
-			if (!isDuplicatedEntry(investigatedElement, relatedElements, path, duplicationCheck)) {
+			int connectionHash = investigatedElement.hashCode() + path.hashCode() + source.hashCode()
+					+ target.hashCode();
+			if (!duplicationCheck.contains(connectionHash)) {
 				Connection conn = new Connection(investigatedElement, relatedElements, path);
 				allElements.add(conn);
-				addPotentialStringsForConnection(investigatedElement, relatedElements, path, duplicationCheck);
+				duplicationCheck.add(connectionHash);
 			}
 		} else {
 			EObject root = EcoreUtil.getRootContainer(investigatedElement);
@@ -90,22 +104,22 @@ public class APP4MCHandler extends AbstractArtifactHandler<IAnnotatable> {
 							QualifiedPort targetPort = connector.getTargetPort();
 							List<EObject> relatedElements = new ArrayList<>();
 							boolean isConnected = false;
-							if (EMFHelper.getNameAttribute(investigatedElement)
-									.equals(EMFHelper.getNameAttribute(sourcePort))) {
+							if (sourcePort.hashCode() == investigatedElement.hashCode()) {
 								isConnected = true;
 								relatedElements.add(targetPort);
-							} else if (EMFHelper.getNameAttribute(investigatedElement)
-									.equals(EMFHelper.getNameAttribute(targetPort))) {
+							} else if (targetPort.hashCode() == investigatedElement.hashCode()) {
 								isConnected = true;
 								relatedElements.add(sourcePort);
 							}
 							if (isConnected) {
-								if (!isDuplicatedEntry(investigatedElement, relatedElements, connector,
-										duplicationCheck)) {
+								int connectionHash = investigatedElement.hashCode() + connector.hashCode();
+								for (EObject el : relatedElements) {
+									connectionHash += el.hashCode();
+								}
+								if (!duplicationCheck.contains(connectionHash)) {
 									Connection conn = new Connection(investigatedElement, relatedElements, connector);
 									allElements.add(conn);
-									addPotentialStringsForConnection(investigatedElement, relatedElements, connector,
-											duplicationCheck);
+									duplicationCheck.add(connectionHash);
 								}
 							}
 						}
@@ -117,83 +131,28 @@ public class APP4MCHandler extends AbstractArtifactHandler<IAnnotatable> {
 						List<EObject> relatedElements = new ArrayList<>();
 						relatedElements.add(source);
 						relatedElements.add(target);
-						if (EMFHelper.getNameAttribute(investigatedElement)
-								.equals(EMFHelper.getNameAttribute(source))) {
+						if (source.hashCode() == investigatedElement.hashCode()) {
 							isConnected = true;
 							relatedElements.add(target);
-						} else if (EMFHelper.getNameAttribute(investigatedElement)
-								.equals(EMFHelper.getNameAttribute(target))) {
+						} else if (target.hashCode() == investigatedElement.hashCode()) {
 							isConnected = true;
 							relatedElements.add(source);
 						}
 						if (isConnected) {
-							if (!isDuplicatedEntry(investigatedElement, relatedElements, path, duplicationCheck)) {
+							int connectionHash = investigatedElement.hashCode() + path.hashCode();
+							for (EObject el : relatedElements) {
+								connectionHash += el.hashCode();
+							}
+							if (!duplicationCheck.contains(connectionHash)) {
 								Connection conn = new Connection(investigatedElement, relatedElements, path);
 								allElements.add(conn);
-								addPotentialStringsForConnection(investigatedElement, relatedElements, path,
-										duplicationCheck);
+								duplicationCheck.add(connectionHash);
 							}
 						}
 					}
 				}
 			}
 		}
-	}
-
-	/**
-	 * Adds all possible relations-ship strings as a concatenated string for a
-	 * relation between two elements
-	 * 
-	 * @param source
-	 *            The source element of the relation
-	 * @param targets
-	 *            The target element of the relation
-	 * @param relation
-	 *            The relation between the elements
-	 * @param duplicationCheck
-	 *            The list of strings the potential relation-ship strings are
-	 *            added to
-	 */
-	private static void addPotentialStringsForConnection(EObject source, List<EObject> targets, EObject relation,
-			List<String> duplicationCheck) {
-		String potentialString = EMFHelper.getNameAttribute(source);
-		for (EObject target : targets) {
-			potentialString += EMFHelper.getNameAttribute(target);
-		}
-		potentialString += EMFHelper.getNameAttribute(relation);
-		duplicationCheck.add(potentialString);
-
-		potentialString = "";
-		for (EObject target : targets) {
-			potentialString += EMFHelper.getNameAttribute(target);
-		}
-		potentialString += EMFHelper.getNameAttribute(source);
-		potentialString += EMFHelper.getNameAttribute(relation);
-		duplicationCheck.add(potentialString);
-	}
-
-	/**
-	 * Checks if a connection for a relation between two elements already exists
-	 * 
-	 * @param source
-	 *            The source element of the relation
-	 * @param targets
-	 *            The target element of the relation
-	 * @param relation
-	 *            The relation between the elements
-	 * @param duplicationCheck
-	 *            List of concatenated strings containing all possible
-	 *            combinations for each relationship added to the tracemodel
-	 * @return
-	 */
-	private static boolean isDuplicatedEntry(EObject source, List<EObject> targets, EObject relation,
-			List<String> duplicationCheck) {
-		String connectionString = EMFHelper.getNameAttribute(source);
-		for (EObject target : targets) {
-			connectionString += EMFHelper.getNameAttribute(target);
-		}
-		connectionString += EMFHelper.getNameAttribute(relation);
-		return duplicationCheck.contains(connectionString);
 	}
 
 	@Override
@@ -208,16 +167,12 @@ public class APP4MCHandler extends AbstractArtifactHandler<IAnnotatable> {
 			}
 			QualifiedPort sourcePort = connector.getSourcePort();
 			QualifiedPort targetPort = connector.getTargetPort();
-			String firstElementName = EMFHelper.getNameAttribute(first);
-			String secondElementName = EMFHelper.getNameAttribute(second);
 			boolean isRelatedToFirst = false;
 			boolean isRelatedToSecond = false;
-			String sourcePortName = EMFHelper.getNameAttribute(sourcePort);
-			String targetPortName = EMFHelper.getNameAttribute(targetPort);
-			if (sourcePortName.equals(firstElementName) || targetPortName.equals(firstElementName)) {
+			if (sourcePort.hashCode() == first.hashCode() || targetPort.hashCode() == first.hashCode()) {
 				isRelatedToFirst = true;
 			}
-			if (sourcePortName.equals(secondElementName) || targetPortName.equals(secondElementName)) {
+			if (sourcePort.hashCode() == second.hashCode() || targetPort.hashCode() == second.hashCode()) {
 				isRelatedToSecond = true;
 			}
 			if (isRelatedToFirst && isRelatedToSecond) {
@@ -234,16 +189,12 @@ public class APP4MCHandler extends AbstractArtifactHandler<IAnnotatable> {
 			}
 			ComplexNode source = path.getSource();
 			ComplexNode target = path.getTarget();
-			String firstElementName = EMFHelper.getNameAttribute(first);
-			String secondElementName = EMFHelper.getNameAttribute(second);
 			boolean isRelatedToFirst = false;
 			boolean isRelatedToSecond = false;
-			String sourcePortName = EMFHelper.getNameAttribute(source);
-			String targetPortName = EMFHelper.getNameAttribute(target);
-			if (sourcePortName.equals(firstElementName) || targetPortName.equals(firstElementName)) {
+			if (source.hashCode() == first.hashCode() || target.hashCode() == first.hashCode()) {
 				isRelatedToFirst = true;
 			}
-			if (sourcePortName.equals(secondElementName) || targetPortName.equals(secondElementName)) {
+			if (source.hashCode() == second.hashCode() || target.hashCode() == second.hashCode()) {
 				isRelatedToSecond = true;
 			}
 			if (isRelatedToFirst && isRelatedToSecond) {
@@ -260,15 +211,12 @@ public class APP4MCHandler extends AbstractArtifactHandler<IAnnotatable> {
 					Connector connector = Connector.class.cast(content);
 					QualifiedPort sourcePort = connector.getSourcePort();
 					QualifiedPort targetPort = connector.getTargetPort();
-					String firstElementName = EMFHelper.getNameAttribute(first);
-					String secondElementName = EMFHelper.getNameAttribute(second);
-					String sourcePortName = EMFHelper.getNameAttribute(sourcePort);
-					String targetPortName = EMFHelper.getNameAttribute(targetPort);
 					boolean relationContainsFirstElement = false;
 					boolean relationContainsSecondElement = false;
-					if (sourcePortName.equals(firstElementName) || targetPortName.equals(firstElementName)) {
+					if (sourcePort.hashCode() == first.hashCode() || targetPort.hashCode() == first.hashCode()) {
 						relationContainsFirstElement = true;
-					} else if (sourcePortName.equals(secondElementName) || targetPortName.equals(secondElementName)) {
+					} else if (sourcePort.hashCode() == second.hashCode()
+							|| targetPort.hashCode() == second.hashCode()) {
 						relationContainsSecondElement = true;
 					}
 					if (!isRelated) {
@@ -287,15 +235,11 @@ public class APP4MCHandler extends AbstractArtifactHandler<IAnnotatable> {
 					AccessPath path = AccessPath.class.cast(content);
 					ComplexNode source = path.getSource();
 					ComplexNode target = path.getTarget();
-					String firstElementName = EMFHelper.getNameAttribute(first);
-					String secondElementName = EMFHelper.getNameAttribute(second);
-					String sourcePortName = EMFHelper.getNameAttribute(source);
-					String targetPortName = EMFHelper.getNameAttribute(target);
 					boolean relationContainsFirstElement = false;
 					boolean relationContainsSecondElement = false;
-					if (sourcePortName.equals(firstElementName) || targetPortName.equals(firstElementName)) {
+					if (source.hashCode() == first.hashCode() || target.hashCode() == first.hashCode()) {
 						relationContainsFirstElement = true;
-					} else if (sourcePortName.equals(secondElementName) || targetPortName.equals(secondElementName)) {
+					} else if (source.hashCode() == second.hashCode() || target.hashCode() == second.hashCode()) {
 						relationContainsSecondElement = true;
 					}
 					if (!isRelated) {

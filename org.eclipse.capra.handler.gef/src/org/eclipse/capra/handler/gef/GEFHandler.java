@@ -34,7 +34,7 @@ public class GEFHandler extends AbstractArtifactHandler<EditPart> {
 
 	@Override
 	public String getDisplayName(EditPart artifact) {
-		return org.eclipse.capra.core.helpers.EMFHelper.getIdentifier((EObject) artifact);
+		return org.eclipse.capra.core.helpers.EMFHelper.getIdentifier(EMFHelper.getEObject(artifact));
 	}
 
 }

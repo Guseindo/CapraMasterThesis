@@ -148,7 +148,7 @@ public class TraceMetaModelAdapter extends AbstractMetaModelAdapter
 
 		if (element instanceof TraceLink) {
 			TraceLink trace = (TraceLink) element;
-			connections.add(new Connection(element, reachabilityHelper.getConnectedElements(trace), null));
+			connections.add(new Connection(element, reachabilityHelper.getConnectedElements(trace), trace));
 		} else {
 			for (TraceLink trace : traces) {
 				List<EObject> connectedElements = reachabilityHelper.getConnectedElements(trace);
@@ -171,7 +171,7 @@ public class TraceMetaModelAdapter extends AbstractMetaModelAdapter
 
 		if (element instanceof TraceLink) {
 			TraceLink trace = (TraceLink) element;
-			connections.add(new Connection(element, reachabilityHelper.getConnectedElements(trace), null));
+			connections.add(new Connection(element, reachabilityHelper.getConnectedElements(trace), trace));
 		} else {
 			for (TraceLink trace : traces) {
 				List<EObject> connectedElements = reachabilityHelper.getConnectedElements(trace);
