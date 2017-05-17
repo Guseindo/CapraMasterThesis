@@ -170,14 +170,19 @@ public class TraceMetaModelAdapter extends AbstractMetaModelAdapter
 		List<TraceLink> traces = tm.getItem();
 
 		if (element instanceof TraceLink) {
-			TraceLink trace = (TraceLink) element;
-			connections.add(new Connection(element, reachabilityHelper.getConnectedElements(trace), trace));
+			if (selectedRelationshipTypes.size() == 0
+					|| selectedRelationshipTypes.contains(element.eClass().getName())) {
+				TraceLink trace = (TraceLink) element;
+				connections.add(new Connection(element, reachabilityHelper.getConnectedElements(trace), trace));
+			}
 		} else {
 			for (TraceLink trace : traces) {
-				List<EObject> connectedElements = reachabilityHelper.getConnectedElements(trace);
-
-				if (connectedElements.contains((EObject) element)) {
-					connections.add(new Connection(element, connectedElements, trace));
+				if (selectedRelationshipTypes.size() == 0
+						|| selectedRelationshipTypes.contains(trace.eClass().getName())) {
+					List<EObject> connectedElements = reachabilityHelper.getConnectedElements(trace);
+					if (connectedElements.contains((EObject) element)) {
+						connections.add(new Connection(element, connectedElements, trace));
+					}
 				}
 			}
 		}

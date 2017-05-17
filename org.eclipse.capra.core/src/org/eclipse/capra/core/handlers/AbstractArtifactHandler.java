@@ -18,7 +18,10 @@ import java.util.function.BiFunction;
 
 import org.eclipse.capra.core.adapters.Connection;
 import org.eclipse.capra.core.helpers.EMFHelper;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 public abstract class AbstractArtifactHandler<T> implements IArtifactHandler<T> {
 
@@ -38,6 +41,50 @@ public abstract class AbstractArtifactHandler<T> implements IArtifactHandler<T> 
 		return withCastedHandler(artifact, handleFunction).orElseThrow(
 				() -> new IllegalArgumentException("withCastedHanderUnchecked called with unhandleble artifact."
 						+ " Artifact: " + artifact + ", handler: " + this));
+	}
+
+	protected void includeContainmentLinks(EObject investigatedElement, List<Connection> allElements,
+			ArrayList<Integer> duplicationCheck, List<String> selectedRelationshipTypes) {
+		List<EStructuralFeature> containments = new ArrayList<>();
+		for (EStructuralFeature obj : investigatedElement.eClass().getEStructuralFeatures()) {
+			if (selectedRelationshipTypes.size() == 0 || selectedRelationshipTypes.contains(obj.eClass().getName())) {
+				if (EReference.class.isAssignableFrom(obj.getClass())) {
+					EReference ref = EReference.class.cast(obj);
+					if (ref.isContainment()) {
+						if (!containments.contains(obj)) {
+							List<EObject> relatedElements = new ArrayList<>();
+							int structuralFeatureHashCode = 0;
+							if (ref.getUpperBound() == -1) {
+								if (investigatedElement.eIsSet(obj)) {
+									@SuppressWarnings("unchecked")
+									EList<EObject> structuralFeatures = (EList<EObject>) investigatedElement.eGet(obj,
+											true);
+									for (EObject structuralFeature : structuralFeatures) {
+										structuralFeatureHashCode += structuralFeature.hashCode();
+										relatedElements.add(structuralFeature);
+									}
+								}
+							} else {
+								if (investigatedElement.eIsSet(obj)) {
+									EObject structuralFeature = (EObject) investigatedElement.eGet(obj, true);
+									relatedElements.add(structuralFeature);
+									structuralFeatureHashCode = structuralFeature.hashCode();
+								}
+							}
+
+							int connectionHash = investigatedElement.hashCode() + ref.hashCode()
+									+ structuralFeatureHashCode;
+							if (!duplicationCheck.contains(connectionHash) && relatedElements.size() > 0) {
+								Connection conn = new Connection(investigatedElement, relatedElements, ref);
+								allElements.add(conn);
+								duplicationCheck.add(connectionHash);
+							}
+							containments.add(obj);
+						}
+					}
+				}
+			}
+		}
 	}
 
 	@Override

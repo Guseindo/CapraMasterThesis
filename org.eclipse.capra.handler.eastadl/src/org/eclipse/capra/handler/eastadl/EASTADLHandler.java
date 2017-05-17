@@ -74,6 +74,7 @@ public class EASTADLHandler extends AbstractArtifactHandler<EAElement> {
 	@Override
 	public void addInternalLinks(EObject investigatedElement, List<Connection> allElements,
 			ArrayList<Integer> duplicationCheck, List<String> selectedRelationshipTypes) {
+		this.includeContainmentLinks(investigatedElement, allElements, duplicationCheck, selectedRelationshipTypes);
 		if (Realization.class.isAssignableFrom(investigatedElement.getClass())) {
 			if (selectedRelationshipTypes.size() == 0
 					|| selectedRelationshipTypes.contains(investigatedElement.eClass().getName())) {

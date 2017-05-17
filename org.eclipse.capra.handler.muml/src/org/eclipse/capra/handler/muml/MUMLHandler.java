@@ -47,6 +47,7 @@ public class MUMLHandler extends AbstractArtifactHandler<ExtendableElement> {
 	@Override
 	public void addInternalLinks(EObject investigatedElement, List<Connection> allElements,
 			ArrayList<Integer> duplicationCheck, List<String> selectedRelationshipTypes) {
+		this.includeContainmentLinks(investigatedElement, allElements, duplicationCheck, selectedRelationshipTypes);
 		if (Transition.class.isAssignableFrom(investigatedElement.getClass())) {
 			if (selectedRelationshipTypes.size() == 0
 					|| selectedRelationshipTypes.contains(investigatedElement.eClass().getName())) {

@@ -47,17 +47,7 @@ public class APP4MCHandler extends AbstractArtifactHandler<IAnnotatable> {
 	@Override
 	public void addInternalLinks(EObject investigatedElement, List<Connection> allElements,
 			ArrayList<Integer> duplicationCheck, List<String> selectedRelationshipTypes) {
-		for (EObject obj : investigatedElement.eClass().getEAllContainments()) {
-			List<EObject> relElements = new ArrayList<>();
-			relElements.add(obj);
-			int connectionHash = investigatedElement.hashCode() + obj.eClass().hashCode() + obj.hashCode();
-			if (!duplicationCheck.contains(connectionHash)) {
-				Connection conn = new Connection(investigatedElement, relElements, obj.eClass());
-				allElements.add(conn);
-				duplicationCheck.add(connectionHash);
-			}
-		}
-
+		this.includeContainmentLinks(investigatedElement, allElements, duplicationCheck, selectedRelationshipTypes);
 		if (Connector.class.isAssignableFrom(investigatedElement.getClass())) {
 			if (selectedRelationshipTypes.size() == 0
 					|| selectedRelationshipTypes.contains(investigatedElement.eClass().getName())) {
