@@ -20,6 +20,7 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.uml2.uml.ActivityEdge;
 import org.eclipse.uml2.uml.Connector;
 import org.eclipse.uml2.uml.ConnectorEnd;
 import org.eclipse.uml2.uml.DirectedRelationship;
@@ -67,6 +68,20 @@ public class UMLHandler extends AbstractArtifactHandler<EModelElement> {
 				}
 				if (!duplicationCheck.contains(connectionHash)) {
 					Connection conn = new Connection(investigatedElement, relatedElements, rel);
+					allElements.add(conn);
+					duplicationCheck.add(connectionHash);
+				}
+			}
+		} else if (ActivityEdge.class.isAssignableFrom(investigatedElement.getClass())) {
+			if (selectedRelationshipTypes.size() == 0
+					|| selectedRelationshipTypes.contains(investigatedElement.eClass().getName())) {
+				ActivityEdge activityEdge = ActivityEdge.class.cast(investigatedElement);
+				List<EObject> relatedElements = new ArrayList<>();
+				relatedElements.add(activityEdge.getTarget());
+				relatedElements.add(activityEdge.getSource());
+				int connectionHash = investigatedElement.hashCode() + activityEdge.hashCode();
+				if (!duplicationCheck.contains(connectionHash)) {
+					Connection conn = new Connection(investigatedElement, relatedElements, activityEdge);
 					allElements.add(conn);
 					duplicationCheck.add(connectionHash);
 				}
@@ -156,28 +171,42 @@ public class UMLHandler extends AbstractArtifactHandler<EModelElement> {
 				if (selectedRelationshipTypes.size() == 0
 						|| selectedRelationshipTypes.contains(content.eClass().getName())) {
 					if (Relationship.class.isAssignableFrom(content.getClass())) {
+						Relationship relation = Relationship.class.cast(content);
+						boolean isRelatedToElement = false;
+						List<EObject> relatedElements = new ArrayList<>();
+						for (Element relatedElement : relation.getRelatedElements()) {
+							if (relatedElement.hashCode() == investigatedElement.hashCode()) {
+								isRelatedToElement = true;
+							} else {
+								relatedElements.add(relatedElement);
+							}
+						}
+						if (isRelatedToElement) {
+							int connectionHash = investigatedElement.hashCode() + relation.hashCode();
+							for (EObject element : relatedElements) {
+								connectionHash += element.hashCode();
+							}
+							if (!duplicationCheck.contains(connectionHash)) {
+								Connection conn = new Connection(investigatedElement, relatedElements, relation);
+								allElements.add(conn);
+								duplicationCheck.add(connectionHash);
+							}
+						}
+					} else if (ActivityEdge.class.isAssignableFrom(content.getClass())) {
 						if (selectedRelationshipTypes.size() == 0
 								|| selectedRelationshipTypes.contains(content.eClass().getName())) {
-							Relationship relation = Relationship.class.cast(content);
-							boolean isRelatedToElement = false;
+							ActivityEdge activityEdge = ActivityEdge.class.cast(content);
 							List<EObject> relatedElements = new ArrayList<>();
-							for (Element relatedElement : relation.getRelatedElements()) {
-								if (relatedElement.hashCode() == investigatedElement.hashCode()) {
-									isRelatedToElement = true;
-								} else {
-									relatedElements.add(relatedElement);
-								}
+							if (activityEdge.getTarget().hashCode() == investigatedElement.hashCode()) {
+								relatedElements.add(activityEdge.getSource());
+							} else if (activityEdge.getSource().hashCode() == investigatedElement.hashCode()) {
+								relatedElements.add(activityEdge.getTarget());
 							}
-							if (isRelatedToElement) {
-								int connectionHash = investigatedElement.hashCode() + relation.hashCode();
-								for (EObject element : relatedElements) {
-									connectionHash += element.hashCode();
-								}
-								if (!duplicationCheck.contains(connectionHash)) {
-									Connection conn = new Connection(investigatedElement, relatedElements, relation);
-									allElements.add(conn);
-									duplicationCheck.add(connectionHash);
-								}
+							int connectionHash = investigatedElement.hashCode() + activityEdge.hashCode();
+							if (!duplicationCheck.contains(connectionHash)) {
+								Connection conn = new Connection(investigatedElement, relatedElements, activityEdge);
+								allElements.add(conn);
+								duplicationCheck.add(connectionHash);
 							}
 						}
 					} else if (Transition.class.isAssignableFrom(content.getClass())) {
@@ -203,105 +232,96 @@ public class UMLHandler extends AbstractArtifactHandler<EModelElement> {
 							}
 						}
 					} else if (Message.class.isAssignableFrom(content.getClass())) {
-						if (selectedRelationshipTypes.size() == 0
-								|| selectedRelationshipTypes.contains(content.eClass().getName())) {
-							Message msg = Message.class.cast(content);
-							MessageOccurrenceSpecification receiver = (MessageOccurrenceSpecification) msg
-									.getReceiveEvent();
-							MessageOccurrenceSpecification sender = (MessageOccurrenceSpecification) msg.getSendEvent();
-							List<EObject> relatedElements = new ArrayList<>();
-							if (receiver != null) {
-								if (receiver.getCovered().hashCode() == investigatedElement.hashCode()) {
-									relatedElements.add(sender.getCovered());
-									int connectionHash = investigatedElement.hashCode() + msg.hashCode()
-											+ msg.getMessageSort().hashCode() + sender.getCovered().hashCode();
-									if (!duplicationCheck.contains(connectionHash)) {
-										Connection conn = new Connection(investigatedElement, relatedElements, msg);
-										allElements.add(conn);
-										duplicationCheck.add(connectionHash);
-									}
-								} else if (sender.getCovered().hashCode() == investigatedElement.hashCode()) {
-									relatedElements.add(receiver.getCovered());
-									int connectionHash = investigatedElement.hashCode() + msg.hashCode()
-											+ msg.getMessageSort().hashCode() + receiver.getCovered().hashCode();
-									if (!duplicationCheck.contains(connectionHash)) {
-										Connection conn = new Connection(investigatedElement, relatedElements, msg);
-										allElements.add(conn);
-										duplicationCheck.add(connectionHash);
-									}
+						Message msg = Message.class.cast(content);
+						MessageOccurrenceSpecification receiver = (MessageOccurrenceSpecification) msg
+								.getReceiveEvent();
+						MessageOccurrenceSpecification sender = (MessageOccurrenceSpecification) msg.getSendEvent();
+						List<EObject> relatedElements = new ArrayList<>();
+						if (receiver != null) {
+							if (receiver.getCovered().hashCode() == investigatedElement.hashCode()) {
+								relatedElements.add(sender.getCovered());
+								int connectionHash = investigatedElement.hashCode() + msg.hashCode()
+										+ msg.getMessageSort().hashCode() + sender.getCovered().hashCode();
+								if (!duplicationCheck.contains(connectionHash)) {
+									Connection conn = new Connection(investigatedElement, relatedElements, msg);
+									allElements.add(conn);
+									duplicationCheck.add(connectionHash);
+								}
+							} else if (sender.getCovered().hashCode() == investigatedElement.hashCode()) {
+								relatedElements.add(receiver.getCovered());
+								int connectionHash = investigatedElement.hashCode() + msg.hashCode()
+										+ msg.getMessageSort().hashCode() + receiver.getCovered().hashCode();
+								if (!duplicationCheck.contains(connectionHash)) {
+									Connection conn = new Connection(investigatedElement, relatedElements, msg);
+									allElements.add(conn);
+									duplicationCheck.add(connectionHash);
 								}
 							}
 						}
 					} else if (Port.class.isAssignableFrom(content.getClass())) {
-						if (selectedRelationshipTypes.size() == 0
-								|| selectedRelationshipTypes.contains(content.eClass().getName())) {
-							Port port = Port.class.cast(content);
-							EList<Interface> provideds = port.getProvideds();
-							boolean investigatedIsProvided = false;
-							for (Interface provided : provideds) {
-								if (provided.hashCode() == investigatedElement.hashCode()) {
-									investigatedIsProvided = true;
-								}
+						Port port = Port.class.cast(content);
+						EList<Interface> provideds = port.getProvideds();
+						boolean investigatedIsProvided = false;
+						for (Interface provided : provideds) {
+							if (provided.hashCode() == investigatedElement.hashCode()) {
+								investigatedIsProvided = true;
 							}
-							EList<Interface> requireds = port.getRequireds();
-							boolean investigatedIsRequired = false;
-							for (Interface required : requireds) {
-								if (required.hashCode() == investigatedElement.hashCode()) {
-									investigatedIsRequired = true;
-								}
+						}
+						EList<Interface> requireds = port.getRequireds();
+						boolean investigatedIsRequired = false;
+						for (Interface required : requireds) {
+							if (required.hashCode() == investigatedElement.hashCode()) {
+								investigatedIsRequired = true;
+							}
 
-							}
-							List<EObject> relatedElements = new ArrayList<>();
+						}
+						List<EObject> relatedElements = new ArrayList<>();
 
-							if (investigatedIsProvided) {
-								relatedElements.addAll(requireds);
-							} else if (investigatedIsRequired) {
-								relatedElements.addAll(provideds);
+						if (investigatedIsProvided) {
+							relatedElements.addAll(requireds);
+						} else if (investigatedIsRequired) {
+							relatedElements.addAll(provideds);
+						}
+						if (investigatedIsProvided || investigatedIsRequired) {
+							int connectionHash = investigatedElement.hashCode() + port.hashCode();
+							for (EObject el : relatedElements) {
+								connectionHash += el.hashCode();
 							}
-							if (investigatedIsProvided || investigatedIsRequired) {
-								int connectionHash = investigatedElement.hashCode() + port.hashCode();
-								for (EObject el : relatedElements) {
-									connectionHash += el.hashCode();
-								}
-								if (!duplicationCheck.contains(connectionHash)) {
-									Connection conn = new Connection(investigatedElement, relatedElements, port);
-									allElements.add(conn);
-									duplicationCheck.add(connectionHash);
-								}
+							if (!duplicationCheck.contains(connectionHash)) {
+								Connection conn = new Connection(investigatedElement, relatedElements, port);
+								allElements.add(conn);
+								duplicationCheck.add(connectionHash);
 							}
 						}
 					} else if (Connector.class.isAssignableFrom(content.getClass())) {
-						if (selectedRelationshipTypes.size() == 0
-								|| selectedRelationshipTypes.contains(content.eClass().getName())) {
-							Connector connector = Connector.class.cast(content);
-							EList<ConnectorEnd> connectedEnds = connector.getEnds();
-							List<EObject> relatedElements = new ArrayList<>();
-							boolean isConnected = false;
-							for (ConnectorEnd connectedEnd : connectedEnds) {
-								if (connectedEnd.getPartWithPort() != null) {
-									relatedElements.add(connectedEnd.getPartWithPort());
-									if (connectedEnd.getPartWithPort().hashCode() == investigatedElement.hashCode()) {
-										isConnected = true;
-										relatedElements.remove(connectedEnd.getPartWithPort());
-									}
-								} else {
-									relatedElements.add(connectedEnd);
-									if (connectedEnd.hashCode() == investigatedElement.hashCode()) {
-										isConnected = true;
-										relatedElements.remove(connectedEnd);
-									}
+						Connector connector = Connector.class.cast(content);
+						EList<ConnectorEnd> connectedEnds = connector.getEnds();
+						List<EObject> relatedElements = new ArrayList<>();
+						boolean isConnected = false;
+						for (ConnectorEnd connectedEnd : connectedEnds) {
+							if (connectedEnd.getPartWithPort() != null) {
+								relatedElements.add(connectedEnd.getPartWithPort());
+								if (connectedEnd.getPartWithPort().hashCode() == investigatedElement.hashCode()) {
+									isConnected = true;
+									relatedElements.remove(connectedEnd.getPartWithPort());
+								}
+							} else {
+								relatedElements.add(connectedEnd);
+								if (connectedEnd.hashCode() == investigatedElement.hashCode()) {
+									isConnected = true;
+									relatedElements.remove(connectedEnd);
 								}
 							}
-							if (isConnected) {
-								int connectionHash = investigatedElement.hashCode() + connector.hashCode();
-								for (EObject el : relatedElements) {
-									connectionHash += el.hashCode();
-								}
-								if (!duplicationCheck.contains(connectionHash)) {
-									Connection conn = new Connection(investigatedElement, relatedElements, connector);
-									allElements.add(conn);
-									duplicationCheck.add(connectionHash);
-								}
+						}
+						if (isConnected) {
+							int connectionHash = investigatedElement.hashCode() + connector.hashCode();
+							for (EObject el : relatedElements) {
+								connectionHash += el.hashCode();
+							}
+							if (!duplicationCheck.contains(connectionHash)) {
+								Connection conn = new Connection(investigatedElement, relatedElements, connector);
+								allElements.add(conn);
+								duplicationCheck.add(connectionHash);
 							}
 						}
 					}
@@ -328,6 +348,23 @@ public class UMLHandler extends AbstractArtifactHandler<EModelElement> {
 				}
 			}
 			if (isRelated) {
+				return "X";
+			}
+			return "";
+		} else if (ActivityEdge.class.isAssignableFrom(first.getClass())
+				|| ActivityEdge.class.isAssignableFrom(second.getClass())) {
+			ActivityEdge activityEdge;
+			if (ActivityEdge.class.isAssignableFrom(first.getClass())) {
+				activityEdge = ActivityEdge.class.cast(first);
+			} else {
+				activityEdge = ActivityEdge.class.cast(second);
+			}
+			int sourceHash = activityEdge.getSource().hashCode();
+			int targetHash = activityEdge.getTarget().hashCode();
+
+			boolean relationContainsFirstElement = sourceHash == first.hashCode() || targetHash == first.hashCode();
+			boolean relationContainsSecondElement = sourceHash == second.hashCode() || sourceHash == second.hashCode();
+			if (relationContainsFirstElement && relationContainsSecondElement) {
 				return "X";
 			}
 			return "";
@@ -445,6 +482,38 @@ public class UMLHandler extends AbstractArtifactHandler<EModelElement> {
 							} else {
 								if (!traceString.toLowerCase().contains(relation.eClass().getName())) {
 									traceString += ", " + relation.eClass().getName();
+								}
+							}
+						}
+					}
+				} else if (ActivityEdge.class.isAssignableFrom(content.getClass())) {
+					ActivityEdge activityEdge = ActivityEdge.class.cast(content);
+					int sourceHash = activityEdge.getSource().hashCode();
+					int targetHash = activityEdge.getTarget().hashCode();
+
+					boolean relationContainsFirstElement = sourceHash == first.hashCode()
+							|| targetHash == first.hashCode();
+					boolean relationContainsSecondElement = sourceHash == second.hashCode()
+							|| targetHash == second.hashCode();
+					if (!isRelated) {
+						isRelated = relationContainsFirstElement && relationContainsSecondElement;
+					}
+
+					if (relationContainsFirstElement && relationContainsSecondElement) {
+						if (sourceHash == first.hashCode()) {
+							if (traceString == "") {
+								traceString = activityEdge.eClass().getName() + upArrow;
+							} else {
+								if (!traceString.toLowerCase().contains(activityEdge.eClass().getName() + upArrow)) {
+									traceString += ", " + activityEdge.eClass().getName() + upArrow;
+								}
+							}
+						} else {
+							if (traceString == "") {
+								traceString = leftArrow + activityEdge.eClass().getName();
+							} else {
+								if (!traceString.toLowerCase().contains(leftArrow + activityEdge.eClass().getName())) {
+									traceString += ", " + leftArrow + activityEdge.eClass().getName();
 								}
 							}
 						}
