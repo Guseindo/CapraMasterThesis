@@ -182,13 +182,21 @@ public interface TraceMetaModelAdapter {
 	 * @param selectedRelationshipTypes
 	 *            List of selected relationship types from the context menu of
 	 *            plantuml
+	 * @param traceLinksTransitive
+	 *            Used to determine if tracelink elements should be received
+	 *            transitively
+	 * @param transitivityDepth
+	 *            Used to in case tracelinks are received transivitely in order
+	 *            to set the depth
 	 * @return A Map with the following structure: [Trace object t -> {list of
 	 *         all objects connected to element via t}]
 	 */
-	List<Connection> getInternalElements(EObject element, EObject traceModel, List<String> selectedRelationshipTypes);
+	List<Connection> getInternalElements(EObject element, EObject traceModel, List<String> selectedRelationshipTypes,
+			boolean traceLinksTransitive, int transitivityDepth);
 
 	/**
 	 * Determine a list of elements internally connected to the selected one
+	 * transitively
 	 * 
 	 * @param element
 	 *            The element used to determine the list of connected objects.

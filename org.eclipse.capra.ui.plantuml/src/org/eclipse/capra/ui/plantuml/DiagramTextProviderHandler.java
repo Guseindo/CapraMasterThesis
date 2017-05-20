@@ -115,7 +115,7 @@ public class DiagramTextProviderHandler implements DiagramTextProvider {
 								SelectRelationshipsHandler.setPreviousElement(selectedObject);
 							}
 							traces.addAll(metamodelAdapter.getInternalElements(selectedObject, traceModel,
-									selectedRelationshipTypes));
+									selectedRelationshipTypes, false, 0));
 						}
 						List<EObject> links = extractLinksFromTraces(traces);
 						SelectRelationshipsHandler.addToPossibleRelationsForSelection(links);

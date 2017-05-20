@@ -14,7 +14,8 @@ public abstract class AbstractMetaModelAdapter implements TraceMetaModelAdapter 
 
 	private List<Connection> getInternalElementsTransitive(EObject element, EObject traceModel,
 			List<Object> accumulator, List<String> selectedRelationshipTypes, int currentDepth, int maximumDepth) {
-		List<Connection> directElements = getInternalElements(element, traceModel, selectedRelationshipTypes);
+		List<Connection> directElements = getInternalElements(element, traceModel, selectedRelationshipTypes, true,
+				maximumDepth);
 		List<Connection> allElements = new ArrayList<>();
 		int currDepth = currentDepth + 1;
 		for (Connection connection : directElements) {
@@ -40,11 +41,18 @@ public abstract class AbstractMetaModelAdapter implements TraceMetaModelAdapter 
 				maximumDepth);
 	}
 
+	@Override
 	public List<Connection> getInternalElements(EObject element, EObject traceModel,
-			List<String> selectedRelationshipTypes) {
+			List<String> selectedRelationshipTypes, boolean traceLinksTransitive, int transitivityDepth) {
 		List<Connection> allElements = new ArrayList<>();
 		ArrayList<Integer> duplicationCheck = new ArrayList<>();
-		List<Connection> directElements = getConnectedElements(element, traceModel, selectedRelationshipTypes);
+		List<Connection> directElements;
+		if (traceLinksTransitive) {
+			directElements = getTransitivelyConnectedElements(element, traceModel, selectedRelationshipTypes,
+					transitivityDepth);
+		} else {
+			directElements = getConnectedElements(element, traceModel, selectedRelationshipTypes);
+		}
 
 		ResourceSet resourceSet = new ResourceSetImpl();
 		TracePersistenceAdapter persistenceAdapter = ExtensionPointHelper.getTracePersistenceAdapter().get();

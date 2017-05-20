@@ -237,7 +237,7 @@ public class UMLHandler extends AbstractArtifactHandler<EModelElement> {
 								.getReceiveEvent();
 						MessageOccurrenceSpecification sender = (MessageOccurrenceSpecification) msg.getSendEvent();
 						List<EObject> relatedElements = new ArrayList<>();
-						if (receiver != null) {
+						if (receiver != null && receiver.getCovered() != null) {
 							if (receiver.getCovered().hashCode() == investigatedElement.hashCode()) {
 								relatedElements.add(sender.getCovered());
 								int connectionHash = investigatedElement.hashCode() + msg.hashCode()
