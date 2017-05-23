@@ -50,8 +50,12 @@ public class Connections {
 
 		allObjects = new LinkedHashSet<>();
 		allObjects.add(origin);
-		connections.forEach(c -> allObjects.addAll(c.getTargets()));
-
+		connections.forEach(c -> {
+			if (!allObjects.contains(c.getOrigin())) {
+				allObjects.add(c.getOrigin());
+			}
+			allObjects.addAll(c.getTargets());
+		});
 		object2Id = new LinkedHashMap<>();
 		int i = 0;
 		for (EObject o : allObjects) {

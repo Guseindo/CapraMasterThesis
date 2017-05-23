@@ -192,7 +192,7 @@ public interface TraceMetaModelAdapter {
 	 *         all objects connected to element via t}]
 	 */
 	List<Connection> getInternalElements(EObject element, EObject traceModel, List<String> selectedRelationshipTypes,
-			boolean traceLinksTransitive, int transitivityDepth);
+			boolean traceLinksTransitive, int transitivityDepth, List<Connection> existingTraces);
 
 	/**
 	 * Determine a list of elements internally connected to the selected one
@@ -210,6 +210,6 @@ public interface TraceMetaModelAdapter {
 	 *         all objects connected to element via t}]
 	 */
 	List<Connection> getInternalElementsTransitive(EObject element, EObject traceModel,
-			List<String> selectedRelationshipTypes, int transitivityDepth);
+			List<String> selectedRelationshipTypes, int transitivityDepth, List<Connection> existingTraces);
 
 }

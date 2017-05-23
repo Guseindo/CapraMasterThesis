@@ -13,9 +13,10 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 public abstract class AbstractMetaModelAdapter implements TraceMetaModelAdapter {
 
 	private List<Connection> getInternalElementsTransitive(EObject element, EObject traceModel,
-			List<Object> accumulator, List<String> selectedRelationshipTypes, int currentDepth, int maximumDepth) {
+			List<Object> accumulator, List<String> selectedRelationshipTypes, int currentDepth, int maximumDepth,
+			List<Connection> existingTraces) {
 		List<Connection> directElements = getInternalElements(element, traceModel, selectedRelationshipTypes, true,
-				maximumDepth);
+				maximumDepth, existingTraces);
 		List<Connection> allElements = new ArrayList<>();
 		int currDepth = currentDepth + 1;
 		for (Connection connection : directElements) {
@@ -23,9 +24,9 @@ public abstract class AbstractMetaModelAdapter implements TraceMetaModelAdapter 
 				allElements.add(connection);
 				accumulator.add(connection.getTlink());
 				for (EObject e : connection.getTargets()) {
-					if (maximumDepth == 0 || currDepth <= maximumDepth) {
+					if (maximumDepth == 0 || currDepth < (maximumDepth + 2)) {
 						allElements.addAll(getInternalElementsTransitive(e, traceModel, accumulator,
-								selectedRelationshipTypes, currDepth, maximumDepth));
+								selectedRelationshipTypes, currDepth, maximumDepth, existingTraces));
 					}
 				}
 			}
@@ -35,15 +36,16 @@ public abstract class AbstractMetaModelAdapter implements TraceMetaModelAdapter 
 	}
 
 	public List<Connection> getInternalElementsTransitive(EObject element, EObject traceModel,
-			List<String> selectedRelationshipTypes, int maximumDepth) {
+			List<String> selectedRelationshipTypes, int maximumDepth, List<Connection> existingTraces) {
 		List<Object> accumulator = new ArrayList<>();
 		return getInternalElementsTransitive(element, traceModel, accumulator, selectedRelationshipTypes, 0,
-				maximumDepth);
+				maximumDepth, existingTraces);
 	}
 
 	@Override
 	public List<Connection> getInternalElements(EObject element, EObject traceModel,
-			List<String> selectedRelationshipTypes, boolean traceLinksTransitive, int transitivityDepth) {
+			List<String> selectedRelationshipTypes, boolean traceLinksTransitive, int transitivityDepth,
+			List<Connection> existingTraces) {
 		List<Connection> allElements = new ArrayList<>();
 		ArrayList<Integer> duplicationCheck = new ArrayList<>();
 		List<Connection> directElements;
@@ -53,6 +55,15 @@ public abstract class AbstractMetaModelAdapter implements TraceMetaModelAdapter 
 		} else {
 			directElements = getConnectedElements(element, traceModel, selectedRelationshipTypes);
 		}
+		List<Integer> hashCodes = new ArrayList<>();
+
+		for (Connection conn : existingTraces) {
+			int connectionHash = conn.getOrigin().hashCode() + conn.getTlink().hashCode();
+			for (EObject targ : conn.getTargets()) {
+				connectionHash += targ.hashCode();
+			}
+			hashCodes.add(connectionHash);
+		}
 
 		ResourceSet resourceSet = new ResourceSetImpl();
 		TracePersistenceAdapter persistenceAdapter = ExtensionPointHelper.getTracePersistenceAdapter().get();
@@ -60,6 +71,13 @@ public abstract class AbstractMetaModelAdapter implements TraceMetaModelAdapter 
 		ArtifactHelper artifactHelper = new ArtifactHelper(artifactModel);
 
 		for (Connection conn : directElements) {
+			int connectionHash = conn.getOrigin().hashCode() + conn.getTlink().hashCode();
+			for (EObject targ : conn.getTargets()) {
+				connectionHash += targ.hashCode();
+			}
+			if (!hashCodes.contains(connectionHash)) {
+				allElements.add(conn);
+			}
 			for (EObject o : conn.getTargets()) {
 				if (o.getClass().getPackage().toString().contains("org.eclipse.eatop")) {
 					@SuppressWarnings("unchecked")

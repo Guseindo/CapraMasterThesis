@@ -63,7 +63,7 @@ public class DiagramTextProviderHandler implements DiagramTextProvider {
 			ArtifactHelper artifactHelper = new ArtifactHelper(artifactModel);
 			// check if there is a hander for the selected and get its Wrapper
 			IArtifactHandler<Object> handler;
-			if (selectedModels.get(0).getClass().getPackage().toString().contains("org.eclpse.eatop")) {
+			if (selectedModels.get(0).getClass().getPackage().toString().contains("org.eclipse.eatop")) {
 				handler = (IArtifactHandler<Object>) artifactHelper.getEastAdlHandler(selectedModels.get(0))
 						.orElse(null);
 			} else {
@@ -100,7 +100,7 @@ public class DiagramTextProviderHandler implements DiagramTextProvider {
 								SelectRelationshipsHandler.setPreviousElement(selectedObject);
 							}
 							traces.addAll(metamodelAdapter.getInternalElementsTransitive(selectedObject, traceModel,
-									selectedRelationshipTypes, transitivityDepth));
+									selectedRelationshipTypes, transitivityDepth, traces));
 						} else if (DisplayInternalLinksHandler.areInternalLinksShown()) {
 							EObject previousElement = SelectRelationshipsHandler.getPreviousElement();
 							if (previousElement != null) {
@@ -115,14 +115,14 @@ public class DiagramTextProviderHandler implements DiagramTextProvider {
 								SelectRelationshipsHandler.setPreviousElement(selectedObject);
 							}
 							traces.addAll(metamodelAdapter.getInternalElements(selectedObject, traceModel,
-									selectedRelationshipTypes, false, 0));
+									selectedRelationshipTypes, false, 0, traces));
 						}
 						List<EObject> links = extractLinksFromTraces(traces);
 						SelectRelationshipsHandler.addToPossibleRelationsForSelection(links);
 						return VisualizationHelper.createNeighboursView(traces, selectedObject);
 					} else if (selectedModels.size() == 2) {
 						IArtifactHandler<Object> handlerSecondElement;
-						if (selectedModels.get(1).getClass().getPackage().toString().contains("org.eclpse.eatop")) {
+						if (selectedModels.get(1).getClass().getPackage().toString().contains("org.eclipse.eatop")) {
 							handlerSecondElement = (IArtifactHandler<Object>) artifactHelper
 									.getEastAdlHandler(selectedModels.get(1)).orElse(null);
 						} else {
@@ -146,7 +146,7 @@ public class DiagramTextProviderHandler implements DiagramTextProvider {
 						if (DisplayTracesHandler.isTraceViewTransitive()) {
 							firstModelElements = selectedModels.stream().flatMap(r -> {
 								IArtifactHandler<Object> individualhandler;
-								if (r.getClass().getPackage().toString().contains("org.eclpse.eatop")) {
+								if (r.getClass().getPackage().toString().contains("org.eclipse.eatop")) {
 									individualhandler = (IArtifactHandler<Object>) artifactHelper.getEastAdlHandler(r)
 											.orElse(null);
 								} else {
@@ -160,7 +160,7 @@ public class DiagramTextProviderHandler implements DiagramTextProvider {
 							List<EObject> Objects = new ArrayList<>();
 							selectedModels.stream().forEach(o -> {
 								IArtifactHandler<Object> individualhandler;
-								if (o.getClass().getPackage().toString().contains("org.eclpse.eatop")) {
+								if (o.getClass().getPackage().toString().contains("org.eclipse.eatop")) {
 									individualhandler = (IArtifactHandler<Object>) artifactHelper.getEastAdlHandler(o)
 											.orElse(null);
 									Objects.add(individualhandler.createWrapper(o, artifactModel));
