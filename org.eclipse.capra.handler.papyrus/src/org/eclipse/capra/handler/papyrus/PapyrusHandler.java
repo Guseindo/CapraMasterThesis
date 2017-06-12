@@ -11,6 +11,7 @@
 package org.eclipse.capra.handler.papyrus;
 
 import org.eclipse.capra.core.handlers.AbstractArtifactHandler;
+import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.papyrus.emf.facet.custom.metamodel.v0_2_0.internal.treeproxy.EObjectTreeElement;
 import org.eclipse.papyrus.infra.emf.utils.EMFHelper;
@@ -37,6 +38,11 @@ public class PapyrusHandler extends AbstractArtifactHandler<EObjectTreeElement> 
 	public String getDisplayName(EObjectTreeElement artifact) {
 		EObject sel = EMFHelper.getEObject(artifact);
 		return org.eclipse.capra.core.helpers.EMFHelper.getIdentifier(sel); // TODO
+	}
+	
+	@Override
+	public String generateMarkerMessage(IResourceDelta delta, String wrapperUri) {
+		return null;
 	}
 
 }

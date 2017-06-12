@@ -15,16 +15,20 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.BiFunction;
 
+import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.capra.core.adapters.Connection;
 import org.eclipse.emf.ecore.EObject;
 
 /**
  * This interface defines functionality required to map chosen Objects in the
  * Eclipse workspace to wrappers which can then be traced and persisted in EMF
- * models.@param <T> The type of artifact that this object can handle. A handler
- * with a parameter T should return true when
- * {@link IArtifactHandler#canHandleArtifact} is called with an object of that
- * type.
+ * models.
+ *
+ * @param <T>
+ *            The type of artifact that this object can handle. A handler with a
+ *            parameter T should return true when
+ *            {@link IArtifactHandler#canHandleArtifact} is called with an
+ *            object of that type.
  */
 public interface IArtifactHandler<T> {
 
@@ -36,9 +40,6 @@ public interface IArtifactHandler<T> {
 	 * @return <code>true</code> if object can be handled, <code>false</code>
 	 *         otherwise.
 	 */
-	// It should be possible to test any object if it is of the right type, even
-	// if the type of this
-	// handler is unknown. Therefore use Object here instead of T.
 	boolean canHandleArtifact(Object artifact);
 
 	/**
@@ -57,11 +58,6 @@ public interface IArtifactHandler<T> {
 	 * @return An optional with the result returned from the handle function if
 	 *         the artifact can be handled; otherwise an empty optional.
 	 */
-	// This method works by casting the artifact and the handler to the right
-	// type. This it not type safe
-	// in itself, but by doing these casts with this methods a caller can be
-	// sure that artifacts and handlers
-	// of incompatible types are not mixed up.
 	<R> Optional<R> withCastedHandler(Object artifact, BiFunction<IArtifactHandler<T>, T, R> handleFunction);
 
 	/**
@@ -102,9 +98,7 @@ public interface IArtifactHandler<T> {
 	String getDisplayName(T artifact);
 
 	/**
-	 * <<<<<<< HEAD Adds the internal links for a given element into the list of
-	 * all elements. This method is delegated to the right handler (e.g. Papyrus
-	 * for UML)
+	 * Returns the type that is handled by this <code>IArtifactHandler</code>.
 	 * 
 	 * @param investigatedElement
 	 *            Element currently under investigation for links
@@ -120,7 +114,7 @@ public interface IArtifactHandler<T> {
 	 * Decide if two objects are connected according to the given trace model
 	 * and returns a String with the Type of connection for the trace matrix
 	 * (empty String if no connection exists)
-	 * 
+	 *
 	 * @param first
 	 *            First object
 	 * @param second
@@ -137,4 +131,20 @@ public interface IArtifactHandler<T> {
 	 * this<code>IArtifactHandler</code>.**@return the type that
 	 */
 	Class<T> getHandledClass();
+
+
+	/**
+	 * When a change in the resource occurs, it generates the message that is to
+	 * be displayed by the Capra marker.
+	 *
+	 * @param delta
+	 *            represents changes in the state of a resource
+	 * @param wrapperUri
+	 *            uri of the artifact that is associated with the change
+	 * @return the Capra marker message. Every marker must return a unique message.
+         *         If the message already exists it will be ignoored and a marker will
+         *         not be created.
+	 */
+	String generateMarkerMessage(IResourceDelta delta, String wrapperUri);
+
 }

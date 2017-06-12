@@ -8,18 +8,19 @@
  *   Contributors:
  *      Chalmers | University of Gothenburg and rt-labs - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.capra.ui.notification;
 
-import org.eclipse.core.resources.ResourcesPlugin;
+package org.eclipse.capra.handler.cdt.notification;
+
+import org.eclipse.cdt.core.model.CoreModel;
 import org.eclipse.ui.IStartup;
 
 /**
- * Registers the startup extension to get access to resource changes.
+ * Registers the startup extension to add the C Element change listener.
  */
 public class StartUp implements IStartup {
 
 	@Override
 	public void earlyStartup() {
-		ResourcesPlugin.getWorkspace().addResourceChangeListener(new ResourceListener());
+		CoreModel.getDefault().addElementChangedListener(new CElementChangeListener());
 	}
 }

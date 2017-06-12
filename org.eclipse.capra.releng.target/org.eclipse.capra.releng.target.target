@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde version="3.8"?><target name="Neon" sequenceNumber="94">
 <locations>
-<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.mortbay.jetty.util" version="6.1.23.v201012071420"/>
-<unit id="org.mortbay.jetty.server" version="6.1.23.v201012071420"/>
-<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20160221192158/repository/"/>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="net.sourceforge.plantuml.feature.feature.group" version="0.0.0"/>
+<repository location="http://files.idi.ntnu.no/publish/plantuml/repository/"/>
 </location>
 <location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.rmf.reqif10.sdk.feature.feature.group" version="0.13.0.201509161042"/>
@@ -144,13 +143,15 @@
 </location>
 <location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.php.feature.group" version="4.2.0.201611142355"/>
+<unit id="org.eclipse.mylyn.github.feature.feature.group" version="0.0.0"/>
 <repository location="http://download.eclipse.org/releases/neon"/>
+<repository location="http://download.eclipse.org/egit/github/updates/"/>
 </location>
 <location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.mylyn.github.feature.feature.group" version="0.0.0"/>
 <repository location="http://download.eclipse.org/egit/github/updates/"/>
 </location>
-<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.apache.poi.ooxml" version="3.9.0.v201405241905"/>
 <unit id="org.apache.xmlbeans" version="2.3.0.v201605172150"/>
 <unit id="com.google.guava" version="15.0.0.v201403281430"/>
