@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.eclipse.capra.core.adapters.Connection;
 import org.eclipse.capra.core.handlers.AbstractArtifactHandler;
+import org.eclipse.capra.core.handlers.IResourceDelta;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
@@ -250,5 +251,11 @@ public class MUMLHandler extends AbstractArtifactHandler<ExtendableElement> {
 			return traceString;
 		}
 
+	}
+
+	@Override
+	public String generateMarkerMessage(IResourceDelta delta, String wrapperUri) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

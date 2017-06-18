@@ -13,8 +13,11 @@ package org.eclipse.capra.handler.uml;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sound.sampled.Port;
+
 import org.eclipse.capra.core.adapters.Connection;
 import org.eclipse.capra.core.handlers.AbstractArtifactHandler;
+import org.eclipse.capra.core.handlers.IResourceDelta;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EModelElement;
@@ -24,11 +27,9 @@ import org.eclipse.uml2.uml.ActivityEdge;
 import org.eclipse.uml2.uml.Connector;
 import org.eclipse.uml2.uml.ConnectorEnd;
 import org.eclipse.uml2.uml.DirectedRelationship;
-import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.Message;
 import org.eclipse.uml2.uml.MessageOccurrenceSpecification;
-import org.eclipse.uml2.uml.Port;
 import org.eclipse.uml2.uml.Relationship;
 import org.eclipse.uml2.uml.Transition;
 
@@ -620,5 +621,11 @@ public class UMLHandler extends AbstractArtifactHandler<EModelElement> {
 			return traceString;
 		}
 
+	}
+
+	@Override
+	public String generateMarkerMessage(IResourceDelta delta, String wrapperUri) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

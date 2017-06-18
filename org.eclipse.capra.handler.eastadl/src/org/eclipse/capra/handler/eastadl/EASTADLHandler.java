@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.eclipse.capra.core.adapters.Connection;
 import org.eclipse.capra.core.handlers.AbstractArtifactHandler;
+import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.eatop.eastadl21.ClampConnector;
 import org.eclipse.eatop.eastadl21.ClampConnector_port;
 import org.eclipse.eatop.eastadl21.DeriveRequirement;
@@ -1418,5 +1419,11 @@ public class EASTADLHandler extends AbstractArtifactHandler<EAElement> {
 			}
 			return traceString;
 		}
+	}
+
+	@Override
+	public String generateMarkerMessage(IResourceDelta delta, String wrapperUri) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -25,6 +25,7 @@ import org.eclipse.capra.ui.helpers.TraceCreationHelper;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorPart;
 
 import net.sourceforge.plantuml.eclipse.utils.DiagramTextProvider;
@@ -39,7 +40,7 @@ public class DiagramTextProviderHandler implements DiagramTextProvider {
 	private EObject artifactModel = null;
 
 	@Override
-	public String getDiagramText(IEditorPart editor) {
+	public String getDiagramText(IEditorPart editor, ISelection arg1) {
 		List<Object> selectedModels = TraceCreationHelper
 				.extractSelectedElements(editor.getSite().getSelectionProvider().getSelection());
 		return getDiagramText(selectedModels);
@@ -193,5 +194,10 @@ public class DiagramTextProviderHandler implements DiagramTextProvider {
 			}
 		}
 		return links;
+	}
+
+	@Override
+	public boolean supportsSelection(ISelection arg0) {
+		return true;
 	}
 }

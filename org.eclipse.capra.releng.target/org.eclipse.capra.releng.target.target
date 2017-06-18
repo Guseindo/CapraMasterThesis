@@ -1,18 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="Neon" sequenceNumber="94">
+<?pde version="3.8"?><target name="Neon" sequenceNumber="95">
 <locations>
-<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="net.sourceforge.plantuml.feature.feature.group" version="0.0.0"/>
-<repository location="http://files.idi.ntnu.no/publish/plantuml/repository/"/>
-</location>
 <location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.rmf.reqif10.sdk.feature.feature.group" version="0.13.0.201509161042"/>
-<unit id="org.eclipse.rmf.reqif10.pror.sdk.feature.feature.group" version="0.13.0.201509161042"/>
-<repository location="http://download.eclipse.org/rmf/updates/releases"/>
-</location>
-<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.scenariotools.feature.feature.group" version="1.0.2.201612231443"/>
-<repository location="https://svn-serv.cs.uni-paderborn.de/updatesites/trunk/org.scenariotools.updatesite/"/>
+<unit id="org.eclipse.sdk.ide" version="0.0.0"/>
+<repository location="http://download.eclipse.org/eclipse/updates/4.6"/>
 </location>
 <location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.muml.example.cooperatingballplayingrobots.feature.feature.group" version="1.0.0.201612231010"/>
@@ -42,6 +33,73 @@
 <unit id="org.muml.example.coordinatingbebots.feature.feature.group" version="1.0.0.201612231010"/>
 <unit id="org.muml.example.mini.syncselectorchannel.feature.feature.group" version="1.0.0.201612231010"/>
 <repository location="http://muml-build.cs.upb.de/job/UpdateSite/2878/artifact/targetPlatform/"/>
+</location>
+<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.mylyn.github.feature.feature.group" version="0.0.0"/>
+<repository location="http://download.eclipse.org/egit/github/updates/"/>
+</location>
+<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.apache.poi.ooxml" version="3.9.0.v201405241905"/>
+<unit id="org.apache.xmlbeans" version="2.3.0.v201605172150"/>
+<unit id="com.google.guava" version="15.0.0.v201403281430"/>
+<unit id="com.google.guava.source" version="15.0.0.v201403281430"/>
+<unit id="org.apache.commons.collections" version="3.2.2.v201511171945"/>
+<unit id="org.apache.poi.ooxml.schemas" version="3.9.0.v201405241750"/>
+<unit id="org.apache.poi" version="3.9.0.v201405241750"/>
+<unit id="com.fasterxml.jackson.core.jackson-core" version="2.5.0.v201504151636"/>
+<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20160520211859/repository"/>
+</location>
+<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.artop.eel.feature.group" version="1.0.0.201302082307"/>
+<unit id="org.artop.eel.source.feature.group" version="1.0.0.201302082307"/>
+<unit id="org.artop.eel.sdk.feature.group" version="1.0.0.201302082307"/>
+<repository location="https://www.artop.org/containers/artop-eel-update-site-1.0"/>
+</location>
+<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.slf4j.api" version="1.7.2.v20121108-1250"/>
+<unit id="org.apache.commons.codec" version="1.6.0.v201305230611"/>
+<unit id="org.apache.poi" version="3.9.0.v201405241750"/>
+<unit id="com.google.guava" version="15.0.0.v201403281430"/>
+<unit id="org.jdom" version="1.1.1.v201101151400"/>
+<unit id="ca.odell.glazedlists" version="1.9.0.v201303080712"/>
+<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20140525021250/repository"/>
+</location>
+<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.php.feature.group" version="4.2.0.201611142355"/>
+<unit id="org.eclipse.mylyn.github.feature.feature.group" version="0.0.0"/>
+<repository location="http://download.eclipse.org/releases/neon"/>
+<repository location="http://download.eclipse.org/egit/github/updates/"/>
+</location>
+<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.gef4.common.sdk.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.gef4.geometry.sdk.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.gef4.fx.sdk.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.gef4.mvc.sdk.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.gef4.mvc.examples.source.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.gef4.layout.sdk.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.gef4.graph.sdk.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.gef4.zest.sdk.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.gef4.zest.examples.source.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.gef4.dot.sdk.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.gef4.cloudio.sdk.feature.group" version="0.0.0"/>
+<repository location="http://download.eclipse.org/tools/gef/gef4/updates/releases"/>
+</location>
+<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="de.upb.swt.qvt.tgg.interpreter.uml.feature.group" version="0.5.2"/>
+<unit id="de.upb.swt.qvt.tgg.feature.group" version="0.5.2"/>
+<unit id="de.upb.swt.qvt.tgg.diagram.feature.group" version="0.5.2"/>
+<unit id="de.upb.swt.qvt.tgg.interpreter.feature.group" version="0.5.2"/>
+<unit id="de.upb.swt.qvt.tgg.interpreter.ui.feature.group" version="0.5.2"/>
+<unit id="de.upb.swt.qvt.tgg.interpreter.sdk.feature.group" version="0.5.2"/>
+<unit id="de.upb.swt.qvt.tgg.example.classes2tables.feature.group" version="0.5.2"/>
+<unit id="de.upb.swt.qvt.tgg.example.ctools2pnet.feature.group" version="0.5.2"/>
+<repository location="https://svn-serv.cs.uni-paderborn.de/updatesites/trunk/de.upb.swt.qvt.tgg-updatesite/3.7/"/>
+</location>
+<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.equinox.executable.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.sdk.ide" version="0.0.0"/>
+<unit id="org.eclipse.rcp.configuration.feature.group" version="0.0.0"/>
+<repository location="http://download.eclipse.org/eclipse/updates/4.6"/>
 </location>
 <location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.app4mc.amalthea.editors.sdk.feature.group" version="0.7.2.201701311233"/>
@@ -78,45 +136,6 @@
 <repository location="http://download.eclipse.org/app4mc/updatesites/releases/0.7.2/"/>
 </location>
 <location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.sdk.ide" version="0.0.0"/>
-<repository location="http://download.eclipse.org/eclipse/updates/4.6"/>
-</location>
-<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.gef4.common.sdk.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.gef4.geometry.sdk.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.gef4.fx.sdk.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.gef4.mvc.sdk.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.gef4.mvc.examples.source.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.gef4.layout.sdk.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.gef4.graph.sdk.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.gef4.zest.sdk.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.gef4.zest.examples.source.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.gef4.dot.sdk.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.gef4.cloudio.sdk.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/tools/gef/gef4/updates/releases"/>
-</location>
-<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="de.upb.swt.qvt.tgg.interpreter.uml.feature.group" version="0.5.2"/>
-<unit id="de.upb.swt.qvt.tgg.feature.group" version="0.5.2"/>
-<unit id="de.upb.swt.qvt.tgg.diagram.feature.group" version="0.5.2"/>
-<unit id="de.upb.swt.qvt.tgg.interpreter.feature.group" version="0.5.2"/>
-<unit id="de.upb.swt.qvt.tgg.interpreter.ui.feature.group" version="0.5.2"/>
-<unit id="de.upb.swt.qvt.tgg.interpreter.sdk.feature.group" version="0.5.2"/>
-<unit id="de.upb.swt.qvt.tgg.example.classes2tables.feature.group" version="0.5.2"/>
-<unit id="de.upb.swt.qvt.tgg.example.ctools2pnet.feature.group" version="0.5.2"/>
-<repository location="https://svn-serv.cs.uni-paderborn.de/updatesites/trunk/de.upb.swt.qvt.tgg-updatesite/3.7/"/>
-</location>
-<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.ease.feature.feature.group" version="0.4.0.I201611181551"/>
-<unit id="org.eclipse.ease.ui.feature.feature.group" version="0.4.0.I201701130652"/>
-<repository location="http://download.eclipse.org/ease/update/release"/>
-</location>
-<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.franca.core.sdk.feature.group" version="0.11.0.201607111218"/>
-<unit id="org.franca.core.feature.group" version="0.11.0.201607111218"/>
-<repository location="http://franca.github.io/franca/update_site/releases"/>
-</location>
-<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.xtext.sdk.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.mylyn.ide_feature.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.mylyn.git.feature.group" version="0.0.0"/>
@@ -138,62 +157,9 @@
 <repository location="http://download.eclipse.org/releases/neon"/>
 </location>
 <location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="net.sourceforge.plantuml.feature.feature.group" version="1.1.8.8057"/>
-<repository location="http://plantuml.sourceforge.net/updatesitejuno/"/>
-</location>
-<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.php.feature.group" version="4.2.0.201611142355"/>
-<unit id="org.eclipse.mylyn.github.feature.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/releases/neon"/>
-<repository location="http://download.eclipse.org/egit/github/updates/"/>
-</location>
-<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.mylyn.github.feature.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/egit/github/updates/"/>
-</location>
-<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.apache.poi.ooxml" version="3.9.0.v201405241905"/>
-<unit id="org.apache.xmlbeans" version="2.3.0.v201605172150"/>
-<unit id="com.google.guava" version="15.0.0.v201403281430"/>
-<unit id="com.google.guava.source" version="15.0.0.v201403281430"/>
-<unit id="org.apache.commons.collections" version="3.2.2.v201511171945"/>
-<unit id="org.apache.poi.ooxml.schemas" version="3.9.0.v201405241750"/>
-<unit id="org.apache.poi" version="3.9.0.v201405241750"/>
-<unit id="com.fasterxml.jackson.core.jackson-core" version="2.5.0.v201504151636"/>
-<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20160520211859/repository"/>
-</location>
-<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.papyrus.sysml14.feature.feature.group" version="0.10.0"/>
-<unit id="org.eclipse.papyrus.sysml14.feature.source.feature.group" version="0.10.0"/>
-<repository location="http://download.eclipse.org/modeling/mdt/papyrus/components/sysml14/"/>
-</location>
-<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.nebula.feature.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.nebula.examples.release.feature.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/technology/nebula/snapshot"/>
-</location>
-<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.sphinx.sdk.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.sphinx.testutils.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/sphinx/updates/interim"/>
-</location>
-<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.equinox.executable.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.sdk.ide" version="0.0.0"/>
-<unit id="org.eclipse.rcp.configuration.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/eclipse/updates/4.6"/>
-</location>
-<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.artop.eel.feature.group" version="1.0.0.201302082307"/>
-<unit id="org.artop.eel.source.feature.group" version="1.0.0.201302082307"/>
-<unit id="org.artop.eel.sdk.feature.group" version="1.0.0.201302082307"/>
-<repository location="https://www.artop.org/containers/artop-eel-update-site-1.0"/>
-</location>
-<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.nebula.widgets.nattable.extension.glazedlists.feature.feature.group" version="1.5.0.201703192131"/>
-<unit id="org.eclipse.nebula.widgets.nattable.core.feature.feature.group" version="1.5.0.201703192131"/>
-<unit id="org.eclipse.nebula.widgets.nattable.extension.poi.feature.feature.group" version="1.5.0.201703192131"/>
-<repository location="http://download.eclipse.org/nattable/releases/1.5.0/repository/"/>
+<unit id="org.franca.core.sdk.feature.group" version="0.11.0.201607111218"/>
+<unit id="org.franca.core.feature.group" version="0.11.0.201607111218"/>
+<repository location="http://franca.github.io/franca/update_site/releases"/>
 </location>
 <location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.emf.transaction.sdk.feature.group" version="1.10.0.201606071900"/>
@@ -213,13 +179,43 @@
 <repository location="http://download.eclipse.org/releases/neon"/>
 </location>
 <location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.slf4j.api" version="1.7.2.v20121108-1250"/>
-<unit id="org.apache.commons.codec" version="1.6.0.v201305230611"/>
-<unit id="org.apache.poi" version="3.9.0.v201405241750"/>
-<unit id="com.google.guava" version="15.0.0.v201403281430"/>
-<unit id="org.jdom" version="1.1.1.v201101151400"/>
-<unit id="ca.odell.glazedlists" version="1.9.0.v201303080712"/>
-<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20140525021250/repository"/>
+<unit id="net.sourceforge.plantuml.feature.feature.group" version="0.0.0"/>
+<repository location="http://files.idi.ntnu.no/publish/plantuml/repository/"/>
+</location>
+<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.rmf.reqif10.sdk.feature.feature.group" version="0.13.0.201509161042"/>
+<unit id="org.eclipse.rmf.reqif10.pror.sdk.feature.feature.group" version="0.13.0.201509161042"/>
+<repository location="http://download.eclipse.org/rmf/updates/releases"/>
+</location>
+<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.mortbay.jetty.util" version="6.1.23.v201012071420"/>
+<unit id="org.mortbay.jetty.server" version="6.1.23.v201012071420"/>
+<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20160221192158/repository/"/>
+</location>
+<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.sphinx.sdk.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.sphinx.testutils.feature.group" version="0.0.0"/>
+<repository location="http://download.eclipse.org/sphinx/updates/interim"/>
+</location>
+<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.nebula.widgets.nattable.extension.glazedlists.feature.feature.group" version="1.5.0.201703192131"/>
+<unit id="org.eclipse.nebula.widgets.nattable.core.feature.feature.group" version="1.5.0.201703192131"/>
+<unit id="org.eclipse.nebula.widgets.nattable.extension.poi.feature.feature.group" version="1.5.0.201703192131"/>
+<repository location="http://download.eclipse.org/nattable/releases/1.5.0/repository/"/>
+</location>
+<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.scenariotools.feature.feature.group" version="1.0.2.201612231443"/>
+<repository location="https://svn-serv.cs.uni-paderborn.de/updatesites/trunk/org.scenariotools.updatesite/"/>
+</location>
+<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.ease.feature.feature.group" version="0.4.0.I201611181551"/>
+<unit id="org.eclipse.ease.ui.feature.feature.group" version="0.4.0.I201701130652"/>
+<repository location="http://download.eclipse.org/ease/update/release"/>
+</location>
+<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.nebula.feature.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.nebula.examples.release.feature.feature.group" version="0.0.0"/>
+<repository location="http://download.eclipse.org/technology/nebula/snapshot"/>
 </location>
 <location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.license.feature.group" version="0.0.0"/>

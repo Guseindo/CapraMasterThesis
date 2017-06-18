@@ -20,6 +20,7 @@ import org.eclipse.app4mc.amalthea.model.IAnnotatable;
 import org.eclipse.app4mc.amalthea.model.QualifiedPort;
 import org.eclipse.capra.core.adapters.Connection;
 import org.eclipse.capra.core.handlers.AbstractArtifactHandler;
+import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -249,5 +250,11 @@ public class APP4MCHandler extends AbstractArtifactHandler<IAnnotatable> {
 			return traceString;
 		}
 
+	}
+
+	@Override
+	public String generateMarkerMessage(IResourceDelta delta, String wrapperUri) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
